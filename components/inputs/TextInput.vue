@@ -169,9 +169,11 @@
     font-size: rem(16);
     line-height: 20px; // match image height
 
-    &__content {
-      padding-left: 35px;
-    }
+  }
+
+  // TODO: no more than 1 child deep !!!
+  .input--radio__label__content {
+    padding-left: 35px;
   }
 
   .input--radio__button {
