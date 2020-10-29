@@ -1,0 +1,62 @@
+
+/**
+ * Forces an element to self-clear its children
+ *
+ * Usage:
+ * .selector {
+ *   @include clearfix;
+ * }
+ */
+ @mixin clearfix() {
+  // stylelint-disable-next-line
+  *zoom: 1;
+
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+/**
+ * Hide element but make it accessible to screen readers
+ *
+ * Usage:
+ * .selector {
+ *   @include visually-hidden;
+ * }
+ */
+@mixin visually-hidden() {
+  // stylelint-disable-next-line
+  position: absolute !important;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+}
+
+/**
+ * Reset some of the base styles for anchor elements.
+ *
+ * Usage:
+ * a {
+ *   @include reset-link-styles;
+ * }
+ */
+@mixin reset-link-styles {
+  color: inherit;
+  text-decoration: none;
+  text-transform: none;
+
+  &:hover,
+  &:focus {
+    color: inherit;
+
+    .icon {
+      fill: inherit;
+    }
+  }
+}

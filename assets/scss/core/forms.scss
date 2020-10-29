@@ -1,0 +1,35 @@
+
+  .form-success,
+  div.errors {
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 6px;
+    padding: 12px 18px;
+  }
+
+  .form-success {
+    background-color: $color--success-light;
+    border-color: $color--success-dark;
+    color: $color--success-dark;
+  }
+
+  div.errors {
+    background-color: $color--error-light;
+    border-color: $color--error;
+    color: $color--error;
+    margin-bottom: $content-gutter;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        padding: 0;
+
+        &:not(:last-child) {
+          margin-bottom: $content-gutter;
+        }
+      }
+    }
+  }

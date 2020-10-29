@@ -1,0 +1,45 @@
+
+/**
+ * Mobile only - use sparingly!
+ */
+@mixin mobile-only {
+  @media (max-width: $breakpoint-tablet - 1) {
+    @content;
+  }
+}
+
+/**
+ * Tablet or larger
+ */
+@mixin tablet-up {
+  @media (min-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+/**
+ * Tablet only
+ */
+@mixin tablet-only {
+  @media (min-width: $breakpoint-tablet) and (max-width: $breakpoint-desktop - 1) {
+    @content;
+  }
+}
+
+/**
+ * Desktop or larger
+ */
+@mixin desktop-up {
+  @media (min-width: $breakpoint-desktop) {
+    @content;
+  }
+}
+
+/**
+ * Desktop only
+ */
+@mixin desktop-only {
+  @media (min-width: $breakpoint-desktop) and (max-width: $breakpoint-hd - 1) {
+    @content;
+  }
+}

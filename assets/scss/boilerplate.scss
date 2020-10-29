@@ -1,0 +1,16 @@
+/*
+
+  Boilerplate is a collection of all the SCSS partials
+  that do not output CSS when compiled.
+
+  This file is globally included through config.nuxt.js
+
+*/
+
+// settings
+@import 'variables';
+
+// tools
+@import 'tools/functions';
+@import 'tools/media-queries';
+@import 'tools/mixins';
