@@ -1,6 +1,3 @@
-
-import path from 'path';
-
 export default {
   // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
   ssr: false,
@@ -45,7 +42,26 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    // https://firebase.nuxtjs.org/
+    '@nuxtjs/firebase',
   ],
+
+  firebase: {
+    config: {
+      apiKey: 'AIzaSyDX5qRpyJ-rmvTGEE97Ii-8p-i-th5TiTM',
+      authDomain: 'd100-guru.firebaseapp.com',
+      databaseURL: 'https://d100-guru.firebaseio.com',
+      projectId: 'd100-guru',
+      storageBucket: 'd100-guru.appspot.com',
+      messagingSenderId: '162997310327',
+      appId: '1:162997310327:web:26c4723b173d2f17508772',
+      measurementId: 'G-TFT1BJ0VHB',
+    },
+    services: {
+      auth: true,
+      firestore: true,
+    },
+  },
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {},

@@ -21,6 +21,15 @@
  * UPDATE: TODO
  * REMOVE: TODO
  *
+ * TODO: once we start working with data, refactor this to take a hash
+ *       of options instead of passing down 'commit' i.e.
+ *
+ * createWatcher({
+ *   ref,
+ *   onAdd: (data) => {},
+ *   onUpdate: (data) => {},
+ *   onRemove: (id) => {},
+ * })
  */
 export const createWatcher = (ref, commit) => {
   return ref.onSnapshot((snapshot) => {

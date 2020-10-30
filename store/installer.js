@@ -2,11 +2,11 @@ import { isIos, isInStandaloneMode } from '~/scripts/helpers/environment.js';
 
 const INSTALLER_DISMISSED_KEY = 'd100g_pwa_installer_dismissed';
 
-const state = {
+export const state = () => ({
   showInstaller: false,
-};
+});
 
-const mutations = {
+export const mutations = {
   SHOW_INSTALLER(state) {
     state.showInstaller = true;
   },
@@ -15,13 +15,11 @@ const mutations = {
   },
 };
 
-const actions = {
+export const actions = {
   init({ commit }) {
-    if (
-      isIos() &&
-      !isInStandaloneMode() &&
-      localStorage[INSTALLER_DISMISSED_KEY] !== 'true'
-    ) {
+    const installerDismissed = localStorage[INSTALLER_DISMISSED_KEY] !== 'true';
+
+    if (isIos() && !isInStandaloneMode() && installerDismissed) {
       commit('SHOW_INSTALLER');
       setTimeout(() => commit('HIDE_INSTALLER'), 30000);
     }
@@ -32,9 +30,9 @@ const actions = {
   },
 };
 
-export default {
-  namespaced: true,
-  state,
-  mutations,
-  actions,
-};
+// export default {
+//   namespaced: true,
+//   state,
+//   mutations,
+//   actions,
+// };

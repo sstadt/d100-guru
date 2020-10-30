@@ -1,10 +1,10 @@
 const timeout = 5000;
 
-const state = {
+export const state = () => ({
   messages: [],
-};
+});
 
-const mutations = {
+export const mutations = {
   ADD_MESSAGE(state, { text, type, label, callback }) {
     const id = new Date().getTime();
 
@@ -13,7 +13,7 @@ const mutations = {
   },
 };
 
-const actions = {
+export const actions = {
   init({ commit }) {
     document.addEventListener('application-updated', () => {
       commit('ADD_MESSAGE', {
@@ -31,11 +31,4 @@ const actions = {
   success({ commit }, text) {
     commit('ADD_MESSAGE', { text, type: 'success' });
   },
-};
-
-export default {
-  namespaced: true,
-  state,
-  mutations,
-  actions,
 };

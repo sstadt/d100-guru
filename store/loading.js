@@ -1,9 +1,9 @@
-const state = {
+export const state = () => ({
   isLoading: false,
   message: '',
-};
+});
 
-const mutations = {
+export const mutations = {
   START_LOADING(state) {
     state.isLoading = true;
   },
@@ -16,7 +16,7 @@ const mutations = {
   },
 };
 
-const actions = {
+export const actions = {
   start({ commit }, message) {
     commit('START_LOADING');
     if (message && message.length > 0) commit('SET_MESSAGE', message);
@@ -27,11 +27,4 @@ const actions = {
   stop({ commit }) {
     commit('STOP_LOADING');
   },
-};
-
-export default {
-  namespaced: true,
-  state,
-  mutations,
-  actions,
 };
