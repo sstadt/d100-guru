@@ -1,6 +1,5 @@
 export default {
   srcDir: 'src',
-  buildDir: 'functions/.nuxt',
 
   // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
   ssr: false,
