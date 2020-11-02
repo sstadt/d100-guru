@@ -1,4 +1,7 @@
 export default {
+  srcDir: 'src',
+  buildDir: 'functions/.nuxt',
+
   // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
   ssr: false,
 
@@ -74,5 +77,7 @@ export default {
   axios: {},
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
-  build: {},
+  build: {
+    extractCSS: true,
+  },
 };

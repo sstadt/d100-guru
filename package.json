@@ -11,7 +11,12 @@
     "lint:style": "stylelint **/*.{vue,css} --ignore-path .gitignore",
     "lint": "yarn lint:js && yarn lint:style",
     "test": "cypress open --browser chrome",
-    "test:silent": "cypress run"
+    "test:silent": "cypress run",
+    "clean": "rimraf \"dist\"",
+    "start:firebase": "firebase serve --only functions,hosting",
+    "deploy": "yarn build && firebase deploy --only functions,hosting",
+    "deploy:functions": "firebase deploy --only functions",
+    "deploy:hosting": "yarn build && firebase deploy --only hosting"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.12.2",

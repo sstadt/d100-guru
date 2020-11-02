@@ -92,3 +92,7 @@ sw.*
 # Cypress videos and screenshots
 /cypress/screenshots
 /cypress/videos
+
+# Firebase Files
+.firebase
+public
