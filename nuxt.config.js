@@ -44,6 +44,8 @@ export default {
     '@nuxtjs/pwa',
     // https://firebase.nuxtjs.org/
     '@nuxtjs/firebase',
+    // https://github.com/nuxt-community/svg-sprite-module
+    '@nuxtjs/svg-sprite',
   ],
 
   firebase: {
@@ -61,6 +63,11 @@ export default {
       auth: true,
       firestore: true,
     },
+  },
+
+  svgSprite: {
+    input: '~/assets/icons/',
+    output: '~/assets/icons/gen/'
   },
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
