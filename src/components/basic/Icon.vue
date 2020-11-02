@@ -1,24 +1,19 @@
 <template lang="pug">
-  svg(:class="iconClass", :style="iconStyle")
-    use(xmlns:xlink="http://www.w3.org/1999/xlink", :xlink:href="iconName")
+  svg-icon(:class="iconClass", :style="iconStyle", :name="name")
 </template>
 
 <script>
   export default {
     name: 'Icon',
     props: {
-      name: String,
+      name: {
+        type: String,
+        default: '',
+      },
       size: {
         type: String,
         default: '24px',
       },
-      sizeWidth: String,
-      sizeHeight: String,
-    },
-    data() {
-      return {
-        isNotSquare: this.sizeWidth && this.sizeHeight,
-      };
     },
     computed: {
       iconClass() {
@@ -30,12 +25,9 @@
       },
       iconStyle() {
         return {
-          height: this.isNotSquare ? this.sizeHeight : this.size,
-          width: this.isNotSquare ? this.sizeWidth : this.size,
+          height: this.size,
+          width: this.size,
         };
-      },
-      iconName() {
-        return `#${this.name}`;
       },
     },
   };

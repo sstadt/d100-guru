@@ -35,8 +35,11 @@ $color--secondary--hover: lighten($color--secondary, 10%);
 $color--accent: $color-green;
 $color--disabled: $color-gray;
 $color--error: $color-red;
-$color--success: $color-forest-green;
-$color--warning: $color-yellow;
+$color--error-light: lighte($color-red, 30%);
+$color--success: $color-dark-green;
+$color--success-light: lighten($color-dark-green, 30%);
+$color--success-dark: darken($color-dark-green, 30%);
+$color--warning: $color-orange;
 
 // background colors
 $bg--main: $color-white;
@@ -45,7 +48,7 @@ $bg--med: $color-light-gray;
 $bg--grey: $color-dark-gray;
 $bg--dark: $color-dark-red;
 $bg--overlay: $color-transparent-black;
-$bg--placeholder: $color-lightest-gray;
+$bg--placeholder: $color-light-gray;
 
 // borders
 $border--main: $color-gray;

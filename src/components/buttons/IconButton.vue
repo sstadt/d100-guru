@@ -23,4 +23,31 @@
   };
 </script>
 
-<style scoped lang="scss"></style>
+<style lang="scss">
+  .button--icon {
+    padding: 0;
+    line-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .icon {
+      fill: $color-black;
+    }
+
+    &.u-icon-primary .icon {
+      fill: $color--primary;
+    }
+
+    &,
+    &:hover {
+      background-color: transparent;
+    }
+
+    &:hover {
+      .icon {
+        fill: $color--primary;
+      }
+    }
+  }
+</style>

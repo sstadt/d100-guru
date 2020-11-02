@@ -18,12 +18,6 @@ export default {
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [],
 
-  styleResources: {
-    scss: [
-      '~/assets/scss/variables.scss',
-    ],
-  },
-
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [],
 
@@ -48,6 +42,8 @@ export default {
     '@nuxtjs/firebase',
     // https://github.com/nuxt-community/svg-sprite-module
     '@nuxtjs/svg-sprite',
+    // https://www.npmjs.com/package/@nuxtjs/style-resources
+    '@nuxtjs/style-resources',
   ],
 
   firebase: {
@@ -70,6 +66,12 @@ export default {
   svgSprite: {
     input: '~/assets/icons/',
     output: '~/assets/icons/gen/'
+  },
+
+  styleResources: {
+    scss: [
+      '~/styles/boilerplate.scss',
+    ],
   },
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
