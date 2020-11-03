@@ -18,6 +18,13 @@ export default {
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [],
 
+  link: [
+    {
+      rel: 'stylesheet',
+      hrel: 'https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,500;1,400;1,500&family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap',
+    },
+  ],
+
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [],
 
@@ -30,6 +37,8 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/stylelint
     '@nuxtjs/stylelint-module',
+    // https://github.com/nuxt-community/google-fonts-module
+    '@nuxtjs/google-fonts',
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
@@ -72,6 +81,13 @@ export default {
     scss: [
       '~/styles/boilerplate.scss',
     ],
+  },
+
+  googleFonts: {
+    families: {
+      Philosopher: true,
+      Mulish: true,
+    },
   },
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)

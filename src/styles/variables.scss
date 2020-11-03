@@ -10,7 +10,7 @@ $color-medium-gray: #72808a;
 $color-dark-gray: #495965;
 $color-black: #000;
 
-$color-tan: #dbdfac;
+// $color-tan: #dbdfac;
 $color-red: #db162e;
 $color-dark-red: #410001;
 $color-purple: #a335ee;
@@ -19,6 +19,39 @@ $color-green: #5cdb16;
 $color-dark-green: #3c763d;
 $color-gold: #cc0;
 $color-orange: #db8a16;
+
+// scheme 1
+$color-sea-green: #3fab9b;
+$color-pastel-green: #cee5d0;
+$color-light-beige: #f3f0d7;
+$color-beige: #d8b384;
+$color-grape: #5e454b;
+$color-tan: #b49274;
+$color-light-tan: #dcc2ac;
+
+$color-brown: #65493b;
+$color-cambridge-blue: #BCD8C1;
+$color-pale-spring-bud: #D6DBB2;
+$color-flax: #E3D985;
+$color-mandarin: #E57A44;
+
+$color-off-black: #1a1a1a;
+
+$color-red-clay: #70380f;
+$color-cobalt-blue: #0f4970;
+$color-navy-blue: #0b334e;
+$color-sepia: #705c0f;
+$color-brown: #371b08;
+$color-dark-brown: #271306;
+$color-light-tan: #ac987b;
+
+// tibet
+$color-mandarin: #c96224;
+$color-off-white: #f3d4ad;
+$color-light-brown: #814b1b;
+$color-brown: #682b06;
+$color-dark-brown: #1c0b01;
+$color-crimson: #8c0100;
 
 $color-transparent-black: rgba($color-black, 0.6);
 $color-transparent-black--light: rgba($color-black, 0.25);
@@ -42,7 +75,8 @@ $color--success-dark: darken($color-dark-green, 30%);
 $color--warning: $color-orange;
 
 // background colors
-$bg--main: $color-white;
+$bg--main: $color-off-white;
+$bg--navbar: transparent;
 $bg--light: $color-off-white;
 $bg--med: $color-light-gray;
 $bg--grey: $color-dark-gray;
@@ -51,7 +85,7 @@ $bg--overlay: $color-transparent-black;
 $bg--placeholder: $color-light-gray;
 
 // borders
-$border--main: $color-gray;
+$border--main: $color-light-brown;
 $border--light: $color-off-white;
 $border--mid: $color-light-gray;
 $border--dark: $color-gray;
@@ -75,12 +109,12 @@ $text--placeholder: $text--main;
 // ---------------------------------
 
 // fonts
-$font-neue: 'Helvetica Neue Pro', arial, sans-serif;
-$font-neue-ex: 'Helvetica Neue Pro Ex', arial, sans-serif;
+$font-philosopher: 'Philosopher', sans-serif;
+$font-mulish: 'Mulish', sans-serif;
 
-$font-header--main: $font-neue-ex;
-$font-body--main: $font-neue;
-$font-body--accent: $font-neue-ex;
+$font-header--main: $font-philosopher;
+$font-body--main: $font-mulish;
+$font-body--accent: $font-header--main;
 
 $font-weight--light: 300;
 $font-weight--regular: 400;
