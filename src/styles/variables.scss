@@ -29,41 +29,17 @@ $color-grape: #5e454b;
 $color-tan: #b49274;
 $color-light-tan: #dcc2ac;
 
-$color-brown: #65493b;
-$color-cambridge-blue: #BCD8C1;
-$color-pale-spring-bud: #D6DBB2;
-$color-flax: #E3D985;
-$color-mandarin: #E57A44;
-
-$color-off-black: #1a1a1a;
-
-$color-red-clay: #70380f;
-$color-cobalt-blue: #0f4970;
-$color-navy-blue: #0b334e;
-$color-sepia: #705c0f;
-$color-brown: #371b08;
-$color-dark-brown: #271306;
-$color-light-tan: #ac987b;
-
-// tibet
-$color-mandarin: #c96224;
-$color-off-white: #f3d4ad;
-$color-light-brown: #814b1b;
-$color-brown: #682b06;
-$color-dark-brown: #1c0b01;
-$color-crimson: #8c0100;
-
-$color-transparent-black: rgba($color-black, 0.6);
-$color-transparent-black--light: rgba($color-black, 0.25);
+$color-transparent-black: rgba($color-black, 0.2);
+$color-transparent-black--light: rgba($color-black, 0.125);
 
 // ---------------------------------
 //   Color Usage
 // ---------------------------------
 
-$color--primary: $color-red;
-$color--primary--hover: darken($color--primary, 10%);
-$color--secondary: $color-dark-red;
-$color--secondary--hover: lighten($color--secondary, 10%);
+$color-primary: $color-red;
+$color-primary--hover: darken($color-primary, 3%);
+$color-secondary: $color-dark-red;
+$color-secondary--hover: lighten($color-secondary, 10%);
 
 $color--accent: $color-green;
 $color--disabled: $color-gray;
@@ -78,23 +54,23 @@ $color--warning: $color-orange;
 $bg--main: $color-off-white;
 $bg--navbar: transparent;
 $bg--light: $color-off-white;
-$bg--med: $color-light-gray;
-$bg--grey: $color-dark-gray;
 $bg--dark: $color-dark-red;
 $bg--overlay: $color-transparent-black;
 $bg--placeholder: $color-light-gray;
 
 // borders
-$border--main: $color-light-brown;
+$border--main: $color-transparent-black--light;
 $border--light: $color-off-white;
 $border--mid: $color-light-gray;
 $border--dark: $color-gray;
 $border--dark--selected: $color-dark-gray;
 $border--input: $border--dark;
 
+$border-radius--input: 4px;
+
 // shadows
 $drop-shadow: 0 3px 8px rgba($color-black, 0.1);
-$drop-shadow--light: 0 3px 8px rgba($color-black, 0.05);
+$drop-shadow--light: 0 3px 15px $color-transparent-black--light;
 
 // typography
 $text--main: $color-black;
@@ -156,8 +132,12 @@ $breakpoint-hd: 1280px;
 $grid-gutter: 24px;
 $grid-column-count: 12;
 $block-grid-column-count: 8;
-
 $container-max-width: $breakpoint-hd + $grid-gutter * 2;
+
+$page-gutter: 30px;
+
+$navbar-height--mobile: 34px;
+$navbar-height--desktop: 44px;
 
 // ---------------------------------
 //   Exports

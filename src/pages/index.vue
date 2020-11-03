@@ -1,22 +1,29 @@
 <template lang="pug">
-  .container
-    .row
-      .column.small-12
-        hero
-          h1 D100 Guru
-          primary-button(icon="check" label="Foo")
+  .page--index
+    sticky-hero
+      .container
+        h2 D100 Guru
+        primary-button(icon="check" label="Foo")
+    .container
+      list-grid
 </template>
 
 <script>
-  import Hero from '~/components/hero/Hero.vue';
+  import StickyHero from '~/components/hero/StickyHero.vue';
   import PrimaryButton from '~/components/buttons/PrimaryButton.vue';
+  import ListGrid from '~/components/lists/ListGrid.vue';
 
   export default {
     component: {
-      Hero,
+      StickyHero,
       PrimaryButton,
+      ListGrid,
     },
   };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+  .page--index {
+    position: relative;
+  }
+</style>

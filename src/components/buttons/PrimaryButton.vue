@@ -109,31 +109,37 @@
     cursor: pointer;
     position: relative;
     display: inline-block;
-    text-align: center;
-    padding: 18px 32px;
-    background-color: $color--primary;
+    padding: 10px 28px;
     border-width: 0;
     border-style: solid;
-    border-color: $color--primary;
-    transition: 0.3s ease all;
-    font-family: $font-body--accent;
-    font-size: rem(12);
+    border-color: $color-primary;
+    border-radius: $border-radius--input;
+    font-size: rem(18);
     font-weight: $font-weight--bold;
     line-height: 1.5;
     letter-spacing: rem(0.6);
+    text-align: center;
     text-decoration: none;
     text-transform: uppercase;
     white-space: nowrap;
     overflow: hidden;
+    background-color: $color-primary;
+    transition: 0.3s ease all;
 
     &,
     &:hover,
     &:focus {
-      color: $text--main;
+      color: $text--light;
 
       .icon {
-        fill: $text--main;
+        fill: $text--light;
       }
+    }
+
+    &:hover,
+    &:focus {
+      background-color: $color-primary--hover;
+      border-color: $color-primary--hover;
     }
 
     &:not(.button--icon) {
@@ -153,16 +159,19 @@
       }
     }
 
+    .icon {
+      margin-right: 8px;
+    }
+
     span,
     .icon {
       vertical-align: middle;
-      fill: $text--main;
     }
   }
 
   .button--secondary {
-    background-color: $color--secondary;
-    border-color: $color--secondary;
+    background-color: $color-secondary;
+    border-color: $color-secondary;
   }
 
   .button--outline {
@@ -176,13 +185,13 @@
       left: 0;
       width: 100%;
       height: 100%;
-      border: 2px solid $color--primary;
+      border: 2px solid $color-primary;
     }
   }
 
   .button--small {
     font-size: rem(12);
-    padding: 10px 16px;
+    padding: 8px 16px;
   }
 
   .button--full {
@@ -227,10 +236,10 @@
 
     &:hover,
     &:focus {
-      color: $color--primary;
+      color: $color-primary;
 
       .icon {
-        fill: $color--primary;
+        fill: $color-primary;
       }
     }
 

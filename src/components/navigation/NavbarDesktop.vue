@@ -1,20 +1,35 @@
 <template lang="pug">
   .navbar.navbar--desktop
     .container
-      .row
-        .column.small-12
-          nuxt-link.navbar__escape-hatch(to="/") D100 Guru
+      nuxt-link.navbar__escape-hatch(to="/")
+        logo
 </template>
 
 <script>
+  import Logo from '~/components/basic/Logo.vue';
+
   export default {
     name: 'NavbarDesktop',
+    components: {
+      Logo,
+    },
   };
 </script>
 
 <style scoped lang="scss">
   .navbar {
-    padding: 20px 0;
-    background-color: $bg--navbar;
+    position: relative;
+    background-color: $bg--main;
+
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: $navbar-height--mobile;
+
+      @include tablet-up {
+        height: $navbar-height--desktop;
+      }
+    }
   }
 </style>

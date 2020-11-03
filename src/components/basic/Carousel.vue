@@ -315,7 +315,7 @@
         }
 
         &.is-active::after {
-          background-color: $color--primary;
+          background-color: $color-primary;
         }
       }
 

@@ -18,6 +18,7 @@ h3,
 h4,
 h5,
 h6 {
+  margin-top: 0;
   font-family: $font-header--main;
 }
 
@@ -96,11 +97,11 @@ a {
 
   &:focus,
   &:hover {
-    color: $color--primary;
+    color: $color-primary;
     text-decoration: underline;
 
     .icon {
-      fill: $color--primary;
+      fill: $color-primary;
     }
   }
 }

@@ -36,7 +36,7 @@
     }
 
     &.u-icon-primary .icon {
-      fill: $color--primary;
+      fill: $color-primary;
     }
 
     &,
@@ -46,7 +46,7 @@
 
     &:hover {
       .icon {
-        fill: $color--primary;
+        fill: $color-primary;
       }
     }
   }
