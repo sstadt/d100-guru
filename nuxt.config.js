@@ -53,6 +53,7 @@ export default {
     '@nuxtjs/svg-sprite',
     // https://www.npmjs.com/package/@nuxtjs/style-resources
     '@nuxtjs/style-resources',
+    'nuxt-mq',
   ],
 
   firebase: {
@@ -87,6 +88,16 @@ export default {
     families: {
       Philosopher: true,
       Mulish: true,
+    },
+  },
+
+  mq: {
+    // Default breakpoint for SSR
+    defaultBreakpoint: 'default',
+    breakpoints: {
+      mobile: 768,
+      tablet: 1024,
+      desktop: Infinity,
     },
   },
 

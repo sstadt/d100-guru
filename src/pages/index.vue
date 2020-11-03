@@ -2,7 +2,8 @@
   .page--index
     sticky-hero
       .container
-        h2 D100 Guru
+        h2(v-if="$mq === 'desktop'") D100 Guru
+        h2(v-else) Foo
         primary-button(icon="check" label="Foo")
     .container
       list-grid
