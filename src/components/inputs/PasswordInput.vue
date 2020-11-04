@@ -1,7 +1,7 @@
 <template lang="pug">
   .input.input--password
-    label(v-if="label") {{ label }}
-    input(type="password" v-model="currentValue")
+    label.input__label(v-if="label" :for="inputId") {{ label }}
+    input.input__input(type="password" :id="inputId" v-model="currentValue")
 </template>
 
 <script>

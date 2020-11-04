@@ -94,6 +94,7 @@ select {
 a {
   text-decoration: none;
   transition: 0.3s ease all;
+  color: $color-dark-gray;
 
   &:focus,
   &:hover {

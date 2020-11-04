@@ -35,9 +35,16 @@
     max-width: 100%;
   }
 
-  .auth__links {
-    display: flex;
-    justify-content: space-between;
-    margin-top: $content-gutter;
+  .auth__title {
+    margin-bottom: 4px;
+  }
+
+  .auth__subtitle {
+    font-size: rem(12);
+    margin-bottom: $content-gutter;
+  }
+
+  .auth__link {
+    margin-right: 8px;
   }
 </style>

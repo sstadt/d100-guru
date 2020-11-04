@@ -1,50 +1,57 @@
 <template lang="pug">
   .signup
-    h2.modal__title Signup
-    form.auth__form(@submit.prevent="signUp", novalidate)
-      .form-input
-        input(
-          type="text"
-          :class="{ 'error': errors.has('name') }"
-          name="name"
-          placeholder="Display Name"
-          v-model="name"
-          v-validate="'required'"
-        )
-        span.error(v-show="errors.has('name')") {{ errors.first('name') }}
-      .form-input
-        input(
-          type="email"
-          :class="{ 'error': errors.has('email') }"
-          name="email"
-          placeholder="Email"
-          v-model="email"
-          v-validate="'required|email'"
-        )
-        span.error(v-show="errors.has('email')") {{ errors.first('email') }}
-      .form-input
-        input(
-          type="password"
-          :class="{ 'error': errors.has('password') }"
-          name="password"
-          placeholder="Password"
-          v-model="password"
-          v-validate="'required'"
-        )
-        password-strength(:password="password")
-        span.error(v-show="errors.has('password')") {{ errors.first('password') }}
-      submit-button(label="Sign Up", :wide="true")
-    .auth__links
-      a(href="#", @click.prevent="switchToLogin") Login
+    h2.auth__title Signup
+    .auth__subtitle
+      a.auth__link(href="#", @click.prevent="switchToLogin") Login
+    validation-observer(v-slot="{ invalid }")
+      form.auth__form(@submit.prevent="signUp", novalidate)
+        validation-provider(name="Password" rules="required" v-slot="{ errors }")
+          .form-input
+            text-input(
+              label="Display Name"
+              :class="{ 'error': errors.length > 0 }"
+              placeholder="Display Name"
+              v-model="name"
+            )
+            span.error(v-show="errors.length > 0") {{ errors[0] }}
+        validation-provider(name="Password" rules="required|email" v-slot="{ errors }")
+          .form-input
+            email-input(
+              label="Email Address"
+              :class="{ 'error': errors.length > 0 }"
+              placeholder="Email"
+              v-model="email"
+            )
+            span.error(v-show="errors.length > 0") {{ errors[0] }}
+        validation-provider(name="Password" rules="required" v-slot="{ errors }")
+          .form-input
+            password-input(
+              label="Password"
+              :class="{ 'error': errors.length > 0 }"
+              placeholder="Password"
+              v-model="password"
+            )
+            password-strength(:password="password")
+            span.error(v-show="errors.length > 0") {{ errors[0] }}
+        submit-button(label="Sign Up" :disabled="invalid" full)
 </template>
 
 <script>
+  import { ValidationObserver, ValidationProvider } from 'vee-validate';
+  import TextInput from '~/components/inputs/TextInput.vue';
+  import EmailInput from '~/components/inputs/EmailInput.vue';
+  import PasswordInput from '~/components/inputs/PasswordInput.vue';
   import SubmitButton from '~/components/buttons/SubmitButton.vue';
   import PasswordStrength from '~/components/basic/PasswordStrength.vue';
 
   export default {
     name: 'Signup',
     components: {
+      ValidationObserver,
+      ValidationProvider,
+      TextInput,
+      EmailInput,
+      PasswordInput,
       SubmitButton,
       PasswordStrength,
     },

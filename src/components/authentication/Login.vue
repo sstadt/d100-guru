@@ -1,21 +1,21 @@
 <template lang="pug">
   .login
-    h2.modal__title Login
+    h2.auth__title Login
+    .auth__subtitle
+      a.auth__link(href="#" @click.prevent="switchView('Signup')") Sign Up
+      a.auth__link(href="#" @click.prevent="switchView('ForgotPassword')") Forgot Password
     validation-observer(v-slot="{ invalid }")
       form.auth__form(@submit.prevent="login" novalidate)
-        .form-input
-          validation-provider(name="Email" rules="required|email" v-slot="{ errors }")
-            email-input(label="Email" placeholder="example@gmail.com" v-model="email")
+        validation-provider(name="Email" rules="required|email" v-slot="{ errors }")
+          .form-input
+            email-input(label="Email Address" placeholder="example@gmail.com" v-model="email")
             span.error(v-show="errors.length > 0") {{ errors[0] }}
-        .form-input
-          validation-provider(name="Password" rules="required" v-slot="{ errors }")
+        validation-provider(name="Password" rules="required" v-slot="{ errors }")
+          .form-input
             password-input(label="Password" name="password" placeholder="Password" v-model="password")
             span.error(v-show="errors.length > 0") {{ errors[0] }}
         submit-button(label="Sign In" :wide="true" :disabled="invalid" full)
     primary-button(label="Sign in with Google" icon="google" full @click="googleLogin")
-    .auth__links
-      a(href="#" @click.prevent="switchView('Signup')") Sign Up
-      a(href="#" @click.prevent="switchView('ForgotPassword')") forgot password?
 </template>
 
 <script>

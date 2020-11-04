@@ -1,7 +1,7 @@
 <template lang="pug">
   .input.input--text(:class="inputClass")
-    label.floating-label(v-if="label" :class="labelClass") {{ label }}
-    input(type="text" v-model="currentValue" :disabled="disabled")
+    label.input__label(v-if="label" :for="inputId") {{ label }}
+    input.input__input(type="text" :id="inputId" v-model="currentValue" :disabled="disabled")
 </template>
 
 <script>
@@ -37,7 +37,6 @@
       return {
         initialized: false,
         currentValue: this.value,
-        focus: false,
       };
     },
     computed: {
@@ -46,10 +45,8 @@
           error: Boolean(this.error),
         };
       },
-      labelClass() {
-        return {
-          active: this.focus || this.currentValue,
-        };
+      inputId() {
+        return `input_${this._uid}`;
       },
     },
     watch: {
@@ -107,6 +104,11 @@
         background-color: $color--error-light;
       }
     }
+  }
+
+  .input__label {
+    display: block;
+    margin-bottom: 2px;
   }
 
   .input--select {

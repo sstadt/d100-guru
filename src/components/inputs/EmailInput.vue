@@ -1,7 +1,7 @@
 <template lang="pug">
   .input.input--email
-    label(v-if="label") {{ label }}
-    input(type="email", :placeholder="placeholder", v-model="currentValue")
+    label.input__label(v-if="label" :for="inputId") {{ label }}
+    input.input__input(type="email" :placeholder="placeholder" :id="inputId" v-model="currentValue")
 </template>
 
 <script>
