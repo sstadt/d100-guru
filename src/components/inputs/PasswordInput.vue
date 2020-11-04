@@ -1,14 +1,14 @@
 <template lang="pug">
-  .input.input--email
+  .input.input--password
     label(v-if="label") {{ label }}
-    input(type="email", :placeholder="placeholder", v-model="currentValue")
+    input(type="password" v-model="currentValue")
 </template>
 
 <script>
   import TextInput from '~/components/inputs/TextInput.vue';
 
   export default {
-    name: 'EmailInput',
+    name: 'PasswordInput',
     extends: TextInput,
   };
 </script>

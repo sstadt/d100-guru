@@ -10,7 +10,7 @@
   import Auth from '~/components/authentication/Auth.vue';
 
   export default {
-    name: 'ComponentName',
+    name: 'AuthModal',
     components: {
       Modal,
       Auth,

@@ -1,11 +1,9 @@
 <template lang="pug">
   button.button(
-    type="submit",
-    :class="buttonClass",
-    :disabled="isDisabled",
-    @mouseenter="mouseEnter",
-    @mouseleave="mouseLeave",
-    @click.stop="$emit('click')"
+    type="submit"
+    :class="buttonClass"
+    :disabled="isDisabled"
+    @click="$emit('click')"
   )
     icon(v-if="icon && !reverseIcon" :name="icon" :size="iconSize")
     span {{ label }}

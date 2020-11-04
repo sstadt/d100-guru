@@ -1,26 +1,33 @@
 <template lang="pug">
   .input.input--text(:class="inputClass")
-    input(
-      type="text",
-      v-model="currentValue",
-      :disabled="disabled",
-      @focus="setFocus(true)",
-      @blur="setFocus(false)"
-    )
     label.floating-label(v-if="label" :class="labelClass") {{ label }}
-    p.input__error-text(v-if="error") {{ error }}
+    input(type="text" v-model="currentValue" :disabled="disabled")
 </template>
 
 <script>
   export default {
     name: 'TextInput',
     props: {
-      value: [String, Number],
-      label: String,
-      error: String,
-      disabled: Boolean,
-      required: Boolean,
-      placeholder: String,
+      value: {
+        type: [String, Number],
+        default: '',
+      },
+      label: {
+        type: String,
+        default: null,
+      },
+      disabled: {
+        type: Boolean,
+        default: false,
+      },
+      required: {
+        type: Boolean,
+        default: false,
+      },
+      placeholder: {
+        type: String,
+        default: '',
+      },
       type: {
         type: String,
         default: 'text',
@@ -54,14 +61,11 @@
       set(val) {
         this.currentValue = val;
       },
-      setFocus(val) {
-        this.focus = val;
-      },
     },
   };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
   .input {
     margin-bottom: $content-gutter;
 
@@ -83,7 +87,6 @@
     select {
       font-size: rem(16);
       line-height: 1.25;
-      font-family: $font-body--main;
       color: $text--main;
       padding: 12px 18px;
       margin: 0;
@@ -96,7 +99,7 @@
 
       &:hover,
       &:active {
-        border-color: $border--input--focus;
+        border-color: $border--input-active;
       }
 
       .error & {
@@ -168,7 +171,6 @@
     position: relative;
     font-size: rem(16);
     line-height: 20px; // match image height
-
   }
 
   // TODO: no more than 1 child deep !!!

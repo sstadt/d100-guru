@@ -1,48 +1,41 @@
 <template lang="pug">
   .login
     h2.modal__title Login
-    form.auth__form(@submit.prevent="login" novalidate)
-      .form-input
-        input(
-          type="email"
-          name="email"
-          placeholder="Email"
-          v-model="email"
-          v-validate="'required|email'"
-        )
-        span.error(v-show="errors.has('email')") {{ errors.first('email') }}
-      .form-input
-        input(
-          type="password"
-          name="password"
-          placeholder="Password"
-          v-model="password"
-          v-validate="'required'"
-        )
-        span.error(v-show="errors.has('password')") {{ errors.first('password') }}
-      submit-button(label="Sign In", :wide="true")
-    primary-button(
-      label="Sign in with Google"
-      icon="google"
-      :wide="true"
-      @click="googleLogin"
-    )
+    validation-observer(v-slot="{ invalid }")
+      form.auth__form(@submit.prevent="login" novalidate)
+        .form-input
+          validation-provider(name="Email" rules="required|email" v-slot="{ errors }")
+            email-input(label="Email" placeholder="example@gmail.com" v-model="email")
+            span.error(v-show="errors.length > 0") {{ errors[0] }}
+        .form-input
+          validation-provider(name="Password" rules="required" v-slot="{ errors }")
+            password-input(label="Password" name="password" placeholder="Password" v-model="password")
+            span.error(v-show="errors.length > 0") {{ errors[0] }}
+        submit-button(label="Sign In" :wide="true" :disabled="invalid" full)
+    primary-button(label="Sign in with Google" icon="google" full @click="googleLogin")
     .auth__links
-      a(href="#", @click.prevent="switchView('Signup')") Sign Up
-      a(href="#", @click.prevent="switchView('ForgotPassword')") forgot password?
+      a(href="#" @click.prevent="switchView('Signup')") Sign Up
+      a(href="#" @click.prevent="switchView('ForgotPassword')") forgot password?
 </template>
 
 <script>
+  import { ValidationObserver, ValidationProvider } from 'vee-validate';
   import PrimaryButton from '~/components/buttons/PrimaryButton.vue';
   import SubmitButton from '~/components/buttons/SubmitButton.vue';
   import Icon from '~/components/basic/Icon.vue';
+  import PasswordInput from '~/components/inputs/PasswordInput.vue';
+  import EmailInput from '~/components/inputs/EmailInput.vue';
 
   export default {
     name: 'Login',
     components: {
+      ValidationObserver,
+      ValidationProvider,
       PrimaryButton,
       SubmitButton,
       Icon,
+      PasswordInput,
+      EmailInput,
     },
     data() {
       return {
