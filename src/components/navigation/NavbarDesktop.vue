@@ -3,15 +3,18 @@
     .container
       nuxt-link.navbar__escape-hatch(to="/")
         logo
+      user-menu
 </template>
 
 <script>
   import Logo from '~/components/basic/Logo.vue';
+  import UserMenu from '~/components/navigation/UserMenu.vue';
 
   export default {
     name: 'NavbarDesktop',
     components: {
       Logo,
+      UserMenu,
     },
   };
 </script>

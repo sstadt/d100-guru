@@ -5,8 +5,9 @@
     :disabled="isDisabled",
     @click="$emit('click')"
   )
-    icon(v-if="icon", :name="icon", :size="iconSize")
+    icon(v-if="icon && !reverseIcon" :name="icon" :size="iconSize")
     span {{ label }}
+    icon(v-if="icon && reverseIcon" :name="icon" :size="iconSize")
 </template>
 
 <script>
@@ -27,7 +28,7 @@
       iconSize: {
         type: String,
         default() {
-          return this.small ? '12px' : '16px';
+          return this.small ? '10px' : '14px';
         },
       },
       small: {
@@ -54,6 +55,10 @@
         type: Boolean,
         default: false,
       },
+      reverseIcon: {
+        type: Boolean,
+        default: false,
+      },
       disabled: {
         type: Boolean,
         default: false,
@@ -62,14 +67,6 @@
         type: Boolean,
         default: false,
       },
-    },
-    data() {
-      return {
-        active: false,
-        rippleX: 0,
-        rippleY: 0,
-        hasRipple: !this.text && !this.textSimple,
-      };
     },
     computed: {
       buttonClass() {
@@ -85,20 +82,6 @@
       },
       isDisabled() {
         return this.disabled || this.loading;
-      },
-      rippleStyles() {
-        return {
-          top: `${this.rippleY}px`,
-          left: `${this.rippleX}px`,
-        };
-      },
-      contentClass() {
-        return {
-          'u-transparent': this.showRipple,
-        };
-      },
-      showRipple() {
-        return this.hasRipple && this.active;
       },
     },
   };
@@ -160,7 +143,13 @@
     }
 
     .icon {
-      margin-right: 8px;
+      &:not(:last-child) {
+        margin-right: 4px;
+      }
+
+      &:not(:first-child) {
+        margin-left: 4px;
+      }
     }
 
     span,
@@ -176,17 +165,6 @@
 
   .button--outline {
     background-color: transparent;
-
-    // using pseudo-element for border so that ripple effect can overlay it
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 2px solid $color-primary;
-    }
   }
 
   .button--small {
@@ -216,21 +194,12 @@
     text-transform: uppercase;
     letter-spacing: rem(0.36);
     line-height: 1;
-
-    .icon {
-      vertical-align: middle;
-
-      &:not(:last-child) {
-        margin-right: 4px;
-      }
-
-      &:not(:first-child) {
-        margin-left: 4px;
-      }
-    }
+    color: $text--main;
+    border-radius: none;
 
     &,
-    &:hover {
+    &:hover,
+    &:focus {
       background-color: transparent;
     }
 
@@ -243,34 +212,8 @@
       }
     }
 
-    &:not(.button--text--simple) {
-      padding: 0 0 1px 0;
-      overflow: visible;
-      border-bottom: 1px solid $color-gray;
-
-      &,
-      &:hover {
-        color: unset;
-        border-color: $color-gray;
-      }
-
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: -1px;
-        left: 0;
-        height: 1px;
-        width: 100%;
-        background-color: $text--main;
-        transform: scale(0);
-        transform-origin: left;
-        transition: transform 0.3s ease;
-      }
-
-      &:hover::after {
-        z-index: 1;
-        transform: scale(1);
-      }
+    .icon {
+      fill: $text--main;
     }
   }
 

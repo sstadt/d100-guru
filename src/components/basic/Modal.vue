@@ -16,8 +16,8 @@
 </template>
 
 <script>
-  import Icon from 'scripts/components/basic/Icon.vue';
-  import IconButton from 'scripts/components/buttons/IconButton.vue';
+  import Icon from '~/components/basic/Icon.vue';
+  import IconButton from '~/components/buttons/IconButton.vue';
 
   export default {
     name: 'Modal',
@@ -26,9 +26,18 @@
       IconButton,
     },
     props: {
-      title: String,
-      icon: String,
-      video: String,
+      title: {
+        type: String,
+        default: null,
+      },
+      icon: {
+        type: String,
+        default: null,
+      },
+      video: {
+        type: String,
+        default: null,
+      },
     },
     data() {
       return {
@@ -37,7 +46,9 @@
     },
     computed: {
       videoUrl() {
-        return this.video && this.isVisible ? `https://www.youtube.com/embed/${this.video}?autoplay=1` : '';
+        return this.video && this.isVisible
+          ? `https://www.youtube.com/embed/${this.video}?autoplay=1`
+          : '';
       },
     },
     methods: {

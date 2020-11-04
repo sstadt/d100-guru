@@ -49,6 +49,8 @@
     "stylelint": "^13.7.2",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^20.0.0",
-    "stylelint-scss": "^3.18.0"
+    "stylelint-scss": "^3.18.0",
+    "vee-validate": "^3.4.3",
+    "zxcvbn": "^4.4.2"
   }
 }

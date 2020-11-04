@@ -17,11 +17,7 @@
     },
     computed: {
       iconClass() {
-        const iconClass = { icon: true };
-
-        iconClass[`icon--${this.name}`] = true;
-
-        return iconClass;
+        return [`icon--${this.name}`];
       },
       iconStyle() {
         return {

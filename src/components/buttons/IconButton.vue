@@ -5,21 +5,18 @@
     :disabled="isDisabled",
     @click="$emit('click')"
   )
-    icon(v-if="icon", :name="icon", :size="size")
+    icon(v-if="icon", :name="icon", :size="iconSize")
     span.u-sr-only {{ label }}
 </template>
 
 <script>
-  import Icon from 'scripts/components/basic/Icon.vue';
-  import PrimaryButton from 'scripts/components/buttons/PrimaryButton.vue';
+  import Icon from '~/components/basic/Icon.vue';
+  import PrimaryButton from '~/components/buttons/PrimaryButton.vue';
 
   export default {
     name: 'IconButton',
     components: { Icon },
     extends: PrimaryButton,
-    props: {
-      size: String,
-    },
   };
 </script>
 
@@ -32,7 +29,7 @@
     justify-content: center;
 
     .icon {
-      fill: $color-black;
+      fill: $text--main;
     }
 
     &.u-icon-primary .icon {
