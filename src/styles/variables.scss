@@ -44,7 +44,7 @@ $color-secondary--hover: lighten($color-secondary, 10%);
 $color--accent: $color-green;
 $color--disabled: $color-gray;
 $color--error: $color-red;
-$color--error-light: lighte($color-red, 30%);
+$color--error-light: lighten($color-red, 50%);
 $color--success: $color-dark-green;
 $color--success-light: lighten($color-dark-green, 30%);
 $color--success-dark: darken($color-dark-green, 30%);

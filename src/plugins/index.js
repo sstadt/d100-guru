@@ -1,7 +1,7 @@
 const cypressNuxt = require("cypress-nuxt");
 
-module.exports = async (on, config) => { // make sure to include "async"!
-  on("file:preprocessor", await cypressNuxt.plugin()); // make sure to include "await"!
+module.exports = async (on, config) => {
+  on("file:preprocessor", await cypressNuxt.plugin());
 
   // other plugins...
   return config;

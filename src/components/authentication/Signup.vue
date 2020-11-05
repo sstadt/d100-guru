@@ -3,8 +3,8 @@
     h2.auth__title Signup
     .auth__subtitle
       a.auth__link(href="#", @click.prevent="switchToLogin") Login
-    validation-observer(v-slot="{ invalid }")
-      form.auth__form(@submit.prevent="signUp", novalidate)
+    validation-observer(v-slot="{ invalid, handleSubmit }")
+      form.auth__form(@submit.prevent="handleSubmit(signUp)", novalidate)
         validation-provider(name="Password" rules="required" v-slot="{ errors }")
           .form-input
             text-input(
@@ -12,8 +12,8 @@
               :class="{ 'error': errors.length > 0 }"
               placeholder="Display Name"
               v-model="name"
+              :errors="errors"
             )
-            span.error(v-show="errors.length > 0") {{ errors[0] }}
         validation-provider(name="Password" rules="required|email" v-slot="{ errors }")
           .form-input
             email-input(
@@ -21,8 +21,8 @@
               :class="{ 'error': errors.length > 0 }"
               placeholder="Email"
               v-model="email"
+              :errors="errors"
             )
-            span.error(v-show="errors.length > 0") {{ errors[0] }}
         validation-provider(name="Password" rules="required" v-slot="{ errors }")
           .form-input
             password-input(
@@ -30,9 +30,9 @@
               :class="{ 'error': errors.length > 0 }"
               placeholder="Password"
               v-model="password"
+              :errors="errors"
             )
             password-strength(:password="password")
-            span.error(v-show="errors.length > 0") {{ errors[0] }}
         submit-button(label="Sign Up" :disabled="invalid" full)
 </template>
 
@@ -67,14 +67,10 @@
         this.$emit('change-auth-view', 'Login');
       },
       signUp() {
-        this.$validator.validateAll().then((isValid) => {
-          if (isValid) {
-            this.$store.dispatch('user/signup', {
-              email: this.email,
-              password: this.password,
-              displayName: this.name,
-            });
-          }
+        this.$store.dispatch('user/signup', {
+          email: this.email,
+          password: this.password,
+          displayName: this.name,
         });
       },
     },

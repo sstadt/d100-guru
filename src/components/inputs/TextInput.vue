@@ -1,7 +1,14 @@
 <template lang="pug">
-  .input.input--text(:class="inputClass")
+  .input.input--text
     label.input__label(v-if="label" :for="inputId") {{ label }}
-    input.input__input(type="text" :id="inputId" v-model="currentValue" :disabled="disabled")
+    input.input__input(
+      type="text"
+      :class="inputClass"
+      :id="inputId"
+      v-model="currentValue"
+      :disabled="disabled"
+    )
+    span.error(v-show="errors.length > 0") {{ errors[0] }}
 </template>
 
 <script>
@@ -32,6 +39,10 @@
         type: String,
         default: 'text',
       },
+      errors: {
+        type: Array,
+        default: () => [],
+      },
     },
     data() {
       return {
@@ -42,7 +53,7 @@
     computed: {
       inputClass() {
         return {
-          error: Boolean(this.error),
+          'input--error': this.errors.length > 0,
         };
       },
       inputId() {
@@ -64,8 +75,6 @@
 
 <style lang="scss">
   .input {
-    margin-bottom: $content-gutter;
-
     [type='text'],
     [type='password'],
     [type='date'],
@@ -99,7 +108,7 @@
         border-color: $border--input-active;
       }
 
-      .error & {
+      &.input--error {
         border-color: $color--error;
         background-color: $color--error-light;
       }

@@ -1,7 +1,13 @@
 <template lang="pug">
-  .input.input--password
+  .input.input--password(:class="inputClass")
     label.input__label(v-if="label" :for="inputId") {{ label }}
-    input.input__input(type="password" :id="inputId" v-model="currentValue")
+    input.input__input(
+      type="password"
+      :class="inputClass"
+      :id="inputId"
+      v-model="currentValue"
+    )
+    span.error(v-show="errors.length > 0") {{ errors[0] }}
 </template>
 
 <script>
