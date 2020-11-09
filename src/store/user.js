@@ -1,217 +1,187 @@
-// import { isIos } from '~/scripts/helpers/environment.js';
+import { isIos } from '~/scripts/helpers/environment.js';
 
-// let isSigningUp = false;
-// let unsubscribeUser = null;
+let isSigningUp = false;
+let unsubscribeUser = null;
 
-// const userChangeHandler = (change, commit) => {
-//   const data = change.doc.data();
+export const state = () => ({
+  currentUser: null,
+  userData: null,
+  loggedIn: false,
+  authRequested: false,
+  authInitialized: false,
+});
 
-//   switch (change.type) {
-//     case 'added':
-//       commit('SET_USER_DATA', { ...data, id: change.doc.id });
-//       break;
-//     case 'modified':
-//       commit('UPDATE_USER_DATA', { ...data, id: change.doc.id });
-//       break;
-//     // default:
-//     //   console.warn('!!! unhandled user change type');
-//     //   console.warn(change.type);
-//   }
-// };
+export const mutations = {
+  AUTH_INITIALIZED() {
+    state.authInitialized = true;
+  },
+  REQUEST_AUTH() {
+    state.authRequested = true;
+  },
+  SET_USER(state, user) {
+    state.loggedIn = true;
+    state.authRequested = false;
+    state.currentUser = {
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+    };
+  },
+  UPDATE_USER(state, user) {
+    let key;
 
-// export const state = () => ({
-//   currentUser: null,
-//   userData: null,
-//   loggedIn: false,
-//   authRequested: false,
-//   authInitialized: false,
-// });
+    for (key in user) {
+      if (Object.prototype.hasOwnProperty.call(state.currentUser, key)) {
+        state.currentUser[key] = user[key];
+      }
+    }
+  },
+  UNSET_USER(state) {
+    state.loggedIn = false;
+    state.currentUser = null;
+    state.userRef = null;
+    state.userData = {};
+  },
+  UPDATE_USER_DATA(state, data) {
+    state.userData = data;
+  },
+};
 
-// export const mutations = {
-//   AUTH_INITIALIZED() {
-//     state.authInitialized = true;
-//   },
-//   REQUEST_AUTH() {
-//     state.authRequested = true;
-//   },
-//   SET_USER(state, user) {
-//     state.loggedIn = true;
-//     state.authRequested = false;
-//     state.currentUser = {
-//       uid: user.uid,
-//       email: user.email,
-//       displayName: user.displayName,
-//       photoURL: user.photoURL,
-//     };
-//   },
-//   UPDATE_USER(state, user) {
-//     let key;
+export const actions = {
+  authStateChanged({ commit }, { authUser }) {
+    console.log('--- authStateChanged');
+    console.log(authUser);
+    if (authUser) {
+      const userRef = this.$firestore
+        .collection('users')
+        .where('uid', '==', authUser.uid);
 
-//     for (key in user) {
-//       if (Object.prototype.hasOwnProperty.call(state.currentUser, key)) {
-//         state.currentUser[key] = user[key];
-//       }
-//     }
-//   },
-//   UNSET_USER(state) {
-//     state.loggedIn = false;
-//     state.currentUser = null;
-//     state.userRef = null;
-//   },
-//   SET_USER_DATA(state, data) {
-//     state.userData = data;
-//   },
-//   UPDATE_USER_DATA(state, data) {
-//     state.userData = data;
-//   },
-// };
+      unsubscribeUser = userRef.onSnapshot((snapshot) => {
+        return snapshot.docChanges().forEach((change) => {
+          if (['added', 'modified'].includes(change.type)) {
+            const data = change.doc.data();
+            commit('UPDATE_USER_DATA', { ...data, id: change.doc.id });
+          }
+        });
+      });
+    }
 
-// export const actions = {
-//   init({ commit, dispatch, rootState }) {
-//     rootState.auth.onAuthStateChanged((user) => {
-//       if (user) {
-//         const userRef = rootState.usersCollection.where('uid', '==', user.uid);
+    commit('AUTH_INITIALIZED');
 
-//         dispatch('files/connect', user.uid, { root: true });
+    if (authUser) {
+      if (isSigningUp) {
+        isSigningUp = false;
+      } else {
+        const { uid, email, emailVerified } = authUser;
+        // eslint-disable-next-line
+        console.log(authUser);
+        commit('SET_USER', { uid, email, emailVerified });
+      }
+    } else {
+      commit('UNSET_USER');
+    }
+  },
+  signup({ commit, dispatch }, { displayName, email, password }) {
+    console.log('--- signup');
+    isSigningUp = true;
 
-//         unsubscribeUser = userRef.onSnapshot((snapshot) => {
-//           return snapshot
-//             .docChanges()
-//             .forEach((change) => userChangeHandler(change, commit, dispatch));
-//         });
-//       }
+    this.$fire.auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(({ user }) => {
+        console.log('user created');
+        return user
+          ? user.updateProfile({ displayName })
+          : new Promise().reject('Could not create user');
+      })
+      .then(() => {
+        console.log('setting user');
+        commit('SET_USER', { user: this.$fire.auth.currentUser });
+      })
+      .catch((error) => {
+        if (error) {
+          dispatch('error/handle', error, { root: true });
+        }
+      });
+  },
+  login({ dispatch }, { email, password }) {
+    this.$fire.auth
+      .signInWithEmailAndPassword(email, password)
+      .catch((error) => {
+        if (error) {
+          dispatch('error/handle', error, { root: true });
+        }
+      });
+  },
+  googleLogin() {
+    const authProvider = this.$fire.auth.GoogleAuthProvider();
 
-//       commit('AUTH_INITIALIZED');
+    if (isIos()) {
+      this.$fire.auth.signInWithRedirect(authProvider);
+    } else {
+      this.$fire.auth.signInWithPopup(authProvider);
+    }
+  },
+  requestReset({ dispatch }, email) {
+    this.$fire.auth.sendPasswordResetEmail(email).catch((error) => {
+      if (error) {
+        dispatch('error/handle', error, { root: true });
+      }
+    });
+  },
+  updateUser({ dispatch, commit }, updatedUser) {
+    this.$fire.auth.currentUser
+      .updateProfile(updatedUser)
+      .then(() => {
+        commit('UPDATE_USER', updatedUser);
+        dispatch('toast/success', 'Profile updated!', { root: true });
+      })
+      .catch((error) => {
+        if (error) {
+          dispatch('error/handle', error, { root: true });
+        }
+      });
+  },
+  updatePassword({ state, dispatch }, { newPassword, currentPassword }) {
+    const credential = this.$fire.auth.EmailAuthProvider.credential(
+      state.currentUser.email,
+      currentPassword
+    );
 
-//       if (user) {
-//         if (isSigningUp) {
-//           isSigningUp = false;
-//         } else {
-//           commit('SET_USER', user);
-//         }
-//       } else {
-//         commit('UNSET_USER');
-//       }
-//     });
-//   },
-//   signup({ commit, rootState }, { displayName, email, password }) {
-//     isSigningUp = true;
-
-//     rootState.auth
-//       .createUserWithEmailAndPassword(email, password)
-//       .then(({ user }) => {
-//         if (user) {
-//           return user.updateProfile({ displayName });
-//         }
-//       })
-//       .then(() => {
-//         commit('SET_USER', { user: rootState.auth.currentUser });
-//       })
-//       .catch((error) => {
-//         if (error) {
-//           // TODO
-//           // console.log('*** Sign Up Error ************');
-//           // console.log(error.code, error.message);
-//         }
-//       });
-//   },
-//   login({ rootState }, { email, password }) {
-//     rootState.auth
-//       .signInWithEmailAndPassword(email, password)
-//       .catch((error) => {
-//         if (error) {
-//           // TODO
-//           // console.log('*** Login Error ************')
-//           // console.log(error.code, error.message)
-//         }
-//       });
-//   },
-//   googleLogin({ rootState }) {
-//     const authProvider = this.$fireAuth.GoogleAuthProvider();
-
-//     if (isIos()) {
-//       rootState.auth.signInWithRedirect(authProvider);
-//     } else {
-//       rootState.auth.signInWithPopup(authProvider);
-//     }
-//   },
-//   requestReset({ rootState }, email) {
-//     rootState.auth.sendPasswordResetEmail(email).catch((error) => {
-//       if (error) {
-//         // TODO
-//         // console.log('*** Request Reset Error ************')
-//         // console.log(error.code, error.message)
-//       }
-//     });
-//   },
-//   updateUser({ rootState, dispatch, commit }, updatedUser) {
-//     rootState.auth.currentUser
-//       .updateProfile(updatedUser)
-//       .then(() => {
-//         commit('UPDATE_USER', updatedUser);
-//         dispatch('toast/success', 'Profile updated!', { root: true });
-//       })
-//       .catch((error) => {
-//         if (error) {
-//           // TODO
-//           // console.log('*** Update User Error ************')
-//           // console.log(error.code, error.message)
-//         }
-//       });
-//   },
-//   updatePassword(
-//     { rootState, state, dispatch },
-//     { newPassword, currentPassword }
-//   ) {
-//     const credential = this.$fireAuth.EmailAuthProvider.credential(
-//       state.currentUser.email,
-//       currentPassword
-//     );
-
-//     return new Promise((resolve, reject) => {
-//       this.$fireAuth.currentUser
-//         .reauthenticateAndRetrieveDataWithCredential(credential)
-//         .then(() => rootState.auth.currentUser.updatePassword(newPassword))
-//         .then(() => {
-//           dispatch('toast/success', 'Password updated!', { root: true });
-//           resolve();
-//         })
-//         .catch((error) => {
-//           if (error) {
-//             switch (error.code) {
-//               case 'auth/wrong-password':
-//                 dispatch('toast/send', 'Password is incorrect!', {
-//                   root: true,
-//                 });
-//                 break;
-//               default:
-//                 // TODO
-//                 // console.log('*** Unknown Password Reset Error ************')
-//                 // console.log(error.code, error.message)
-//                 break;
-//             }
-//           }
-//         });
-//     });
-//   },
-//   updateUserData({ state, rootState }, userData) {
-//     // TODO
-//     // const userRef = rootState.usersCollection.doc(state.userData.id);
-//     // userRef.set(userData, { merge: true });
-//   },
-//   requestAuth({ commit }) {
-//     commit('REQUEST_AUTH');
-//   },
-//   logout({ rootState, dispatch }) {
-//     unsubscribeUser();
-//     dispatch('files/disconnect', null, { root: true });
-//     rootState.auth.signOut();
-//   },
-// };
-
-// // export default {
-// //   namespaced: true,
-// //   state,
-// //   mutations,
-// //   actions,
-// // };
+    return new Promise((resolve) => {
+      this.$fire.auth.currentUser
+        .reauthenticateAndRetrieveDataWithCredential(credential)
+        .then(() => this.$fire.auth.currentUser.updatePassword(newPassword))
+        .then(() => {
+          dispatch('toast/success', 'Password updated!', { root: true });
+          resolve();
+        })
+        .catch((error) => {
+          if (error) {
+            switch (error.code) {
+              case 'auth/wrong-password':
+                dispatch('toast/send', 'Password is incorrect!', {
+                  root: true,
+                });
+                break;
+              default:
+                dispatch('error/handle', error, { root: true });
+                break;
+            }
+          }
+        });
+    });
+  },
+  updateUserData({ state }, userData) {
+    const userRef = this.$fireStore.collection('users').doc(state.userData.id);
+    userRef.set(userData, { merge: true });
+  },
+  requestAuth({ commit }) {
+    commit('REQUEST_AUTH');
+  },
+  logout({ dispatch }) {
+    unsubscribeUser();
+    dispatch('files/disconnect', null, { root: true });
+    this.$fire.auth.signOut();
+  },
+};

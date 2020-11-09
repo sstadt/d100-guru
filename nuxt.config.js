@@ -70,8 +70,15 @@ export default {
       measurementId: 'G-TFT1BJ0VHB',
     },
     services: {
-      auth: true,
       firestore: true,
+      auth: {
+        initialize: {
+          onAuthStateChangedAction: 'user/authStateChanged',
+          subscribeManually: false,
+        },
+        emulatorPort: 3000,
+        emulatorHost: 'http://localhost',
+      },
     },
   },
 

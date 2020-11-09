@@ -25,14 +25,14 @@ export const mutations = {
 
 export const actions = {
   bind({ commit }) {
-    const ref = this.$fireStore.collection('lists');
+    const ref = this.$fire.firestore.collection('lists');
     unsubscribeLists = createWatcher(ref, commit);
   },
   create(_, list) {
-    this.$firestore.collection('lists').add(list);
+    this.$fire.firestore.collection('lists').add(list);
   },
   update(_, list) {
-    const ref = this.$fireStore.collection('lists').doc(list.id);
+    const ref = this.$fire.firestore.collection('lists').doc(list.id);
     const updatedlist = {};
     let key;
 
@@ -45,7 +45,7 @@ export const actions = {
     ref.set(updatedlist, { merge: true });
   },
   remove(_, listId) {
-    this.$fireStore.collection('lists').doc(listId).delete();
+    this.$fire.firestore.collection('lists').doc(listId).delete();
   },
   clear({ commit }) {
     unsubscribeLists();
