@@ -101,13 +101,17 @@ export const actions = {
       });
   },
   login({ dispatch }, { email, password }) {
-    this.$fire.auth
-      .signInWithEmailAndPassword(email, password)
-      .catch((error) => {
-        if (error) {
-          dispatch('error/handle', error, { root: true });
-        }
-      });
+    return new Promise((resolve, reject) => {
+      this.$fire.auth
+        .signInWithEmailAndPassword(email, password)
+        .then(() => resolve())
+        .catch((error) => {
+          if (error) {
+            dispatch('error/handle', error, { root: true });
+            reject(error);
+          }
+        });
+    });
   },
   googleLogin() {
     const authProvider = this.$fire.auth.GoogleAuthProvider();

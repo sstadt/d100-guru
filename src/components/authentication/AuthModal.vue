@@ -28,8 +28,8 @@
           this.$refs.authModal.open();
         }
       },
-      currentUser(newVal, oldVal) {
-        if (newVal !== oldVal && !oldVal) {
+      currentUser(_, oldVal) {
+        if (!oldVal && this.currentUser) {
           this.$refs.authModal.close();
         }
       },

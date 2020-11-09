@@ -4,6 +4,8 @@
     .auth__subtitle
       a.auth__link(href="#" @click.prevent="switchView('Signup')") Sign Up
       a.auth__link(href="#" @click.prevent="switchView('ForgotPassword')") Forgot Password
+    transition(name="slide-left")
+      p.alert.alert--error(v-if="error.length > 0") {{ error }}
     validation-observer(v-slot="{ invalid, handleSubmit }")
       form.auth__form(@submit.prevent="handleSubmit(login)" novalidate)
         validation-provider(name="Email" rules="required|email" v-slot="{ errors }")
@@ -50,20 +52,56 @@
       return {
         email: '',
         password: '',
+        error: '',
       };
     },
     methods: {
       switchView(view) {
         this.$emit('change-auth-view', view);
       },
+      startLogin() {
+        this.error = '';
+        this.$emit('start-loading');
+      },
       login() {
-        this.$store.dispatch('user/login', {
-          email: this.email,
-          password: this.password,
-        });
+        this.startLogin();
+        this.$store
+          .dispatch('user/login', {
+            email: this.email,
+            password: this.password,
+          })
+          .then(
+            () => {},
+            (error) => {
+              this.$emit('stop-loading');
+              this.handleSubmitError(error);
+            }
+          );
       },
       googleLogin() {
-        this.$store.dispatch('user/googleLogin');
+        this.startLogin();
+        this.$store.dispatch('user/googleLogin').then(
+          () => {},
+          (error) => {
+            this.$emit('stop-loading');
+            this.handleSubmitError(error);
+          }
+        );
+      },
+      handleSubmitError(error) {
+        switch (error.code) {
+          case 'auth/wrong-password':
+            this.error = 'Wrong username or password';
+            break;
+          case 'auth/too-many-requests':
+            this.error = error.message;
+            break;
+
+          default:
+            this.error =
+              'There was an error logging you in, please try again later.';
+            break;
+        }
       },
     },
   };

@@ -67,6 +67,7 @@
         this.$emit('change-auth-view', 'Login');
       },
       signUp() {
+        this.$emit('start-loading');
         this.$store.dispatch('user/signup', {
           email: this.email,
           password: this.password,

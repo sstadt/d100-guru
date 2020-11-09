@@ -1,0 +1,34 @@
+.alert {
+  display: block;
+  margin-bottom: $content-gutter;
+  padding: $grid-gutter / 2;
+  border: 1px solid $border--input;
+  background-color: $bg--main;
+  border-radius: $border-radius--input;
+
+  *:first-child {
+    margin-top: 0;
+  }
+
+  *:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.alert--success {
+  background-color: $color--success-light;
+  color: $color--success;
+  border-color: $color--success;
+}
+
+.alert--warning {
+  background-color: $color--warning-light;
+  color: $color--warning;
+  border-color: $color--warning;
+}
+
+.alert--error {
+  background-color: $color--error-light;
+  color: $color--error;
+  border-color: $color--error;
+}

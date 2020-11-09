@@ -20,14 +20,13 @@ $color-dark-green: #3c763d;
 $color-gold: #cc0;
 $color-orange: #db8a16;
 
-// scheme 1
-$color-sea-green: #3fab9b;
-$color-pastel-green: #cee5d0;
-$color-light-beige: #f3f0d7;
-$color-beige: #d8b384;
-$color-grape: #5e454b;
-$color-tan: #b49274;
-$color-light-tan: #dcc2ac;
+// alert colors
+$color-honeydew: #e1faf5;
+$color-sea-green: #137C67;
+$color-light-yellow: #fff3d9;
+$color-bronze: #946500;
+$color-light-pink: #f7e4e1;
+$color-blood-red: #ab3f2e;
 
 $color-transparent-black: rgba($color-black, 0.2);
 $color-transparent-black--light: rgba($color-black, 0.125);
@@ -43,15 +42,16 @@ $color-secondary--hover: lighten($color-secondary, 10%);
 
 $color--accent: $color-green;
 $color--disabled: $color-gray;
-$color--error: $color-red;
-$color--error-light: lighten($color-red, 50%);
-$color--success: $color-dark-green;
-$color--success-light: lighten($color-dark-green, 30%);
-$color--success-dark: darken($color-dark-green, 30%);
-$color--warning: $color-orange;
+$color--error: $color-blood-red;
+$color--error-light: $color-light-pink;
+$color--success: $color-sea-green;
+$color--success-light: $color-honeydew;
+$color--warning: $color-bronze;
+$color--warning-light: $color-light-yellow;
 
 // background colors
 $bg--main: $color-off-white;
+$bg--fade-main: rgba($bg--main, 0.6);
 $bg--navbar: transparent;
 $bg--light: $color-off-white;
 $bg--dark: $color-dark-red;
