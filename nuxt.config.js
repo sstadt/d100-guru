@@ -76,8 +76,6 @@ export default {
           onAuthStateChangedAction: 'user/authStateChanged',
           subscribeManually: false,
         },
-        emulatorPort: 3000,
-        emulatorHost: 'http://localhost',
       },
     },
   },

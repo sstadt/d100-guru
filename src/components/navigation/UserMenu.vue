@@ -6,13 +6,18 @@
       icon-size="10px"
       reverse-icon
       text
-      @click="toggleDropdown"
+      @click="handleTopClick"
     )
-    .user-menu__dropdown(v-if="dropdownOpen")
-      primary-button.user-menu__dropdown-action(label="Log Out" text)
+    .user-menu__dropdown(v-if="currentUser && dropdownOpen")
+      primary-button.user-menu__dropdown-action(
+        label="Log Out"
+        text
+        @click="logout"
+      )
 </template>
 
 <script>
+  import { mapState } from 'vuex';
   import PrimaryButton from '~/components/buttons/PrimaryButton.vue';
 
   export default {
@@ -26,16 +31,35 @@
       };
     },
     computed: {
+      ...mapState({
+        currentUser: (state) => state.user.currentUser,
+        loggedIn: (state) => state.user.loggedIn,
+        authInitialized: (state) => state.user.authInitialized,
+      }),
       statusLabel() {
-        return 'Log In';
+        return this.loggedIn
+          ? `Hey, ${this.currentUser.displayName}!`
+          : 'Log In';
       },
       statusIcon() {
+        if (!this.loggedIn) return null;
         return this.dropdownOpen ? 'chevron-up' : 'chevron-down';
       },
     },
     methods: {
+      handleTopClick() {
+        if (this.loggedIn) {
+          this.toggleDropdown();
+        } else {
+          this.$store.dispatch('user/openAuth');
+        }
+      },
       toggleDropdown() {
         this.dropdownOpen = !this.dropdownOpen;
+      },
+      logout() {
+        this.dropdownOpen = false;
+        this.$store.dispatch('user/logout');
       },
     },
   };

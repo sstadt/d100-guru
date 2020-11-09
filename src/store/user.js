@@ -7,16 +7,19 @@ export const state = () => ({
   currentUser: null,
   userData: null,
   loggedIn: false,
-  authRequested: false,
+  authOpen: false,
   authInitialized: false,
 });
 
 export const mutations = {
-  AUTH_INITIALIZED() {
+  AUTH_INITIALIZED(state) {
     state.authInitialized = true;
   },
-  REQUEST_AUTH() {
-    state.authRequested = true;
+  OPEN_AUTH(state) {
+    state.authOpen = true;
+  },
+  CLOSE_AUTH(state) {
+    state.authOpen = false;
   },
   SET_USER(state, user) {
     state.loggedIn = true;
@@ -50,10 +53,8 @@ export const mutations = {
 
 export const actions = {
   authStateChanged({ commit }, { authUser }) {
-    console.log('--- authStateChanged');
-    console.log(authUser);
     if (authUser) {
-      const userRef = this.$firestore
+      const userRef = this.$fire.firestore
         .collection('users')
         .where('uid', '==', authUser.uid);
 
@@ -74,8 +75,6 @@ export const actions = {
         isSigningUp = false;
       } else {
         const { uid, email, emailVerified } = authUser;
-        // eslint-disable-next-line
-        console.log(authUser);
         commit('SET_USER', { uid, email, emailVerified });
       }
     } else {
@@ -83,19 +82,16 @@ export const actions = {
     }
   },
   signup({ commit, dispatch }, { displayName, email, password }) {
-    console.log('--- signup');
     isSigningUp = true;
 
     this.$fire.auth
       .createUserWithEmailAndPassword(email, password)
       .then(({ user }) => {
-        console.log('user created');
         return user
           ? user.updateProfile({ displayName })
           : new Promise().reject('Could not create user');
       })
       .then(() => {
-        console.log('setting user');
         commit('SET_USER', { user: this.$fire.auth.currentUser });
       })
       .catch((error) => {
@@ -173,15 +169,20 @@ export const actions = {
     });
   },
   updateUserData({ state }, userData) {
-    const userRef = this.$fireStore.collection('users').doc(state.userData.id);
+    const userRef = this.$fire.firestoretore
+      .collection('users')
+      .doc(state.userData.id);
+
     userRef.set(userData, { merge: true });
   },
-  requestAuth({ commit }) {
-    commit('REQUEST_AUTH');
+  openAuth({ commit }) {
+    commit('OPEN_AUTH');
   },
-  logout({ dispatch }) {
+  closeAuth({ commit }) {
+    commit('CLOSE_AUTH');
+  },
+  logout() {
     unsubscribeUser();
-    dispatch('files/disconnect', null, { root: true });
     this.$fire.auth.signOut();
   },
 };
