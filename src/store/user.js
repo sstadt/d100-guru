@@ -114,7 +114,7 @@ export const actions = {
     });
   },
   googleLogin() {
-    const authProvider = this.$fire.auth.GoogleAuthProvider();
+    const authProvider = new this.$fireModule.auth.GoogleAuthProvider();
 
     if (isIos()) {
       this.$fire.auth.signInWithRedirect(authProvider);
