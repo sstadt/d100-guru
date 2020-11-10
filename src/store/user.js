@@ -1,7 +1,19 @@
+import md5 from 'js-md5';
 import { isIos } from '~/scripts/helpers/environment.js';
 
 let isSigningUp = false;
 let unsubscribeUser = null;
+
+const initializeUserProfile = (user, { displayName, email }) => {
+  const photoURL = `https://www.gravatar.com/avatar/${md5(email)}`;
+  const options = { photoURL };
+
+  if (displayName) {
+    options.displayName = displayName;
+  }
+
+  return user.updateProfile(options);
+};
 
 export const state = () => ({
   currentUser: null,
@@ -72,12 +84,15 @@ export const actions = {
 
     if (authUser) {
       if (isSigningUp) {
+        // avoid logging in if the watcher was triggered from signup
         isSigningUp = false;
       } else {
+        // logging in
         const { uid, email, photoURL, displayName } = authUser;
         commit('SET_USER', { uid, email, photoURL, displayName });
       }
     } else {
+      // logging out
       commit('UNSET_USER');
     }
   },
@@ -89,7 +104,7 @@ export const actions = {
       .createUserWithEmailAndPassword(email, password)
       .then(({ user }) => {
         return user
-          ? user.updateProfile({ displayName })
+          ? initializeUserProfile(user, { displayName, email })
           : new Promise().reject('Could not create user');
       })
       .then(() => {
@@ -114,14 +129,14 @@ export const actions = {
         });
     });
   },
-  googleLogin() {
-    const authProvider = new this.$fireModule.auth.GoogleAuthProvider();
-
-    if (isIos()) {
-      this.$fire.auth.signInWithRedirect(authProvider);
-    } else {
-      this.$fire.auth.signInWithPopup(authProvider);
-    }
+  loginWithProvider(_, provider) {
+    return isIos()
+      ? this.$fire.auth.signInWithRedirect(provider)
+      : this.$fire.auth.signInWithPopup(provider);
+  },
+  googleLogin({ dispatch }) {
+    const googleAuthProvider = new this.$fireModule.auth.GoogleAuthProvider();
+    dispatch('loginWithProvider', googleAuthProvider);
   },
   requestReset({ dispatch }, email) {
     this.$fire.auth.sendPasswordResetEmail(email).catch((error) => {
