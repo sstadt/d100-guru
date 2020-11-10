@@ -74,14 +74,15 @@ export const actions = {
       if (isSigningUp) {
         isSigningUp = false;
       } else {
-        const { uid, email, emailVerified } = authUser;
-        commit('SET_USER', { uid, email, emailVerified });
+        const { uid, email, photoURL, displayName } = authUser;
+        commit('SET_USER', { uid, email, photoURL, displayName });
       }
     } else {
       commit('UNSET_USER');
     }
   },
   signup({ commit, dispatch }, { displayName, email, password }) {
+    // keep auth watcher from firing prematurely
     isSigningUp = true;
 
     this.$fire.auth

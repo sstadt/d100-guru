@@ -1,5 +1,5 @@
 <template lang="pug">
-  .input.input--text
+  .input.input--text(:class="inputClass")
     label.input__label(v-if="label" :for="inputId") {{ label }}
     input.input__input(
       type="text"

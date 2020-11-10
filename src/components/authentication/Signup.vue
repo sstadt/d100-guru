@@ -5,11 +5,10 @@
       a.auth__link(href="#", @click.prevent="switchToLogin") Login
     validation-observer(v-slot="{ invalid, handleSubmit }")
       form.auth__form(@submit.prevent="handleSubmit(signUp)", novalidate)
-        validation-provider(name="Password" rules="required" v-slot="{ errors }")
+        validation-provider(name="Display Name" rules="required" v-slot="{ errors }")
           .form-input
             text-input(
               label="Display Name"
-              :class="{ 'error': errors.length > 0 }"
               placeholder="Display Name"
               v-model="name"
               :errors="errors"
@@ -18,7 +17,6 @@
           .form-input
             email-input(
               label="Email Address"
-              :class="{ 'error': errors.length > 0 }"
               placeholder="Email"
               v-model="email"
               :errors="errors"
@@ -27,7 +25,6 @@
           .form-input
             password-input(
               label="Password"
-              :class="{ 'error': errors.length > 0 }"
               placeholder="Password"
               v-model="password"
               :errors="errors"
