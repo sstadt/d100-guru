@@ -1,19 +1,8 @@
-import md5 from 'js-md5';
 import { isIos } from '~/scripts/helpers/environment.js';
+import { buildUserProfileOptions } from '~/scripts/helpers/user.js';
 
 let isSigningUp = false;
 let unsubscribeUser = null;
-
-const initializeUserProfile = (user, { displayName, email }) => {
-  const photoURL = `https://www.gravatar.com/avatar/${md5(email)}`;
-  const options = { photoURL };
-
-  if (displayName) {
-    options.displayName = displayName;
-  }
-
-  return user.updateProfile(options);
-};
 
 export const state = () => ({
   currentUser: null,
@@ -103,8 +92,10 @@ export const actions = {
     this.$fire.auth
       .createUserWithEmailAndPassword(email, password)
       .then(({ user }) => {
+        const userProfile = buildUserProfileOptions({ displayName, email });
+
         return user
-          ? initializeUserProfile(user, { displayName, email })
+          ? user.updateProfile(userProfile)
           : new Promise().reject('Could not create user');
       })
       .then(() => {
@@ -189,7 +180,7 @@ export const actions = {
     });
   },
   updateUserData({ state }, userData) {
-    const userRef = this.$fire.firestoretore
+    const userRef = this.$fire.firestore
       .collection('users')
       .doc(state.userData.id);
 
