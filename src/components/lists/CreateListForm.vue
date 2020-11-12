@@ -1,10 +1,10 @@
 <template lang="pug">
   .create-list-form
-    transition(name="slide-fade-right")
-      .create-list-form__toggle(v-if="!formVisible")
+    transition(name="slide-fade-left" mode="out-in")
+      .create-list-form__toggle(v-if="!formVisible" key="toggle")
         .form-input
-          primary-button(label="Create List" icon="plus" @click="showForm" small)
-      .create-list-form__form(v-else)
+          primary-button(label="New List" @click="showForm" small)
+      .create-list-form__form(v-else key="form")
         validation-observer(v-slot="{ invalid, handleSubmit }")
           form(@submit.prevent="handleSubmit(createList)" novalidate)
             validation-provider(name="Email" rules="required" v-slot="{ errors }")
@@ -16,7 +16,7 @@
                   v-model="newListTitle"
                 )
                 submit-button(label="Create" :disabled="invalid" inline)
-              icon-button.create-list-form__cancel(icon="close" label="Cancel" @click="hideForm")
+                icon-button.create-list-form__cancel(icon="times" label="Cancel" @click="hideForm")
 </template>
 
 <script>
@@ -24,6 +24,7 @@
   import { ValidationObserver, ValidationProvider } from 'vee-validate';
   import TextInput from '~/components/inputs/TextInput.vue';
   import PrimaryButton from '~/components/buttons/PrimaryButton.vue';
+  import IconButton from '~/components/buttons/IconButton.vue';
   import SubmitButton from '~/components/buttons/SubmitButton.vue';
 
   import List from '~/scripts/schema/List.js';
@@ -37,6 +38,7 @@
       ValidationProvider,
       TextInput,
       PrimaryButton,
+      IconButton,
       SubmitButton,
     },
     data() {
@@ -96,7 +98,12 @@
 </script>
 
 <style scoped lang="scss">
+  .create-list-form__toggle {
+    padding-top: 20px;
+  }
+
   .create-list-form__cancel {
     margin-top: 20px;
+    margin-left: 10px;
   }
 </style>
