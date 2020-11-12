@@ -28,8 +28,19 @@ export const actions = {
     const ref = this.$fire.firestore.collection('lists');
     unsubscribeLists = createWatcher(ref, commit);
   },
-  create(_, list) {
-    this.$fire.firestore.collection('lists').add(list);
+  create({ dispatch }, list) {
+    return new Promise((resolve, reject) => {
+      this.$fire.firestore
+        .collection('lists')
+        .add(list)
+        .then(() => resolve())
+        .catch((error) => {
+          if (error) {
+            dispatch('error/handle', error, { root: true });
+            reject(error);
+          }
+        });
+    });
   },
   update(_, list) {
     const ref = this.$fire.firestore.collection('lists').doc(list.id);

@@ -1,9 +1,9 @@
 <template lang="pug">
-  .input.input--email
+  .input.input--email(:class="wrapperClass")
     label.input__label(v-if="label" :for="inputId") {{ label }}
     input.input__input(
       type="email"
-      :class="inputClass"
+      :class="wrapperClass"
       :placeholder="placeholder"
       :id="inputId"
       v-model="currentValue"

@@ -7,6 +7,10 @@
   }
 }
 
+.form-input__inline {
+  display: flex;
+}
+
 .form-success,
 div.errors {
   border-width: 1px;
