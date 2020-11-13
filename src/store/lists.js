@@ -44,17 +44,22 @@ export const actions = {
     });
   },
   update(_, list) {
-    const ref = this.$fire.firestore.collection('lists').doc(list.id);
-    const updatedlist = {};
-    let key;
+    return new Promise((resolve, reject) => {
+      const ref = this.$fire.firestore.collection('lists').doc(list.id);
+      const updatedlist = {};
+      let key;
 
-    for (key in list) {
-      if (Object.prototype.hasOwnProperty.call(list, key) && key !== 'id') {
-        updatedlist[key] = list[key];
+      for (key in list) {
+        if (Object.prototype.hasOwnProperty.call(list, key) && key !== 'id') {
+          updatedlist[key] = list[key];
+        }
       }
-    }
 
-    ref.set(updatedlist, { merge: true });
+      ref
+        .set(updatedlist, { merge: true })
+        .then(() => resolve())
+        .catch((err) => reject(err));
+    });
   },
   remove(_, listId) {
     this.$fire.firestore.collection('lists').doc(listId).delete();
