@@ -1,10 +1,10 @@
 <template lang="pug">
-  .page--index
+  .page.page--index
     sticky-hero
       .container
         h2 D100 Guru
         primary-button(icon="check" label="Foo")
-    .container
+    .container.container--page
       list-grid
 </template>
 

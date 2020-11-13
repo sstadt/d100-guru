@@ -1,6 +1,7 @@
 import { createWatcher } from '~/scripts/helpers/firebase.js';
 
 let unsubscribeLists;
+let listsRef;
 
 export const state = () => ({
   all: [],
@@ -25,8 +26,8 @@ export const mutations = {
 
 export const actions = {
   bind({ commit }) {
-    const ref = this.$fire.firestore.collection('lists');
-    unsubscribeLists = createWatcher(ref, commit);
+    listsRef = this.$fire.firestore.collection('lists');
+    unsubscribeLists = createWatcher(listsRef, commit);
   },
   create({ dispatch }, list) {
     return new Promise((resolve, reject) => {

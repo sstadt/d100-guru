@@ -1,6 +1,6 @@
 /********************************
   Firebase doesn't like custom
-  class object, so we export
+  class objects, so we export
   a function in place of a
   constructor
 ********************************/
@@ -10,6 +10,7 @@ const List = ({ author, title, description }) => {
     author,
     title: title || '',
     description: description || '',
+    published: false,
     items: [],
   };
 };
