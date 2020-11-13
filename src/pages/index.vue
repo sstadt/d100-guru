@@ -14,6 +14,8 @@
   import ListGrid from '~/components/lists/ListGrid.vue';
 
   export default {
+    name: 'IndexPage',
+    transition: 'page',
     component: {
       StickyHero,
       PrimaryButton,

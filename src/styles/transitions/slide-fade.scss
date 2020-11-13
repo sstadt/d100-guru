@@ -23,18 +23,6 @@
   opacity: 0;
 }
 
-// slide-fade-up
-.slide-fade-up-enter-active,
-.slide-fade-up-leave-active {
-  transition: all 0.3s ease;
-}
-
-.slide-fade-up-enter,
-.slide-fade-up-leave-active {
-  transform: translateY(30px);
-  opacity: 0;
-}
-
 // slide-fade-down
 .slide-fade-down-enter-active,
 .slide-fade-down-leave-active {
@@ -43,6 +31,18 @@
 
 .slide-fade-down-enter,
 .slide-fade-down-leave-active {
+  transform: translateY(30px);
+  opacity: 0;
+}
+
+// slide-fade-up
+.slide-fade-up-enter-active,
+.slide-fade-up-leave-active {
+  transition: all 0.3s ease;
+}
+
+.slide-fade-up-enter,
+.slide-fade-up-leave-active {
   transform: translateY(-30px);
   opacity: 0;
 }

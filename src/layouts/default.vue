@@ -10,7 +10,6 @@
   import NavbarDesktop from '~/components/navigation/NavbarDesktop.vue';
 
   export default {
-    middleware: 'setup-lists',
     components: {
       AuthModal,
       NavbarDesktop,
