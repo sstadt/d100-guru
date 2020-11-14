@@ -9,6 +9,9 @@
       :placeholder="placeholder"
       @input="valueUpdated(currentValue)"
       @keypress.enter.prevent="enterHandler"
+      @keyup.delete="deleteItem"
+      @keyup.38="checkKeys"
+      @keyup.40="checkKeys"
     )
     span.list-item__label(v-else) {{ item }}
 </template>
@@ -37,6 +40,7 @@
         currentValue: this.item.value,
         saved: true,
         oldValue: this.currentValue,
+        empty: false,
       };
     },
     computed: {
@@ -69,6 +73,7 @@
     methods: {
       valueUpdated(value) {
         if (value === this.oldValue) return;
+        if (value !== '') this.empty = false;
 
         const newItems = value.split(/\r?\n/);
 
@@ -88,10 +93,33 @@
         if (this.saved) this.saved = false;
       }, 500),
       enterHandler() {
-        this.$emit('next-input');
+        this.$emit('new-input');
       },
       focus() {
         this.$refs.input.focus();
+      },
+      getValue() {
+        return this.currentValue;
+      },
+      getId() {
+        return this.item.id;
+      },
+      deleteItem() {
+        if (this.empty) {
+          this.$emit('delete-item');
+        } else if (this.currentValue === '') {
+          this.empty = true;
+        }
+      },
+      checkKeys($event) {
+        // up arrow
+        if ($event.keyCode === 38) {
+          this.$emit('prev-input');
+        }
+
+        if (event.keyCode === 40) {
+          this.$emit('next-input');
+        }
       },
     },
   };

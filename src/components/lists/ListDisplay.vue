@@ -10,7 +10,10 @@
         :editable="editable"
         @item-overflow="parseOverflowItems($event, index)"
         @item-updated="checkForUpdates"
-        @next-input="insertBlankItemAtIndex(index)"
+        @new-input="insertBlankItemAtIndex(index + 1)"
+        @next-input="focusNextInput(index + 1)"
+        @prev-input="focusNextInput(index - 1)"
+        @delete-item="deleteItem(index)"
       )
 </template>
 
@@ -44,9 +47,6 @@
         return this.currentUser && this.currentUser.uid === this.list.author;
       },
     },
-    mounted() {
-      this.listItems.push(ListEntry({ value: '' }));
-    },
     methods: {
       parseOverflowItems(overflowItems, index) {
         for (let i = 0, j = overflowItems.length; i < j; i++) {
@@ -57,48 +57,65 @@
         this.saveItems();
       },
       checkForUpdates(updatedItem) {
-        const getById = (item) => item.id === updatedItem.id;
-        const localIndex = this.listItems.findIndex(getById);
-        const savedIndex = this.list.items.findIndex(getById);
-        const localValue = this.listItems[localIndex].value;
-        const savedValue = this.list.items[savedIndex].value;
+        const index = this.listItems.findIndex((i) => i.id === updatedItem.id);
 
-        if (localValue !== savedValue) {
-          this.listItems.splice(localIndex, 1, updatedItem);
+        if (updatedItem.value !== this.listItems[index].value) {
+          this.listItems.splice(index, 1, updatedItem);
           this.saveItems();
         }
       },
       saveItems: debounce(function () {
-        const id = this.list.id;
-        const items = this.listItems
-          .slice()
-          .filter((item) => item.value !== '');
+        const itemsDeleted = this.list.items.length > this.listItems.length;
+        const items = this.listItems.slice().filter((i) => i.value !== '');
         const updatedItems = items.filter((item) => {
           const savedItem = this.list.items.find((i) => i.id === item.id);
           return !savedItem || savedItem.value !== item.value;
         });
 
-        if (updatedItems.length > 0) {
-          console.log('saving...');
-          this.$store.dispatch('lists/update', { id, items });
+        if (itemsDeleted || updatedItems.length > 0) {
+          this.$store.dispatch('lists/update', {
+            items,
+            id: this.list.id,
+          });
         }
-      }, 500),
+      }, 2500),
       insertBlankItemAtIndex(index) {
-        const newIndex = index + 1;
+        this.listItems.splice(index, 0, ListEntry({ value: '' }));
+        this.focusNewInput();
+      },
+      focusNewInput() {
+        this.$nextTick(() => {
+          // NOTE: new refs are pushed onto the array,
+          //       so we always grab the last ref
+          const lastIndex = this.$refs.listItems.length - 1;
+          const $newRef = this.$refs.listItems[lastIndex];
 
-        this.listItems.splice(newIndex, 0, ListEntry({ value: '' }));
-
-        const interval = setInterval(() => {
-          if (this.listItems[newIndex].value === '') {
-            this.focusInput(newIndex);
-            // TODO: this is focusing the wrong input
-            console.log(this.listItems[newIndex]);
-            clearInterval(interval);
+          if ($newRef.getValue() === '') {
+            this.focusInput(lastIndex);
           }
-        }, 200);
+        });
+      },
+      focusNextInput(index) {
+        // NOTE: since refs are always appended we
+        //       need to find the right index by ID
+        if (this.listItems[index]) {
+          const id = this.listItems[index].id;
+          const refIndex = this.$refs.listItems.findIndex(
+            (ref) => ref.getId() === id
+          );
+
+          this.focusInput(refIndex);
+        }
       },
       focusInput(index) {
-        this.$refs.listItems[index].focus();
+        if (this.$refs.listItems[index]) {
+          this.$refs.listItems[index].focus();
+        }
+      },
+      deleteItem(index) {
+        this.listItems.splice(index, 1);
+        this.saveItems();
+        this.focusInput(index - 1);
       },
     },
   };
