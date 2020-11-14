@@ -19,6 +19,21 @@
 <script>
   import { debounce } from '~/scripts/helpers/utils.js';
 
+  const events = {
+    // more than one line of text was entered, returns extra lines as an array
+    itemOverflow: 'item-overflow',
+    // item was updated, returns the updated item object
+    itemUpdated: 'item-updated',
+    // a new line was started, create a new item for it
+    newInput: 'new-input',
+    // delete the current item
+    deleteItem: 'delete-item',
+    // navigate to the previous item
+    prevInput: 'prev-input',
+    // navigate to the next item
+    nextInput: 'next-input',
+  };
+
   export default {
     name: 'ListItem',
     props: {
@@ -81,10 +96,10 @@
           const validItems = newItems.filter((item) => item.value !== '');
 
           this.currentValue = validItems.shift();
-          this.$emit('item-overflow', validItems);
+          this.$emit(events.itemOverflow, validItems);
         }
 
-        this.$emit('item-updated', {
+        this.$emit(events.itemUpdated, {
           id: this.item.id,
           value: this.currentValue,
         });
@@ -93,7 +108,7 @@
         if (this.saved) this.saved = false;
       }, 500),
       enterHandler() {
-        this.$emit('new-input');
+        this.$emit(events.newInput);
       },
       focus() {
         this.$refs.input.focus();
@@ -106,7 +121,7 @@
       },
       deleteItem() {
         if (this.empty) {
-          this.$emit('delete-item');
+          this.$emit(events.deleteItem);
         } else if (this.currentValue === '') {
           this.empty = true;
         }
@@ -114,11 +129,11 @@
       checkKeys($event) {
         // up arrow
         if ($event.keyCode === 38) {
-          this.$emit('prev-input');
+          this.$emit(events.prevInput);
         }
 
         if (event.keyCode === 40) {
-          this.$emit('next-input');
+          this.$emit(events.nextInput);
         }
       },
     },
