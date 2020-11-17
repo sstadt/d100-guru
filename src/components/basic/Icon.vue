@@ -40,10 +40,6 @@
     transition: 0.3s ease all;
     vertical-align: middle;
 
-    &--underline {
-      transform: translateY(22%);
-    }
-
     h1 &,
     h2 &,
     h3 &,
@@ -54,5 +50,9 @@
       letter-spacing: 1px;
       vertical-align: bottom;
     }
+  }
+
+  .icon--underline {
+    transform: translateY(22%);
   }
 </style>

@@ -1,5 +1,8 @@
 <template lang="pug">
   li.list-item(:class="itemClass")
+    .list-item__handle(v-if="editable")
+      loading-icon(v-if="!saved" :size="12")
+      icon.list-item__icon(v-else name="drag-handle" size="12px")
     textarea.list-item__input(
       ref="input"
       v-if="editable"
@@ -17,7 +20,8 @@
 </template>
 
 <script>
-  import { debounce } from '~/scripts/helpers/utils.js';
+  import Icon from '~/components/basic/Icon.vue';
+  import LoadingIcon from '~/components/basic/LoadingIcon.vue';
 
   const events = {
     // more than one line of text was entered, returns extra lines as an array
@@ -36,12 +40,16 @@
 
   export default {
     name: 'ListItem',
+    commponents: {
+      Icon,
+      LoadingIcon,
+    },
     props: {
       item: {
         type: Object,
         required: true,
       },
-      listItems: {
+      savedItems: {
         type: Array,
         default: () => [],
       },
@@ -54,7 +62,7 @@
       return {
         currentValue: this.item.value,
         saved: true,
-        oldValue: this.currentValue,
+        oldValue: this.item.value,
         empty: false,
       };
     },
@@ -62,6 +70,7 @@
       itemClass() {
         return {
           'u-no-padding': this.editable,
+          'list-item--editable': this.editable,
         };
       },
       placeholder() {
@@ -71,8 +80,10 @@
     watch: {
       saved(newVal, oldVal) {
         if (newVal !== oldVal && !this.saved) {
+          // if the value has changed and is flagged as not saved,
+          // start checking for when it has been saved
           const interval = setInterval(() => {
-            const savedItem = this.list.items.find(
+            const savedItem = this.savedItems.find(
               (item) => item.id === this.item.id
             );
 
@@ -99,14 +110,12 @@
           this.$emit(events.itemOverflow, validItems);
         }
 
+        this.saved = false;
         this.$emit(events.itemUpdated, {
           id: this.item.id,
           value: this.currentValue,
         });
       },
-      startLoading: debounce(function () {
-        if (this.saved) this.saved = false;
-      }, 500),
       enterHandler() {
         this.$emit(events.newInput);
       },
@@ -141,12 +150,34 @@
 </script>
 
 <style scoped lang="scss">
+  .list-item {
+    position: relative;
+  }
+
+  .list-item__handle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .list-item__icon {
+    fill: $border--input;
+  }
+
   .list-item__input {
-    display: block;
     width: 100%;
     border: 0;
     padding: 12px 20px;
     resize: none;
     background-color: transparent;
+
+    .list-item--editable & {
+      padding-left: 30px;
+    }
   }
 </style>

@@ -6,7 +6,7 @@
         v-for="(item, index) in listItems"
         :key="item.id"
         :item="item"
-        :list-items="listItems"
+        :saved-items="list.items"
         :editable="editable"
         @item-overflow="parseOverflowItems($event, index)"
         @item-updated="checkForUpdates"
@@ -46,6 +46,11 @@
       editable() {
         return this.currentUser && this.currentUser.uid === this.list.author;
       },
+    },
+    mounted() {
+      if (this.listItems.length < 1) {
+        this.listItems.push(ListEntry());
+      }
     },
     methods: {
       parseOverflowItems(overflowItems, index) {
