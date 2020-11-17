@@ -2,7 +2,7 @@
   li.list-item(:class="itemClass")
     .list-item__handle(v-if="editable")
       loading-icon(v-if="!saved" :size="12")
-      icon.list-item__icon(v-else name="drag-handle" size="12px")
+      icon.list-item__drag-icon(v-else name="drag-handle" size="12px")
     textarea.list-item__input(
       ref="input"
       v-if="editable"
@@ -165,7 +165,8 @@
     align-items: center;
   }
 
-  .list-item__icon {
+  .list-item__drag-icon {
+    cursor: grab;
     fill: $border--input;
   }
 

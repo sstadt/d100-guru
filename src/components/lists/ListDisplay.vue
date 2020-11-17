@@ -1,6 +1,10 @@
 <template lang="pug">
   .list-display
-    ul.u-list-bordered
+    draggable.u-list-bordered(
+      v-model="listItems"
+      tag="li"
+      @end="saveItems"
+    )
       list-item.u-list-bordered__item(
         ref="listItems"
         v-for="(item, index) in listItems"
@@ -19,6 +23,7 @@
 
 <script>
   import { mapState } from 'vuex';
+  import Draggable from 'vuedraggable';
   import { debounce } from '~/scripts/helpers/utils.js';
   import ListEntry from '~/scripts/schema/ListEntry.js';
   import ListItem from '~/components/lists/ListItem.vue';
@@ -26,6 +31,7 @@
   export default {
     name: 'ListDisplay',
     components: {
+      Draggable,
       ListItem,
     },
     props: {
@@ -72,9 +78,15 @@
       saveItems: debounce(function () {
         const itemsDeleted = this.list.items.length > this.listItems.length;
         const items = this.listItems.slice().filter((i) => i.value !== '');
-        const updatedItems = items.filter((item) => {
-          const savedItem = this.list.items.find((i) => i.id === item.id);
-          return !savedItem || savedItem.value !== item.value;
+        const updatedItems = items.filter((item, index) => {
+          const savedIndex = this.list.items.findIndex((i) => i.id === item.id);
+          const savedItem = this.list.items[savedIndex];
+
+          return (
+            !savedItem || // doesn't exist
+            savedItem.value !== item.value || // value has changed
+            index !== savedIndex // order has changed
+          );
         });
 
         if (itemsDeleted || updatedItems.length > 0) {

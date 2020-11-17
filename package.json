@@ -53,6 +53,7 @@
     "stylelint-scss": "^3.18.0",
     "uuid": "^8.3.1",
     "vee-validate": "^3.4.3",
+    "vuedraggable": "^2.24.3",
     "zxcvbn": "^4.4.2"
   }
 }
