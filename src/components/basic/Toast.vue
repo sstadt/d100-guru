@@ -2,23 +2,23 @@
   .toast
     transition-group(name="slide-fade-right")
       .toast__message(
-        v-for="message in messages", 
+        v-for="message in messages",
         :key="message.id",
         :class="{ 'error': message.type === 'error' }"
       )
         p.toast__message__copy(v-html="message.text")
         primary-button.toast__message__cta(
-          v-if="message.callback", 
-          :small="true", 
-          :secondary="true", 
-          :label="message.label", 
+          v-if="message.callback",
+          :small="true",
+          :secondary="true",
+          :label="message.label",
           @click="message.callback"
         )
 </template>
 
 <script>
   import { mapState } from 'vuex';
-  import PrimaryButton from 'scripts/components/buttons/PrimaryButton.vue';
+  import PrimaryButton from '~/components/buttons/PrimaryButton.vue';
 
   export default {
     name: 'Toast',

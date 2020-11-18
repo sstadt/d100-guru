@@ -1,8 +1,5 @@
 <template lang="pug">
   li.list-item(:class="itemClass")
-    .list-item__handle(v-if="editable")
-      loading-icon(v-if="!saved" :size="12")
-      icon.list-item__drag-icon(v-else name="drag-handle" size="12px")
     textarea.list-item__input(
       ref="input"
       v-if="editable"
@@ -16,10 +13,14 @@
       @keyup.38="checkKeys"
       @keyup.40="checkKeys"
     )
-    span.list-item__label(v-else) {{ item }}
+    .list-item__label(v-else) {{ item.value | clean }}
+    .list-item__handle(v-if="editable")
+      loading-icon(v-if="!saved" :size="12")
+      icon.list-item__drag-icon(v-else name="drag-handle" size="12px")
 </template>
 
 <script>
+  import cleanAndSanitize from '~/scripts/filters/cleanAndSanitize.js';
   import Icon from '~/components/basic/Icon.vue';
   import LoadingIcon from '~/components/basic/LoadingIcon.vue';
 
@@ -101,7 +102,7 @@
         if (value === this.oldValue) return;
         if (value !== '') this.empty = false;
 
-        const newItems = value.split(/\r?\n/);
+        const newItems = value.split(/\r?\n/).map(cleanAndSanitize);
 
         if (newItems.length > 1) {
           const validItems = newItems.filter((item) => item.value !== '');
@@ -110,6 +111,7 @@
           this.$emit(events.itemOverflow, validItems);
         }
 
+        this.currentValue = cleanAndSanitize(this.currentValue);
         this.saved = false;
         this.$emit(events.itemUpdated, {
           id: this.item.id,
@@ -154,10 +156,22 @@
     position: relative;
   }
 
+  .list-item--editable {
+    line-height: 0;
+  }
+
+  .list-item__input {
+    width: 100%;
+    border: 0;
+    padding: 12px 30px 12px 20px;
+    resize: none;
+    background-color: transparent;
+  }
+
   .list-item__handle {
     position: absolute;
+    right: 0;
     top: 0;
-    left: 0;
     height: 100%;
     width: 30px;
     display: flex;
@@ -168,17 +182,5 @@
   .list-item__drag-icon {
     cursor: grab;
     fill: $border--input;
-  }
-
-  .list-item__input {
-    width: 100%;
-    border: 0;
-    padding: 12px 20px;
-    resize: none;
-    background-color: transparent;
-
-    .list-item--editable & {
-      padding-left: 30px;
-    }
   }
 </style>

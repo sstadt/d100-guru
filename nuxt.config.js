@@ -27,6 +27,7 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
+    '~/plugins/filter.clean.js',
     '~/plugins/setupLists.js',
     '~/plugins/veeValidate.js',
   ],

@@ -22,6 +22,7 @@
 <script>
   import { mapState } from 'vuex';
   import { ValidationObserver, ValidationProvider } from 'vee-validate';
+  import cleanAndSanitize from '~/scripts/filters/cleanAndSanitize.js';
   import TextInput from '~/components/inputs/TextInput.vue';
   import PrimaryButton from '~/components/buttons/PrimaryButton.vue';
   import IconButton from '~/components/buttons/IconButton.vue';
@@ -81,17 +82,21 @@
       },
       createList() {
         const newList = List({
-          title: this.newListTitle,
+          title: cleanAndSanitize(this.newListTitle),
           author: this.currentUser.uid,
         });
 
-        this.formLoading = true;
-        this.formDisabled = true;
+        if (newList.title.length > 0) {
+          this.formLoading = true;
+          this.formDisabled = true;
 
-        this.$store
-          .dispatch('lists/create', newList)
-          .then(() => this.resetForm())
-          .catch(() => this.listCreated());
+          this.$store
+            .dispatch('lists/create', newList)
+            .then(() => this.resetForm())
+            .catch(() => this.listCreated());
+        } else {
+          this.$store.dispatch('toast/send', 'Invalid list title');
+        }
       },
     },
   };

@@ -7,7 +7,7 @@
         v-for="list in lists"
         :key="list.id"
       )
-        nuxt-link(:to="`/list/${list.id}`") {{ list.title }}
+        nuxt-link(:to="`/list/${list.id}`") {{ list.title | clean }}
 </template>
 
 <script>
