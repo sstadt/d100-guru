@@ -61,7 +61,7 @@ export const actions = {
         .catch((err) => reject(err));
     });
   },
-  remove(_, listId) {
+  delete(_, listId) {
     this.$fire.firestore.collection('lists').doc(listId).delete();
   },
   clear({ commit }) {

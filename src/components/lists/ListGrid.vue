@@ -9,6 +9,12 @@
         :key="list.id"
       )
         nuxt-link(:to="`/list/${list.id}`") {{ list.title | clean }}
+        .u-list-bordered__controls
+          icon-button(
+            v-if="list.author === currentUser.uid"
+            icon="trash"
+            @click="deleteList(list.id)"
+          )
 </template>
 
 <script>
@@ -39,6 +45,16 @@
       atListCap() {
         if (!this.loggedIn) return true;
         return this.userListCount >= maxListsPerUser;
+      },
+    },
+    methods: {
+      deleteList(listId) {
+        const list = this.lists.find((list) => list.id === listId);
+        const message = `Are you sure you want to delete ${list.title}\n!!! This cannot be undone !!!`;
+
+        if (confirm(message)) {
+          this.$store.dispatch('lists/delete', list.id);
+        }
       },
     },
   };

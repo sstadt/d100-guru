@@ -97,6 +97,13 @@
       padding: 0;
     }
   }
+
+  .u-list-bordered__controls {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+  }
 }
 
 // ---------------------------------
