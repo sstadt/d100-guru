@@ -9,12 +9,8 @@
         :key="list.id"
       )
         nuxt-link(:to="`/list/${list.id}`") {{ list.title | clean }}
-        .u-list-bordered__controls
-          icon-button(
-            v-if="list.author === currentUser.uid"
-            icon="trash"
-            @click="deleteList(list.id)"
-          )
+        .u-list-bordered__controls(v-if="list.author === currentUser.uid")
+          icon-button(icon="trash" @click="deleteList(list.id)")
 </template>
 
 <script>
