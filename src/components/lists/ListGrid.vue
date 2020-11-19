@@ -1,7 +1,8 @@
 <template lang="pug">
   .list-grid
-    .list-grid__controls
-      create-list-form
+    transition(name="slide-fade-left")
+      .list-grid__controls(v-if="loggedIn && !atListCap")
+        create-list-form
     ul.u-list-bordered
       li.u-list-bordered__item(
         v-for="list in lists"
@@ -12,6 +13,7 @@
 
 <script>
   import { mapState } from 'vuex';
+  import { maxListsPerUser } from '~/scripts/config/lists.js';
   import CreateListForm from '~/components/lists/CreateListForm.vue';
 
   export default {
@@ -22,7 +24,22 @@
     computed: {
       ...mapState({
         lists: (state) => state.lists.all,
+        loggedIn: (state) => state.user.loggedIn,
+        currentUser: (state) => state.user.currentUser,
       }),
+      userListCount() {
+        if (!this.loggedIn) return 0;
+
+        const userLists = this.lists.filter(
+          (list) => list.author === this.currentUser.uid
+        );
+
+        return userLists.length;
+      },
+      atListCap() {
+        if (!this.loggedIn) return true;
+        return this.userListCount >= maxListsPerUser;
+      },
     },
   };
 </script>

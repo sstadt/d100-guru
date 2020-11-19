@@ -4,3 +4,5 @@ export const newListPlaceholders = [
   'Roadside Encounters',
   'Baubles in a Dragon Hoard',
 ];
+
+export const maxListsPerUser = 20;

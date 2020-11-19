@@ -1,8 +1,11 @@
 <template lang="pug">
   .list-display
+    .list-display__empty.alert(v-if="list && list.items.length < 1")
+      p.list-display__empty-title.h2 This list has no items
+      p.list-display__empty-subtitle Add some below!
     draggable.u-list-bordered(
-      v-model="listItems"
       tag="li"
+      v-model="listItems"
       @end="saveItems"
     )
       list-item.u-list-bordered__item(
@@ -138,4 +141,21 @@
   };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+  .list-display__empty {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 30px;
+  }
+
+  .list-display__empty-title {
+    margin-bottom: $content-gutter;
+  }
+
+  .list-display__empty-subtitle {
+    margin: 0;
+  }
+</style>

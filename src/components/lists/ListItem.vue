@@ -143,7 +143,8 @@
           this.$emit(events.prevInput);
         }
 
-        if (event.keyCode === 40) {
+        // down arrow
+        if ($event.keyCode === 40) {
           this.$emit(events.nextInput);
         }
       },
