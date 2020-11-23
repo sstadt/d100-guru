@@ -1,6 +1,6 @@
 <template lang="pug">
-  li.list-item(:class="itemClass")
-    textarea.list-item__input(
+  li.list-display-item(:class="itemClass")
+    textarea.list-display-item__input(
       ref="input"
       v-if="editable"
       type="text"
@@ -13,10 +13,10 @@
       @keyup.38="checkKeys"
       @keyup.40="checkKeys"
     )
-    .list-item__label(v-else) {{ item.value | clean }}
-    .list-item__handle(v-if="editable")
+    .list-display-item__label(v-else) {{ item.value | clean }}
+    .list-display-item__handle(v-if="editable")
       loading-icon(v-if="!saved" :size="12")
-      icon.list-item__drag-icon(v-else name="drag-handle" size="12px")
+      icon.list-display-item__drag-icon(v-else name="drag-handle" size="12px")
 </template>
 
 <script>
@@ -40,7 +40,7 @@
   };
 
   export default {
-    name: 'ListItem',
+    name: 'ListDisplayItem',
     commponents: {
       Icon,
       LoadingIcon,
@@ -71,7 +71,7 @@
       itemClass() {
         return {
           'u-no-padding': this.editable,
-          'list-item--editable': this.editable,
+          'list-display-item--editable': this.editable,
         };
       },
       placeholder() {
@@ -153,15 +153,15 @@
 </script>
 
 <style scoped lang="scss">
-  .list-item {
+  .list-display-item {
     position: relative;
   }
 
-  .list-item--editable {
+  .list-display-item--editable {
     line-height: 0;
   }
 
-  .list-item__input {
+  .list-display-item__input {
     width: 100%;
     border: 0;
     padding: 12px 30px 12px 20px;
@@ -169,7 +169,7 @@
     background-color: transparent;
   }
 
-  .list-item__handle {
+  .list-display-item__handle {
     position: absolute;
     right: 0;
     top: 0;
@@ -180,7 +180,7 @@
     align-items: center;
   }
 
-  .list-item__drag-icon {
+  .list-display-item__drag-icon {
     cursor: grab;
     fill: $border--input;
   }

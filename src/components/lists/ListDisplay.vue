@@ -8,7 +8,7 @@
       v-model="listItems"
       @end="saveItems"
     )
-      list-item.u-list-bordered__item(
+      list-display-item.u-list-bordered__item(
         ref="listItems"
         v-for="(item, index) in listItems"
         :key="item.id"
@@ -29,13 +29,13 @@
   import Draggable from 'vuedraggable';
   import { debounce } from '~/scripts/helpers/utils.js';
   import ListEntry from '~/scripts/schema/ListEntry.js';
-  import ListItem from '~/components/lists/ListItem.vue';
+  import ListDisplayItem from '~/components/lists/ListDisplayItem.vue';
 
   export default {
     name: 'ListDisplay',
     components: {
       Draggable,
-      ListItem,
+      ListDisplayItem,
     },
     props: {
       list: {

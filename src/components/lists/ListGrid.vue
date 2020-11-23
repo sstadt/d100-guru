@@ -1,51 +1,33 @@
 <template lang="pug">
-  .list-grid
-    transition(name="slide-fade-left")
-      .list-grid__controls(v-if="loggedIn && !atListCap")
-        create-list-form
-    ul.u-list-bordered
-      li.u-list-bordered__item(
-        v-for="list in lists"
-        :key="list.id"
-      )
-        nuxt-link(:to="`/list/${list.id}`") {{ list.title | clean }}
-        .u-list-bordered__controls(v-if="list.author === currentUser.uid")
-          icon-button(icon="trash" @click="deleteList(list.id)")
+  ul.u-list-bordered
+    li.u-list-bordered__item(
+      v-for="list in lists"
+      :key="list.id"
+    )
+      nuxt-link(:to="`/list/${list.id}`") {{ list.title | clean }}
+      .u-list-bordered__controls(v-if="list.author === currentUser.uid")
+        icon-button(icon="trash" @click="deleteList(list.id)")
 </template>
 
 <script>
-  import { mapState, mapGetters } from 'vuex';
-  import { maxListsPerUser } from '~/scripts/config/lists.js';
-  import CreateListForm from '~/components/lists/CreateListForm.vue';
+  import { mapState } from 'vuex';
+  import IconButton from '~/components/buttons/IconButton.vue';
 
   export default {
     name: 'ListGrid',
     components: {
-      CreateListForm,
+      IconButton,
+    },
+    props: {
+      lists: {
+        type: Array,
+        default: () => [],
+      },
     },
     computed: {
       ...mapState({
-        lists: (state) => state.lists.all,
-        loggedIn: (state) => state.user.loggedIn,
         currentUser: (state) => state.user.currentUser,
       }),
-      ...mapGetters('lists', {
-        publishedLists: 'published',
-        ownedLists: 'owned',
-      }),
-      userListCount() {
-        if (!this.loggedIn) return 0;
-
-        const userLists = this.lists.filter(
-          (list) => list.author === this.currentUser.uid
-        );
-
-        return userLists.length;
-      },
-      atListCap() {
-        if (!this.loggedIn) return true;
-        return this.userListCount >= maxListsPerUser;
-      },
     },
     methods: {
       deleteList(listId) {
