@@ -14,7 +14,7 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
+  import { mapState, mapGetters } from 'vuex';
   import { maxListsPerUser } from '~/scripts/config/lists.js';
   import CreateListForm from '~/components/lists/CreateListForm.vue';
 
@@ -28,6 +28,10 @@
         lists: (state) => state.lists.all,
         loggedIn: (state) => state.user.loggedIn,
         currentUser: (state) => state.user.currentUser,
+      }),
+      ...mapGetters('lists', {
+        publishedLists: 'published',
+        ownedLists: 'owned',
       }),
       userListCount() {
         if (!this.loggedIn) return 0;
