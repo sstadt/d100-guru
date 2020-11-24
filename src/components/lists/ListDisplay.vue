@@ -105,7 +105,7 @@
       },
       focusNewInput() {
         this.$nextTick(() => {
-          // NOTE: new refs are pushed onto the array,
+          // NOTE: new refs are pushed onto the array (not spliced),
           //       so we always grab the last ref
           const lastIndex = this.$refs.listItems.length - 1;
           const $newRef = this.$refs.listItems[lastIndex];

@@ -1,23 +1,26 @@
 <template lang="pug">
   .input.input--toggle(:class="toggleClass")
-    input.u-sr-only(type="checkbox" :id="toggleId" v-model="currentValue" :disabled="disabled")
-    .input--toggle__indicator
-    label.u-sr-only(:for="toggleId") {{ label }}
-    label.input--toggle__label(:for="toggleId")
+    input.u-sr-only(type="checkbox" :id="inputId" v-model="currentValue" :disabled="disabled")
+    label.input--toggle__hitbox(:for="inputId")
+      .input--toggle__track
+      .input--toggle__icon-wrapper
+        icon.input--toggle__die-icon(name="d20")
+        transition(name="zoom-in")
+          icon.input--toggle__check-icon(v-if="currentValue" name="check" size="12px")
+    label.input--toggle__label(:for="inputId") {{ label }}
 </template>
 
 <script>
-  import CheckboxInput from 'scripts/components/forms/CheckboxInput.vue';
+  import Icon from '~/components/basic/Icon.vue';
+  import CheckboxInput from '~/components/inputs/CheckboxInput.vue';
 
   export default {
     name: 'ToggleInput',
+    components: {
+      Icon,
+    },
     extends: CheckboxInput,
     computed: {
-      toggleId() {
-        /* eslint-disable no-underscore-dangle */
-        return `toggle_${this._uid}`;
-        /* eslint-enable no-underscore-dangle */
-      },
       toggleClass() {
         return {
           'input--toggle__active': this.currentValue,
@@ -28,44 +31,62 @@
 </script>
 
 <style scoped lang="scss">
-  $input-toggle-height: 28px;
-  $input-toggle-width: 50px;
-  $input-toggle-indicator-size: 20px;
+  $toggle-track-height: 8px;
 
   .input--toggle {
-    position: relative;
-    display: inline-block;
-    height: $input-toggle-height;
-    width: 50px;
-    margin: 0;
-  }
-
-  .input--toggle__indicator {
-    pointer-events: none;
-    position: absolute;
-    top: 50%;
-    left: 5px;
-    transform: translateY(-50%);
-    height: $input-toggle-indicator-size;
-    width: $input-toggle-indicator-size;
-    border-radius: 50%;
-    background-color: $bg--main;
-    transition: 0.3s ease-in-out left;
-
-    .input--toggle__active & {
-      left: calc(100% - #{$input-toggle-indicator-size + 5});
-    }
+    display: flex;
+    align-items: center;
   }
 
   .input--toggle__label {
-    height: 100%;
-    width: 100%;
-    border: 1px solid $color-true-light-gray;
-    border-radius: $input-toggle-height / 2;
-    background-color: $color-mid-green;
+    margin-right: $content-gutter / 2;
+    color: $text--subtle;
 
-    &:not([disabled]) {
-      cursor: pointer;
+    .input--toggle__active & {
+      color: $color-primary;
     }
+  }
+
+  .input--toggle__hitbox {
+    position: relative;
+    display: flex;
+    padding: 8px;
+    width: 50px;
+  }
+
+  .input--toggle__track {
+    width: 100%;
+    height: $toggle-track-height;
+    background-color: $bg--placeholder;
+    border: 1px solid $border--input;
+    border-radius: $toggle-track-height / 2;
+  }
+
+  .input--toggle__icon-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    transition: 0.3s ease left, 0.3s ease fill;
+
+    .input--toggle__active & {
+      left: calc(100% - 24px);
+    }
+  }
+
+  .input--toggle__die-icon {
+    fill: $bg--control;
+
+    .input--toggle__active & {
+      fill: $color-primary;
+    }
+  }
+
+  .input--toggle__check-icon {
+    fill: $bg--main;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-35%, -60%);
   }
 </style>

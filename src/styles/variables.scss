@@ -53,10 +53,11 @@ $color--warning-light: $color-light-yellow;
 $bg--main: $color-off-white;
 $bg--fade-main: rgba($bg--main, 0.6);
 $bg--navbar: transparent;
-$bg--light: $color-off-white;
-$bg--dark: $color-dark-red;
+$bg--light: $color-off-white; // TODO: eliminate
+$bg--dark: $color-dark-red; // TODO: eliminate
 $bg--overlay: $color-transparent-black;
 $bg--placeholder: $color-light-gray;
+$bg--control: $color-gray;
 
 // borders
 $border--main: $color-transparent-black--light;
@@ -76,8 +77,8 @@ $drop-shadow--light: 0 3px 15px $color-transparent-black--light;
 
 // typography
 $text--main: $color-black;
-$text--dark: $color-dark-gray;
-$text--mid: $color-gray;
+$text--subtle: $color-medium-gray;
+$text--dark: $color-dark-gray; // TODO: refactor out
 $text--light: $color-white;
 $text--accent: $color--accent;
 $text--placeholder: $text--main;

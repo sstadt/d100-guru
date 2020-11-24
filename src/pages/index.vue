@@ -17,7 +17,7 @@
 
 <script>
   import { mapState, mapGetters } from 'vuex';
-  import { maxListsPerUser } from '~/scripts/config/lists.js';
+  import { MAX_LISTS_PER_USER } from '~/scripts/config/lists.js';
   import Tabs from '~/components/basic/Tabs.vue';
   import Tab from '~/components/basic/Tab.vue';
   import PrimaryButton from '~/components/buttons/PrimaryButton.vue';
@@ -47,7 +47,7 @@
       },
       atListCap() {
         if (!this.loggedIn) return true;
-        return this.userListCount >= maxListsPerUser;
+        return this.userListCount >= MAX_LISTS_PER_USER;
       },
     },
   };

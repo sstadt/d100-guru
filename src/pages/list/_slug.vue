@@ -2,15 +2,18 @@
   .page.page--list
     sticky-hero
       .container
-        h1(v-if="list") {{ list.title }}
-        h1(v-else) Loading list...
+        transition(name="slide-left")
+          h1(v-if="list") {{ list.title }}
+          p.h1(v-else) Loading list...
     .container.container--page(v-if="list")
+      list-controls(v-if="list && isAuthor" :list="list")
       list-display(:list="list")
 </template>
 
 <script>
   import { mapState } from 'vuex';
   import StickyHero from '~/components/hero/StickyHero.vue';
+  import ListControls from '~/components/lists/ListControls.vue';
   import ListDisplay from '~/components/lists/ListDisplay.vue';
 
   export default {
@@ -18,6 +21,7 @@
     transition: 'page',
     components: {
       StickyHero,
+      ListControls,
       ListDisplay,
     },
     asyncData({ params }) {
@@ -28,9 +32,15 @@
     computed: {
       ...mapState({
         lists: (state) => state.lists.all,
+        currentUser: (state) => state.user.currentUser,
       }),
       list() {
         return this.lists.find((list) => list.id === this.listId);
+      },
+      isAuthor() {
+        return (
+          this.currentUser.uid && this.currentUser.uid === this.list.author
+        );
       },
     },
     mounted() {

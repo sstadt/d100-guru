@@ -29,7 +29,7 @@
   import SubmitButton from '~/components/buttons/SubmitButton.vue';
 
   import List from '~/scripts/schema/List.js';
-  import { newListPlaceholders } from '~/scripts/config/lists.js';
+  import { NEW_LIST_PLACEHOLDERS } from '~/scripts/config/lists.js';
   import { getRandomNumber } from '~/scripts/helpers/dice.js';
 
   export default {
@@ -57,8 +57,8 @@
       }),
     },
     mounted() {
-      const randomIndex = getRandomNumber(1, newListPlaceholders.length);
-      this.newListPlaceholder = newListPlaceholders[randomIndex];
+      const randomIndex = getRandomNumber(1, NEW_LIST_PLACEHOLDERS.length);
+      this.newListPlaceholder = NEW_LIST_PLACEHOLDERS[randomIndex];
     },
     methods: {
       showForm() {
