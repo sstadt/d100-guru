@@ -42,6 +42,11 @@
         this.currentValue = true;
       }
     },
+    methods: {
+      set(val) {
+        this.currentValue = val;
+      },
+    },
   };
 </script>
 

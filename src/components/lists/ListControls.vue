@@ -1,6 +1,7 @@
 <template lang="pug">
   .list-controls
     toggle-input(
+      ref="publishToggle"
       v-model="isPublished"
       label="Shared"
       :disabled="publishDisabled"
@@ -43,7 +44,9 @@
       },
       publishDisabled() {
         if (this.publishDisabled && this.list.published) {
-          this.saveList({ published: false });
+          // NOTE: v-model will trigger an update and the
+          //       isPublished watcher will save the change
+          this.$refs.publishToggle.set(false);
         }
       },
     },
