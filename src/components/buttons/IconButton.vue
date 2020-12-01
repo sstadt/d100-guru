@@ -37,14 +37,21 @@
     }
 
     &,
-    &:hover {
+    &:hover,
+    &:focus {
       background-color: transparent;
     }
 
-    &:hover {
+    &:hover,
+    &:focus {
       .icon {
         fill: $color-primary;
       }
+    }
+
+    .u-list-bordered__item & {
+      padding: 0 8px;
+      height: 44px;
     }
   }
 </style>

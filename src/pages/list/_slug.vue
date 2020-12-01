@@ -1,0 +1,65 @@
+<template lang="pug">
+  .page.page--list
+    sticky-hero
+      .container
+        transition(name="slide-left")
+          h1(v-if="list") {{ list.title }}
+          p.h1(v-else) Loading list...
+    .container.container--page(v-if="list")
+      list-controls(v-if="list && isAuthor" :list="list")
+      list-display(:list="list")
+</template>
+
+<script>
+  import { mapState } from 'vuex';
+  import StickyHero from '~/components/hero/StickyHero.vue';
+  import ListControls from '~/components/lists/ListControls.vue';
+  import ListDisplay from '~/components/lists/ListDisplay.vue';
+
+  export default {
+    name: 'ListPage',
+    transition: 'page',
+    components: {
+      StickyHero,
+      ListControls,
+      ListDisplay,
+    },
+    asyncData({ params }) {
+      return {
+        listId: params.slug,
+      };
+    },
+    computed: {
+      ...mapState({
+        lists: (state) => state.lists.all,
+        currentUser: (state) => state.user.currentUser,
+      }),
+      list() {
+        return this.lists.find((list) => list.id === this.listId);
+      },
+      isAuthor() {
+        return (
+          this.currentUser.uid && this.currentUser.uid === this.list.author
+        );
+      },
+    },
+    mounted() {
+      // NOTE: Show loading bar if this page loads
+      //       before binding lists
+      if (!this.list) {
+        const interval = setInterval(() => {
+          if (this.list) {
+            this.$nuxt.$loading.finish();
+            clearInterval(interval);
+          }
+        }, 200);
+
+        this.$nextTick(() => {
+          this.$nuxt.$loading.start();
+        });
+      }
+    },
+  };
+</script>
+
+<style scoped lang="scss"></style>

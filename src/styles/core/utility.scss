@@ -48,14 +48,19 @@
 //   Spacing
 // ---------------------------------
 
-// .u-mb-template {
-//   margin-bottom: 40px;
-// }
+.u-no-padding {
+  padding: 0;
+}
+
+.u-no-margin {
+  margin: 0;
+}
 
 // ---------------------------------
 //   Lists
 // ---------------------------------
 
+.u-list-bordered,
 .u-list-simple,
 .u-list-inline {
   margin: 0;
@@ -66,6 +71,38 @@
 .u-list-inline {
   li {
     display: inline-block;
+  }
+}
+
+.u-list-bordered {
+  .u-list-bordered__item {
+    position: relative;
+    display: block;
+    padding: 12px 20px;
+    margin-bottom: -1px;
+    background-color: $bg--main;
+    border: 1px solid $border--main;
+
+    &:first-child {
+      border-top-left-radius: $border-radius--input;
+      border-top-right-radius: $border-radius--input;
+    }
+
+    &:last-child {
+      border-bottom-left-radius: $border-radius--input;
+      border-bottom-right-radius: $border-radius--input;
+    }
+
+    &.u-no-padding {
+      padding: 0;
+    }
+  }
+
+  .u-list-bordered__controls {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
   }
 }
 

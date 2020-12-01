@@ -1,8 +1,8 @@
 <template lang="pug">
   .input.input--checkbox(:class="inputClass")
-    input(type="checkbox", :id="'checkbox' + _uid", v-model="currentValue", :disabled="disabled", :name="name" :value="value")
+    input(type="checkbox", :id="inputId" v-model="currentValue" :disabled="disabled" :value="value")
     .input--checkbox__indicator
-    label(:for="'checkbox' + _uid") {{ label }}
+    label(:for="inputId") {{ label }}
 </template>
 
 <script>
@@ -10,10 +10,12 @@
     name: 'CheckboxInput',
     props: {
       value: Boolean,
-      label: String,
       disabled: Boolean,
       checked: Boolean,
-      name: String,
+      label: {
+        type: String,
+        default: null,
+      },
     },
     data() {
       return {
@@ -26,6 +28,9 @@
           disabled: this.disabled,
         };
       },
+      inputId() {
+        return `input_${this._uid}`;
+      },
     },
     watch: {
       currentValue() {
@@ -36,6 +41,11 @@
       if (this.checked) {
         this.currentValue = true;
       }
+    },
+    methods: {
+      set(val) {
+        this.currentValue = val;
+      },
     },
   };
 </script>

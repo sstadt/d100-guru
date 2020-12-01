@@ -1,13 +1,13 @@
 <template lang="pug">
   .tabs
-    .tabs__nav(ref="nav")
-      button.tabs__nav-button(
+    .tabs-nav(ref="nav")
+      button.tabs-nav__button(
         type="button",
         v-for="tab in tabs",
         ref="navButtons"
         @click="activate(tab)"
       ) {{ tab.heading }}
-      .tabs__nav-indicator(:style="indicatorPosition")
+      .tabs-nav__indicator(:style="indicatorPosition")
     .tabs__content
       slot
 </template>
@@ -39,7 +39,10 @@
         this.tabs.push(newTab);
       },
       removeTab(tabToRemove) {
-        const index = this.tabs.findIndex((tab) => tab.heading === tabToRemove.heading);
+        const index = this.tabs.findIndex(
+          (tab) => tab.heading === tabToRemove.heading
+        );
+
         this.tabs.splice(index, 1);
       },
       activate({ heading }) {
@@ -52,12 +55,12 @@
 </script>
 
 <style scoped lang="scss">
-  .tabs__nav {
+  .tabs-nav {
     display: flex;
     position: relative;
   }
 
-  .tabs__nav-button {
+  .tabs-nav__button {
     cursor: pointer;
     position: relative;
     flex-grow: 1;
@@ -82,11 +85,11 @@
     }
   }
 
-  .tabs__nav-indicator {
+  .tabs-nav__indicator {
     position: absolute;
     bottom: 0;
     height: 3px;
-    background-color: $color-mid-green;
+    background-color: $border--tabs;
     transition: 0.3s ease-in-out left;
 
     &::after {
@@ -99,7 +102,7 @@
       height: 0;
       border-style: solid;
       border-width: 6px 5px 0 5px;
-      border-color: $color-mid-green transparent transparent transparent;
+      border-color: $border--tabs transparent transparent transparent;
     }
   }
 </style>

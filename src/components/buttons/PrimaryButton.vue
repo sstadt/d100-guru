@@ -74,7 +74,7 @@
           'button--primary': this.secondary === false,
           'button--secondary': this.secondary === true,
           'button--outline': this.outline === true,
-          'button--small': this.small === true,
+          'button--small': this.small === true || this.inline === true,
           'button--full': this.full === true,
           'button--text': this.text === true,
           'button--inline': this.inline === true,
@@ -168,8 +168,9 @@
   }
 
   .button--small {
+    padding: 0 16px;
     font-size: rem(12);
-    padding: 8px 16px;
+    line-height: 44px;
   }
 
   .button--full {
@@ -218,7 +219,8 @@
   }
 
   .button--inline {
-    padding-top: 12px;
-    padding-bottom: 12px;
+    margin-top: 20px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
   }
 </style>

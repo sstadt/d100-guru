@@ -24,7 +24,6 @@ export const mutations = {
   },
   SET_USER(state, user) {
     state.loggedIn = true;
-    state.authRequested = false;
     state.currentUser = {
       uid: user.uid,
       email: user.email,
@@ -53,7 +52,7 @@ export const mutations = {
 };
 
 export const actions = {
-  authStateChanged({ commit }, { authUser }) {
+  authStateChanged({ state, commit, dispatch }, { authUser }) {
     if (authUser) {
       const userRef = this.$fire.firestore
         .collection('users')
@@ -69,20 +68,22 @@ export const actions = {
       });
     }
 
-    commit('AUTH_INITIALIZED');
+    if (!state.authInitialized) commit('AUTH_INITIALIZED');
 
     if (authUser) {
       if (isSigningUp) {
         // avoid logging in if the watcher was triggered from signup
         isSigningUp = false;
       } else {
-        // logging in
+        // LOGGING IN
         const { uid, email, photoURL, displayName } = authUser;
         commit('SET_USER', { uid, email, photoURL, displayName });
+        dispatch('lists/bindOwned', null, { root: true });
       }
     } else {
-      // logging out
+      // LOGGING OUT
       commit('UNSET_USER');
+      dispatch('lists/unbindOwned', null, { root: true });
     }
   },
   signup({ commit, dispatch }, { displayName, email, password }) {

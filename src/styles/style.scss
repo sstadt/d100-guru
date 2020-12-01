@@ -12,11 +12,14 @@
 @import 'core/grid';
 @import 'core/z-index';
 @import 'core/alerts';
+@import 'core/tooltip';
 @import 'core/forms';
 @import 'core/utility';
 
 // Transitions
 @import 'transitions/fade';
 @import 'transitions/off-canvas';
+@import 'transitions/page';
 @import 'transitions/slide-fade';
 @import 'transitions/slide';
+@import 'transitions/zoom';

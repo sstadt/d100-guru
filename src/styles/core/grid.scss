@@ -7,6 +7,11 @@
   padding-right: $grid-gutter;
 }
 
+.container--page {
+  padding-top: $page-gutter;
+  padding-bottom: $page-gutter;
+}
+
 @mixin grid-row($size) {
   @for $i from 1 through $grid-column-count {
     &.#{$size}-#{$i} {

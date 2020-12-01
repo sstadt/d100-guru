@@ -27,7 +27,10 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-    '~/plugins/vee-validate.js',
+    '~/plugins/filter.clean.js',
+    '~/plugins/setupLists.js',
+    '~/plugins/tooltip.js',
+    '~/plugins/veeValidate.js',
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -35,25 +38,17 @@ export default {
 
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
-    // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
-    // https://go.nuxtjs.dev/stylelint
     '@nuxtjs/stylelint-module',
-    // https://github.com/nuxt-community/google-fonts-module
     '@nuxtjs/google-fonts',
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
-    // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
-    // https://firebase.nuxtjs.org/
     '@nuxtjs/firebase',
-    // https://github.com/nuxt-community/svg-sprite-module
     '@nuxtjs/svg-sprite',
-    // https://www.npmjs.com/package/@nuxtjs/style-resources
     '@nuxtjs/style-resources',
     'nuxt-mq',
   ],

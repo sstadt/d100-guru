@@ -1,9 +1,9 @@
 <template lang="pug">
-  .input.input--password(:class="inputClass")
+  .input.input--password(:class="wrapperClass")
     label.input__label(v-if="label" :for="inputId") {{ label }}
     input.input__input(
       type="password"
-      :class="inputClass"
+      :class="wrapperClass"
       :id="inputId"
       v-model="currentValue"
     )

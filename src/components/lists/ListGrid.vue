@@ -1,59 +1,50 @@
 <template lang="pug">
-  .list-grid
-    ul.list-grid__list.u-list-simple
-      li.list-grid__item(
-        v-for="list in fauxLists"
-        :key="list.name"
-      ) {{ list.title }}
+  ul.u-list-bordered
+    li.u-list-bordered__item(
+      v-for="list in lists"
+      :key="list.id"
+    )
+      nuxt-link(:to="`/list/${list.id}`") {{ list.title | clean }}
+      .u-list-bordered__controls(v-if="list.author === currentUser.uid")
+        icon-button(icon="trash" @click="deleteList(list.id)")
 </template>
 
 <script>
   import { mapState } from 'vuex';
-  import { clone } from '~/scripts/helpers/utils.js';
+  import IconButton from '~/components/buttons/IconButton.vue';
 
   export default {
     name: 'ListGrid',
+    components: {
+      IconButton,
+    },
+    props: {
+      lists: {
+        type: Array,
+        default: () => [],
+      },
+    },
     computed: {
       ...mapState({
-        lists: (state) => state.lists.all,
+        currentUser: (state) => state.user.currentUser,
       }),
-      fauxLists() {
-        const [list] = this.lists;
-        const fauxLists = [];
+    },
+    methods: {
+      deleteList(listId) {
+        const list = this.lists.find((list) => list.id === listId);
+        const message = `Are you sure you want to delete ${list.title}\n!!! This cannot be undone !!!`;
 
-        if (!list) return fauxLists;
-
-        for (let i = 0, j = 50; i < j; i++) {
-          fauxLists.push(clone(list));
+        if (confirm(message)) {
+          this.$store.dispatch('lists/delete', list.id);
         }
-
-        return fauxLists;
       },
     },
   };
 </script>
 
 <style scoped lang="scss">
-  .list-grid {
-    padding: $page-gutter 0;
-  }
-
-  .list-grid__item {
-    position: relative;
-    display: block;
-    padding: 12px 20px;
-    margin-bottom: -1px;
-    background-color: $bg--main;
-    border: 1px solid $border--main;
-
-    &:first-child {
-      border-top-left-radius: $border-radius--input;
-      border-top-right-radius: $border-radius--input;
-    }
-
-    &:last-child {
-      border-bottom-left-radius: $border-radius--input;
-      border-bottom-right-radius: $border-radius--input;
-    }
+  .list-grid__controls {
+    display: flex;
+    justify-content: flex-end;
   }
 </style>

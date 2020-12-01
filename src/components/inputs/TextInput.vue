@@ -1,10 +1,11 @@
 <template lang="pug">
-  .input.input--text(:class="inputClass")
+  .input.input--text(:class="wrapperClass")
     label.input__label(v-if="label" :for="inputId") {{ label }}
     input.input__input(
       type="text"
       :class="inputClass"
       :id="inputId"
+      :placeholder="placeholder"
       v-model="currentValue"
       :disabled="disabled"
     )
@@ -51,6 +52,11 @@
       };
     },
     computed: {
+      wrapperClass() {
+        return {
+          'input--error': this.errors.length > 0,
+        };
+      },
       inputClass() {
         return {
           'input--error': this.errors.length > 0,
@@ -98,10 +104,10 @@
       margin: 0;
       background-color: $bg--main;
       border: 1px solid $border--input;
-      border-radius: 0; // iOS reset
       -webkit-appearance: none; // iOS reset (legacy)
       width: 100%;
       transition: border-color 0.5s ease;
+      border-radius: $border-radius--input;
 
       &:hover,
       &:active {
@@ -111,6 +117,12 @@
       &.input--error {
         border-color: $color--error;
         background-color: $color--error-light;
+      }
+
+      .form-input__inline & {
+        flex-grow: 1;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
       }
     }
   }

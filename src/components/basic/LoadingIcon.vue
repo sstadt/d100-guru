@@ -24,9 +24,9 @@
         };
       },
       spinnerStyle() {
-        const size = Math.floor(this.size * 0.8);
-        const margin = Math.floor(this.size * 0.1);
-        const borderWidth = Math.floor(this.size * 0.075);
+        const size = Math.ceil(this.size * 0.8);
+        const margin = Math.ceil(this.size * 0.1);
+        const borderWidth = Math.ceil(this.size * 0.075);
 
         return {
           width: `${size}px`,
