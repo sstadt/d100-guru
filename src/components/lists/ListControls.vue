@@ -5,6 +5,7 @@
       v-model="isPublished"
       label="Shared"
       :disabled="publishDisabled"
+      v-tooltip="publishTooltip"
     )
 </template>
 
@@ -34,6 +35,17 @@
     computed: {
       publishDisabled() {
         return this.list.items.length < MIN_LIST_ITEMS_TO_PUBLISH;
+      },
+      publishTooltip() {
+        const itemsShort = MIN_LIST_ITEMS_TO_PUBLISH - this.list.items.length;
+        const itemsShortMsg =
+          itemsShort > 1
+            ? `${itemsShort} more items`
+            : `${itemsShort} more item`;
+
+        return this.publishDisabled
+          ? `You need at least ${itemsShortMsg} to share with the community`
+          : 'Share this list with the community';
       },
     },
     watch: {

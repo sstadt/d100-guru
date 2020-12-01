@@ -29,6 +29,7 @@ export default {
   plugins: [
     '~/plugins/filter.clean.js',
     '~/plugins/setupLists.js',
+    '~/plugins/tooltip.js',
     '~/plugins/veeValidate.js',
   ],
 
