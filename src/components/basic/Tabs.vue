@@ -34,7 +34,6 @@
       },
     },
     mounted() {
-      // TODO: wait until there are tabs, then activate selected or first
       const interval = setInterval(() => {
         if (this.tabs.length > 0) {
           const activeTab = this.tabs.find((tab) => tab.active) || this.tabs[0];
