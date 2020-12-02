@@ -9,8 +9,8 @@
         .list-controls(v-if="loggedIn && !atListCap")
           create-list-form
       tabs
-        tab(heading="Browse Lists")
-          list-grid(:lists="publishedLists" selected)
+        tab(heading="Browse Lists" selected)
+          list-grid(:lists="publishedLists")
         tab(heading="My Lists" v-if="loggedIn")
           list-grid(:lists="ownedLists")
 </template>
