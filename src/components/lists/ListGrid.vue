@@ -5,13 +5,31 @@
       :key="list.id"
     )
       nuxt-link(:to="`/list/${list.id}`") {{ list.title | clean }}
-      .u-list-bordered__controls(v-if="list.author === currentUser.uid")
-        icon-button(icon="trash" @click="deleteList(list.id)")
+      .u-list-bordered__controls
+        icon-button(
+          label="Roll"
+          icon="d20"
+          icon-size="22px"
+          @click="rollList(list.id)"
+          tooltip
+        )
+        icon-button(
+          v-if="list.author === currentUser.uid"
+          label="Delete"
+          icon="trash"
+          icon-size="16px"
+          @click="deleteList(list.id)"
+        )
 </template>
 
 <script>
   import { mapState } from 'vuex';
   import IconButton from '~/components/buttons/IconButton.vue';
+
+  const events = {
+    // ask the parent to roll on this list
+    rollList: 'roll-list',
+  };
 
   export default {
     name: 'ListGrid',
@@ -30,6 +48,10 @@
       }),
     },
     methods: {
+      rollList(listId) {
+        const list = this.lists.find((list) => list.id === listId);
+        this.$emit(events.rollList, list);
+      },
       deleteList(listId) {
         const list = this.lists.find((list) => list.id === listId);
         const message = `Are you sure you want to delete ${list.title}\n!!! This cannot be undone !!!`;

@@ -1,9 +1,10 @@
 <template lang="pug">
   button.button(
-    type="button",
-    :class="buttonClass",
-    :disabled="isDisabled",
+    type="button"
+    :class="buttonClass"
+    :disabled="isDisabled"
     @click="$emit('click')"
+    v-tooltip="tooltipText"
   )
     icon(v-if="icon && !reverseIcon" :name="icon" :size="iconSize")
     span {{ label }}
@@ -67,6 +68,10 @@
         type: Boolean,
         default: false,
       },
+      tooltip: {
+        type: Boolean,
+        default: false,
+      },
     },
     computed: {
       buttonClass() {
@@ -82,6 +87,9 @@
       },
       isDisabled() {
         return this.disabled || this.loading;
+      },
+      tooltipText() {
+        return this.tooltip ? this.label : '';
       },
     },
   };
