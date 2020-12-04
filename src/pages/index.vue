@@ -2,9 +2,11 @@
   .page.page--index
     sticky-hero
       .container
-        h2 D100 Guru
-        primary-button(icon="check" label="Foo")
-        list-roller(:list="activeList")
+        transition(name="fade" mode="out-in" @after-enter="heroTransitioning")
+          list-roller(ref="roller" v-if="activeList" :list="activeList")
+          div(v-else)
+            h2 D100 Guru
+            p todo: info about what they can do
     .container.container--page
       transition(name="slide-fade-left")
         .list-controls(v-if="loggedIn && !atListCap")
@@ -40,7 +42,8 @@
     },
     data() {
       return {
-        activeList: {},
+        activeList: null,
+        rollAfterTransition: false,
       };
     },
     computed: {
@@ -61,18 +64,27 @@
     },
     methods: {
       rollList(list) {
-        if (this.activeList.id === list.id) {
+        if (this.activeList && this.activeList.id === list.id) {
           this.rollActiveList();
         } else if (list.id) {
           this.setActiveList(list);
-          this.rollActiveList();
+          this.$nextTick(() => this.rollActiveList());
         }
       },
       setActiveList(list) {
         this.activeList = clone(list);
       },
       rollActiveList() {
-        console.log(`roll on ${this.activeList.title}`);
+        if (!this.$refs.roller) {
+          this.rollAfterTransition = true;
+        } else {
+          this.$refs.roller.roll();
+        }
+      },
+      heroTransitioning() {
+        if (this.rollAfterTransition) {
+          this.rollActiveList();
+        }
       },
     },
   };

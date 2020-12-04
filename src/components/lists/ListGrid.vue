@@ -1,9 +1,6 @@
 <template lang="pug">
   ul.u-list-bordered
-    li.u-list-bordered__item(
-      v-for="list in lists"
-      :key="list.id"
-    )
+    li.u-list-bordered__item(v-for="list in lists" :key="list.id")
       nuxt-link(:to="`/list/${list.id}`") {{ list.title | clean }}
       .u-list-bordered__controls
         icon-button(
