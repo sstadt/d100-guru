@@ -16,7 +16,7 @@
     .list-display-item__label(v-else) {{ item.value | clean }}
     .list-display-item__handle(v-if="editable")
       loading-icon(v-if="!saved" :size="12")
-      icon.list-display-item__drag-icon(v-else name="drag-handle" size="12px")
+      icon.list-display-item__drag-icon(v-else name="drag-handle" :size="12")
 </template>
 
 <script>

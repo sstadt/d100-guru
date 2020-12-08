@@ -27,9 +27,9 @@
         default: null,
       },
       iconSize: {
-        type: String,
+        type: Number,
         default() {
-          return this.small ? '10px' : '14px';
+          return this.small ? 10 : 14;
         },
       },
       small: {

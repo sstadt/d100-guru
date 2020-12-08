@@ -2,25 +2,25 @@
   .input.input--quantity
     label.u-sr-only(v-if="label") {{ label }}
     icon-button.input--quantity__decrement.u-icon-primary(
-      label="Decrease Quantity",
-      icon="minus",
-      size="10px",
-      :disabled="disableDecrement",
+      label="Decrease Quantity"
+      icon="minus"
+      :size="10"
+      :disabled="disableDecrement"
       @click="decrement"
     )
     input.input--quantity__input(
-      type="text",
-      v-model="currentValue",
-      :min="min",
+      type="text"
+      v-model="currentValue"
+      :min="min"
       :max="max"
-      :placeholder="placeholder",
+      :placeholder="placeholder"
       readonly
     )
     icon-button.input--quantity__increment.u-icon-primary(
-      label="Increase Quantity",
-      icon="plus",
-      size="10px",
-      :disabled="disableIncrement",
+      label="Increase Quantity"
+      icon="plus"
+      :size="10"
+      :disabled="disableIncrement"
       @click="increment"
     )
 </template>

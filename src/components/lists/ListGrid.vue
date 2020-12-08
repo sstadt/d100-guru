@@ -6,7 +6,7 @@
         icon-button(
           label="Roll"
           icon="d20"
-          icon-size="22px"
+          :icon-size="22"
           @click="rollList(list.id)"
           tooltip
         )
@@ -14,7 +14,7 @@
           v-if="list.author === currentUser.uid"
           label="Delete"
           icon="trash"
-          icon-size="16px"
+          :icon-size="16"
           @click="deleteList(list.id)"
         )
 </template>

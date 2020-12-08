@@ -4,7 +4,7 @@
       h2.h4 {{ heading }}
       transition(name="fade")
         span.accordion__cta(v-if="ctaLabel" @click.stop.prevent="$emit('cta-click')") {{ ctaLabel }}
-      icon.accordion__icon(:name="currentIcon", size="13px")
+      icon.accordion__icon(:name="currentIcon", :size="13")
     transition(:name="transition")
       .accordion__content(v-if="active", ref="content", :style="contentStyle")
         slot

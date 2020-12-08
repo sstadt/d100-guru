@@ -3,7 +3,7 @@
     primary-button.user-menu__dropdown-toggle(
       :label="statusLabel"
       :icon="statusIcon"
-      icon-size="10px"
+      :icon-size="10"
       reverse-icon
       text
       @click="handleTopClick"

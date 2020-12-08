@@ -6,7 +6,7 @@
       .input--toggle__icon-wrapper
         icon.input--toggle__die-icon(name="d20")
         transition(name="zoom-in")
-          icon.input--toggle__check-icon(v-if="currentValue" name="check" size="12px")
+          icon.input--toggle__check-icon(v-if="currentValue" name="check" :size="12")
     label.input--toggle__label(:for="inputId") {{ label }}
 </template>
 

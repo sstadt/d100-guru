@@ -7,11 +7,11 @@
 
 import { v4 as uuidv4 } from 'uuid';
 
-const ListEntry = (options = {}) => {
+const newListEntry = (options = {}) => {
   return {
     id: uuidv4(),
     value: options.value || '',
   };
 };
 
-export default ListEntry;
+export default newListEntry;
