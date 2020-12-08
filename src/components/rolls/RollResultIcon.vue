@@ -49,10 +49,12 @@
 
   .roll-result-icon__roll {
     position: absolute;
+    width: 100%;
     top: 50%;
-    left: 50%;
-    transform: translate(-58%, -55%);
+    left: 0;
+    transform: translateY(-55%);
     color: $text--light;
     font-weight: bold;
+    text-align: center;
   }
 </style>
