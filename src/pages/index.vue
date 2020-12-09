@@ -6,7 +6,7 @@
           list-roller(ref="roller" v-if="activeList" :list="activeList")
           div(v-else)
             h2 D100 Guru
-            p todo: info about what they can do
+            p Click the #[icon(name="d20")] icon on a list below to roll something!
     .container.container--page
       transition(name="slide-fade-left")
         .list-controls(v-if="loggedIn && !atListCap")
@@ -22,6 +22,7 @@
   import { mapState, mapGetters } from 'vuex';
   import { MAX_LISTS_PER_USER } from '~/scripts/config/lists.js';
   import { clone } from '~/scripts/helpers/utils.js';
+  import Icon from '~/components/basic/Icon.vue';
   import Tabs from '~/components/basic/Tabs.vue';
   import Tab from '~/components/basic/Tab.vue';
   import PrimaryButton from '~/components/buttons/PrimaryButton.vue';
@@ -33,6 +34,7 @@
     name: 'IndexPage',
     transition: 'page',
     component: {
+      Icon,
       Tabs,
       Tab,
       PrimaryButton,

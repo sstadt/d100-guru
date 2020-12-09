@@ -48,7 +48,7 @@
     h6 &,
     p & {
       letter-spacing: 1px;
-      vertical-align: bottom;
+      vertical-align: middle;
     }
   }
 
