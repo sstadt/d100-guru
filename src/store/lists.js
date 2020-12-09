@@ -18,7 +18,10 @@ export const getters = {
 
 export const mutations = {
   ADD(state, list) {
-    state.all.push(list);
+    // NOTE: prevent owned and published from being duplicated
+    if (!state.all.find((l) => l.id === list.id)) {
+      state.all.push(list);
+    }
   },
   UPDATE(state, list) {
     const index = state.all.findIndex((item) => item.id === list.id);

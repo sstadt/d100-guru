@@ -5,7 +5,7 @@
   constructor
 ********************************/
 
-const List = ({ author, title, description }) => {
+const newList = ({ author, title, description }) => {
   return {
     author,
     title: title || '',
@@ -15,4 +15,4 @@ const List = ({ author, title, description }) => {
   };
 };
 
-export default List;
+export default newList;

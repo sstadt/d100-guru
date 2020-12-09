@@ -28,7 +28,7 @@
   import IconButton from '~/components/buttons/IconButton.vue';
   import SubmitButton from '~/components/buttons/SubmitButton.vue';
 
-  import List from '~/scripts/schema/List.js';
+  import newList from '~/scripts/schema/newList.js';
   import { NEW_LIST_PLACEHOLDERS } from '~/scripts/config/lists.js';
   import { getRandomNumber } from '~/scripts/helpers/dice.js';
 
@@ -81,17 +81,17 @@
         this.enableForm();
       },
       createList() {
-        const newList = List({
+        const list = newList({
           title: cleanAndSanitize(this.newListTitle),
           author: this.currentUser.uid,
         });
 
-        if (newList.title.length > 0) {
+        if (list.title.length > 0) {
           this.formLoading = true;
           this.formDisabled = true;
 
           this.$store
-            .dispatch('lists/create', newList)
+            .dispatch('lists/create', list)
             .then(() => this.resetForm())
             .catch(() => this.listCreated());
         } else {

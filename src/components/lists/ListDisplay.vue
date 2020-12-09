@@ -28,7 +28,7 @@
   import { mapState } from 'vuex';
   import Draggable from 'vuedraggable';
   import { debounce } from '~/scripts/helpers/utils.js';
-  import ListEntry from '~/scripts/schema/ListEntry.js';
+  import newListEntry from '~/scripts/schema/newListEntry.js';
   import ListDisplayItem from '~/components/lists/ListDisplayItem.vue';
 
   export default {
@@ -58,14 +58,14 @@
     },
     mounted() {
       if (this.listItems.length < 1) {
-        this.listItems.push(ListEntry());
+        this.listItems.push(newListEntry());
       }
     },
     methods: {
       parseOverflowItems(overflowItems, index) {
         for (let i = 0, j = overflowItems.length; i < j; i++) {
           const newItemOptions = { value: overflowItems[i] };
-          this.listItems.splice(index + i, 0, ListEntry(newItemOptions));
+          this.listItems.splice(index + i, 0, newListEntry(newItemOptions));
         }
 
         this.saveItems();
@@ -100,7 +100,7 @@
         }
       }, 2500),
       insertBlankItemAtIndex(index) {
-        this.listItems.splice(index, 0, ListEntry({ value: '' }));
+        this.listItems.splice(index, 0, newListEntry({ value: '' }));
         this.focusNewInput();
       },
       focusNewInput() {

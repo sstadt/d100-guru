@@ -2,12 +2,12 @@
   .tabs
     .tabs-nav(ref="nav")
       button.tabs-nav__button(
-        type="button",
-        v-for="tab in tabs",
+        type="button"
         ref="navButtons"
-        @click="activate(tab)"
+        v-for="(tab, index) in tabs"
+        @click="activate(tab, index)"
       ) {{ tab.heading }}
-      .tabs-nav__indicator(:style="indicatorPosition")
+      .tabs-nav__indicator(:style="indicatorStyle")
     .tabs__content
       slot
 </template>
@@ -18,21 +18,29 @@
     data() {
       return {
         tabs: [],
+        indicatorWidth: 0,
+        indicatorPosition: 0,
       };
     },
     computed: {
       activeIndex() {
         return this.tabs.findIndex((tab) => tab.active);
       },
-      indicatorPosition() {
-        const buttonWidth = 100 / this.tabs.length;
-        const position = Math.max(this.activeIndex, 0) * buttonWidth;
-
+      indicatorStyle() {
         return {
-          left: `${position}%`,
-          width: `${buttonWidth}%`,
+          left: `${this.indicatorPosition}px`,
+          width: `${this.indicatorWidth}px`,
         };
       },
+    },
+    mounted() {
+      const interval = setInterval(() => {
+        if (this.tabs.length > 0) {
+          const activeTab = this.tabs.find((tab) => tab.active) || this.tabs[0];
+          this.activate(activeTab);
+          clearInterval(interval);
+        }
+      }, 200);
     },
     methods: {
       addTab(newTab) {
@@ -46,8 +54,17 @@
         this.tabs.splice(index, 1);
       },
       activate({ heading }) {
+        // set active tab
         this.tabs.forEach((tab) => {
           tab.$set(tab, 'active', Boolean(heading === tab.heading));
+        });
+
+        // set indicator position
+        this.$nextTick(() => {
+          const $currentButton = this.$refs.navButtons[this.activeIndex];
+
+          this.indicatorWidth = $currentButton.offsetWidth;
+          this.indicatorPosition = $currentButton.offsetLeft;
         });
       },
     },
@@ -56,7 +73,6 @@
 
 <style scoped lang="scss">
   .tabs-nav {
-    display: flex;
     position: relative;
   }
 
@@ -64,8 +80,8 @@
     cursor: pointer;
     position: relative;
     flex-grow: 1;
-    margin: 0;
-    padding: 18px 0 16px;
+    margin: 0 12px 0 0;
+    padding: 8px 0;
     border-width: 0 0 3px 0;
     border-style: solid;
     border-color: $border--mid;
@@ -90,19 +106,6 @@
     bottom: 0;
     height: 3px;
     background-color: $border--tabs;
-    transition: 0.3s ease-in-out left;
-
-    &::after {
-      content: '';
-      display: block;
-      position: absolute;
-      bottom: -6px;
-      left: 50%;
-      width: 0;
-      height: 0;
-      border-style: solid;
-      border-width: 6px 5px 0 5px;
-      border-color: $border--tabs transparent transparent transparent;
-    }
+    transition: 0.3s ease-in-out left, 0.3s ease-in-out width;
   }
 </style>

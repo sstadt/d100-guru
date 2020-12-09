@@ -9,7 +9,7 @@
       .modal__content-wrapper(v-else)
         icon-button.modal__close(label="Close Modal" icon="close" size="12px" @click="close")
         .modal__header(v-if="title")
-          icon.modal__title-icon(v-if="icon" :name="icon" size="19px")
+          icon.modal__title-icon(v-if="icon" :name="icon" :size="19")
           p.modal__title {{ title }}
         .modal__content
           slot(name="content")

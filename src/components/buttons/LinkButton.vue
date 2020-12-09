@@ -10,7 +10,7 @@
     transition(name="ripple")
       .ripple(v-if="showRipple" :style="rippleStyles")
     transition(name="slide-fade-in-out")
-      icon.button__arrow(v-if="showRipple" name="arrow-right-long" size="35px")
+      icon.button__arrow(v-if="showRipple" name="arrow-right-long" :size="35")
     .button__content(:class="contentClass")
       icon(v-if="icon", :name="icon", :size="iconSize")
       span {{ label }}

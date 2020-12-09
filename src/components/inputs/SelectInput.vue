@@ -4,7 +4,7 @@
     select(v-model="currentValue", :disabled="disabled", :id="'select' + _uid")
       option(v-if="!required", :value="null") {{ defaultOption }}
       option(v-for="option in options", :value="option.value", :key="option.value") {{ option.label }}
-    icon(v-if="showNativeSelect", name="chevron-down", size="14px")
+    icon(v-if="showNativeSelect", name="chevron-down", :size="14")
     p.input__error-text(v-if="error") {{ error }}
 </template>
 
