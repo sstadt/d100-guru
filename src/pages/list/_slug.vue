@@ -2,8 +2,8 @@
   .page.page--list
     sticky-hero
       .container
-        transition(name="slide-left")
-          h1(v-if="list") {{ list.title }}
+        transition(name="fade" mode="out-in")
+          list-roller(ref="roller" v-if="list" :list="list")
           p.h1(v-else) Loading list...
     .container.container--page(v-if="list")
       list-controls(v-if="list && isAuthor" :list="list")
@@ -15,6 +15,7 @@
   import StickyHero from '~/components/hero/StickyHero.vue';
   import ListControls from '~/components/lists/ListControls.vue';
   import ListDisplay from '~/components/lists/ListDisplay.vue';
+  import ListRoller from '~/components/lists/ListRoller.vue';
 
   export default {
     name: 'ListPage',
@@ -23,6 +24,7 @@
       StickyHero,
       ListControls,
       ListDisplay,
+      ListRoller,
     },
     asyncData({ params }) {
       return {
