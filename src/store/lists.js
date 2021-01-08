@@ -29,7 +29,15 @@ export const mutations = {
   },
   REMOVE(state, gameId) {
     const index = state.all.findIndex((item) => item.id === gameId);
-    state.all.splice(index, 1);
+    const game = state.all[index];
+
+    // don't remove owned lists - they are watched separately
+    if (
+      state.rootState.user.currentUser &&
+      state.rootState.user.currentUser.uid !== game.author
+    ) {
+      state.all.splice(index, 1);
+    }
   },
   SET_UNSUBSCRIBE(state, unsubscribe) {
     state.unsubscribe = () => unsubscribe();

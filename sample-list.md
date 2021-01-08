@@ -34,46 +34,47 @@ An ice chest
 A partition or folding screen
 Literally just a regular door
 A small fishing boat overturned on the shore
-A set of harpoons displayed on a wall [u/UltimateKingXIII]
-Beer (because why not) [u/UltimateKingXIII]
-Something falling from above [u/UltimateKingXIII]
-Something coming from below [u/UltimateKingXIII]
-A shout/scream/roar [u/UltimateKingXIII]
-Someone standing with full plate armor [u/UltimateKingXIII]
-Smell [u/UltimateKingXIII]
-Blood on the ground [u/UltimateKingXIII]
-A claw of a creature (literally the claw) [u/UltimateKingXIII]
-Paint [u/UltimateKingXIII]
-(Classics) A cart full of melons (angry vendor included); [u/digger_not_alone]
-Minibar full of liquor (highly flammable); [u/digger_not_alone]
-Cabinet full of experimental potions (including hallucinogenic); [u/digger_not_alone]
-Zone of low/high gravity; [u/digger_not_alone]
-Holes in the floor leading to the dark basement; [u/digger_not_alone]
-Panicking civilians; [u/digger_not_alone]
-Mechanical toys: whirligigs, marbles, marching metal soldiers, dancing spring, surprise boxes; [u/digger_not_alone]
-A pyramid of barrels with water, wine, oil, fat, fish, and may be gunpowder? [u/digger_not_alone]
-Theater rigging: ropes, bridges, iron structures, sandbags, props, decorations, mirrors; [u/digger_not_alone]
-Giant ants! [u/digger_not_alone]
-Steam engine, that makes “pooof” from time to time; [u/digger_not_alone]
-A bunch of drunken sailors; [u/digger_not_alone]
-Giant multi-sectional aquarium: minisharks, piranhas, inky octopuses, LOBSTERS; [u/digger_not_alone]
-Bags of flour (create a clouds when attacked); [u/digger_not_alone]
-A pile of food, including fondue, pies, party bowls, extremely smelly cheese, wedding cake! [u/digger_not_alone]
-Trampolines, ropes and trapezes; [u/digger_not_alone]
-Musical instruments: sturdy cymbals, superloud horns, grand piano. [u/digger_not_alone]
-Fishing Nets, or a Clothes Line (Entanglement) [u/victorianchan]
-Pottery Stall, (Impromptu Caltrops) [u/victorianchan]
-Jar of Marbles (Caltrops) [u/victorianchan]
-Petrochemicals (Fire and Smoke) [u/victorianchan]
-Live Poultry in Cages (Common Trope) [u/victorianchan]
-Rope (Lasso) [u/victorianchan]
-Chains and Locks (Manacles) [u/victorianchan]
-Horse or Riding Dinosaur or Chocobo (Mounted Combat) [u/victorianchan]
-Snake Charmers Baskets (Indiana Jones hates Snakes) [u/victorianchan]
-Bells (Interrupt Conversation) [u/victorianchan]
-Fireworks (Signalling Device) [u/victorianchan]
-Wagon or Cart (Obstacle or Escape) [u/victorianchan]
-Hay Bale (Falling) [u/victorianchan]
-Sporting Equipment (Weaponry) [u/victorianchan]
-Civic Engineering Machine (Roman Pile Driver or similar) [u/victorianchan]
-Circus Clowns (Not for Target Practice, as a Disguise!!) [u/victorianchan]
+A set of harpoons displayed on a wall
+Beer (because why not)
+Something falling from above
+Something coming from below
+A shout/scream/roar
+Enemy soldier in full plate armor
+Smell
+Blood on the ground
+A claw of some creature
+Paint
+A cart full of melons
+Minibar full of liquor
+Cabinet full of experimental potions
+Zone of low/high gravity
+Holes in the floor leading to the dark basement
+Panicking civilians
+Clockwork toys
+A pyramid of barrels with water, wine, oil, fat, or fish
+Theater rigging
+Giant ants!
+Steam engine
+A bunch of drunken sailors
+Giant multi-sectional aquarium
+Bags of flour
+Barrels and crates of food
+Trampolines
+Musical instruments
+Fishing Nets
+Clothes Line
+Pottery Stall
+Caltrops
+Petrochemicals
+Live Poultry in Cages
+Rope
+Chains and Locks
+Horse
+Snake Charmers Baskets
+Bells
+Fireworks
+Wagon or Cart
+Hay Bale
+Sporting Equipment
+Civic Engineering Machine
+Circus Clowns
