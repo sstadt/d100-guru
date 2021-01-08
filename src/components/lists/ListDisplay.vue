@@ -18,8 +18,8 @@
         @item-overflow="parseOverflowItems($event, index)"
         @item-updated="checkForUpdates"
         @new-input="insertBlankItemAtIndex(index + 1)"
-        @next-input="focusNextInput(index + 1)"
-        @prev-input="focusNextInput(index - 1)"
+        @next-input="focusInputByListIndex(index + 1)"
+        @prev-input="focusInputByListIndex(index - 1)"
         @delete-item="deleteItem(index)"
       )
 </template>
@@ -64,10 +64,13 @@
     methods: {
       parseOverflowItems(overflowItems, index) {
         for (let i = 0, j = overflowItems.length; i < j; i++) {
-          const newItemOptions = { value: overflowItems[i] };
-          this.listItems.splice(index + i, 0, newListEntry(newItemOptions));
+          if (overflowItems[i].length > 0) {
+            const newItemOptions = { value: overflowItems[i] };
+            this.listItems.splice(index + i, 0, newListEntry(newItemOptions));
+          }
         }
 
+        this.focusNewInput();
         this.saveItems();
       },
       checkForUpdates(updatedItem) {
@@ -103,19 +106,12 @@
         this.listItems.splice(index, 0, newListEntry({ value: '' }));
         this.focusNewInput();
       },
-      focusNewInput() {
-        this.$nextTick(() => {
-          // NOTE: new refs are pushed onto the array (not spliced),
-          //       so we always grab the last ref
-          const lastIndex = this.$refs.listItems.length - 1;
-          const $newRef = this.$refs.listItems[lastIndex];
-
-          if ($newRef.getValue() === '') {
-            this.focusInput(lastIndex);
-          }
-        });
-      },
-      focusNextInput(index) {
+      focusNewInput: debounce(function () {
+        this.$nextTick(() =>
+          this.focusInputByListIndex(this.listItems.length - 1)
+        );
+      }, 100),
+      focusInputByListIndex(index) {
         // NOTE: since refs are always appended we
         //       need to find the right index by ID
         if (this.listItems[index]) {

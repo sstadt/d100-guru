@@ -1,7 +1,7 @@
 <template lang="pug">
   .list-controls
     nuxt-link(to="/")
-      icon(name="chevron-left" size="8")
+      icon(name="chevron-left" :size="8")
       span Back
     toggle-input(
       ref="publishToggle"

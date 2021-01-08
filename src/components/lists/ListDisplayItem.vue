@@ -88,7 +88,7 @@
               (item) => item.id === this.item.id
             );
 
-            if (savedItem.value === this.currentValue) {
+            if (savedItem && savedItem.value === this.currentValue) {
               this.saved = true;
               this.oldValue = this.currentValue;
               clearInterval(interval);

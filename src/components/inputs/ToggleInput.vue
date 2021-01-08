@@ -76,6 +76,7 @@
 
   .input--toggle__die-icon {
     fill: $bg--control;
+    transform: translateY(2px);
 
     .input--toggle__active & {
       fill: $color-primary;
