@@ -1,5 +1,8 @@
 <template lang="pug">
   .list-controls
+    nuxt-link(to="/")
+      icon(name="chevron-left" size="8")
+      span Back
     toggle-input(
       ref="publishToggle"
       v-model="isPublished"
@@ -73,6 +76,8 @@
 
 <style scoped lang="scss">
   .list-controls {
+    display: flex;
+    justify-content: space-between;
     margin-bottom: $content-gutter;
   }
 </style>

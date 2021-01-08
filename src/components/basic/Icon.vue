@@ -38,7 +38,6 @@
 <style scoped lang="scss">
   .icon {
     transition: 0.3s ease all;
-    vertical-align: middle;
 
     h1 &,
     h2 &,
@@ -46,9 +45,17 @@
     h4 &,
     h5 &,
     h6 &,
-    p & {
-      letter-spacing: 1px;
+    p &,
+    a & {
       vertical-align: middle;
+
+      &:not(:first-child) {
+        margin-left: 4px;
+      }
+
+      &:not(:last-child) {
+        margin-right: 4px;
+      }
     }
   }
 

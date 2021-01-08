@@ -9,7 +9,7 @@
             p Click the #[icon(name="d20")] icon on a list below to roll something!
     .container.container--page
       transition(name="slide-fade-left")
-        .list-controls(v-if="loggedIn && !atListCap")
+        .page-controls(v-if="showCreateList")
           create-list-form
       tabs
         tab(heading="Browse Lists" selected)
@@ -51,6 +51,7 @@
     computed: {
       ...mapState({
         loggedIn: (state) => state.user.loggedIn,
+        currentUser: (state) => state.user.currentUser,
       }),
       ...mapGetters('lists', {
         publishedLists: 'published',
@@ -62,6 +63,9 @@
       atListCap() {
         if (!this.loggedIn) return true;
         return this.userListCount >= MAX_LISTS_PER_USER;
+      },
+      showCreateList() {
+        return this.currentUser.admin || (this.loggedIn && !this.atListCap);
       },
     },
     methods: {
@@ -92,12 +96,12 @@
   };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
   .page--index {
     position: relative;
   }
 
-  .list-controls {
+  .page-controls {
     display: flex;
     justify-content: flex-end;
   }
