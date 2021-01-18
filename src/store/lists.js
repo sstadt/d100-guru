@@ -1,13 +1,20 @@
 import { createWatcher } from '~/scripts/helpers/firebase.js';
 
+const RESULTS_PER_PAGE = 2;
+
 export const state = () => ({
   all: [],
-  unsubscribe: () => {},
+  query: null,
+  unsubscribeOwned: () => {},
+  unsubscribePublished: [],
+  numDocsQueried: 0,
 });
 
 export const getters = {
-  published: (state) => {
-    return state.all.filter((list) => list.published);
+  published: (state, _, rootState) => {
+    return state.all.filter((list) => {
+      return list.published && list.author !== rootState.user.currentUser.uid;
+    });
   },
   owned: (state, _, rootState) => {
     return state.all.filter(
@@ -31,7 +38,7 @@ export const mutations = {
     const index = state.all.findIndex((item) => item.id === gameId);
     const game = state.all[index];
 
-    // don't remove owned lists - they are watched separately
+    // NOTE: don't remove owned lists - they are watched separately
     if (
       state.rootState.user.currentUser &&
       state.rootState.user.currentUser.uid !== game.author
@@ -39,34 +46,83 @@ export const mutations = {
       state.all.splice(index, 1);
     }
   },
-  SET_UNSUBSCRIBE(state, unsubscribe) {
-    state.unsubscribe = () => unsubscribe();
+  SET_QUERY(state, query) {
+    state.query = query;
   },
-  UNSUBSCRIBE(state) {
-    state.unsubscribe();
-    state.unsubscribe = () => {};
+  ADD_PAGE_QUERIED(state) {
+    state.numDocsQueried += RESULTS_PER_PAGE;
+  },
+  ADD_UNSUBSCRIBE(state, unsubscribe) {
+    state.unsubscribePublished.push(unsubscribe);
+  },
+  SET_UNSUBSCRIBE_OWNED(state, unsubscribe) {
+    state.unsubscribeOwned = () => unsubscribe();
+  },
+  UNSUBSCRIBE_OWNED(state) {
+    state.unsubscribeOwned();
+    state.unsubscribeOwned = () => {};
     state.all = state.all.filter((list) => list.published);
+  },
+  UNSUBSCRIBE_PUBLISHED(state, rootState) {
+    state.numDocsQueried = 0;
+    state.unsubscribePublished.forEach((unsubscribe) => () => unsubscribe());
+    state.unsubscribePublished = [];
+    state.all = state.all.filter(
+      (list) => list.author === rootState.user.currentUser.uid
+    );
   },
 };
 
 export const actions = {
-  bindPublished({ commit }) {
-    const publishedListsRef = this.$fire.firestore
-      .collection('lists')
-      .where('published', '==', true);
-
-    // TODO: this will need to be adjusted for lazyloading
-    //       but for now, we don't care about the unsubscribe
-    //       - unsubscribe/update as necessary for search
-    createWatcher(publishedListsRef, commit);
+  handleUpdate({ commit }, change) {
+    switch (change.type) {
+      case 'added':
+        commit('ADD', { ...change.doc.data(), id: change.doc.id });
+        break;
+      case 'modified':
+        commit('UPDATE', { ...change.doc.data(), id: change.doc.id });
+        break;
+      case 'removed':
+        commit('REMOVE', change.doc.id);
+        break;
+    }
   },
-  bindOwned({ rootState, commit }) {
-    const ownedListsRef = this.$fire.firestore
+  bindOwned({ rootState, commit, dispatch }) {
+    const query = this.$fire.firestore
       .collection('lists')
       .where('author', '==', rootState.user.currentUser.uid);
-    const unsubscribeOwnedLists = createWatcher(ownedListsRef, commit);
+    const unsubscribeOwnedLists = createWatcher(query, (change) =>
+      dispatch('handleUpdate', change)
+    );
 
-    commit('SET_UNSUBSCRIBE', unsubscribeOwnedLists);
+    commit('SET_UNSUBSCRIBE_OWNED', unsubscribeOwnedLists);
+  },
+  bindPublished({ commit, dispatch }) {
+    const query = this.$fire.firestore
+      .collection('lists')
+      .where('published', '==', true)
+      .orderBy('created')
+      .limit(RESULTS_PER_PAGE);
+    const unsubscribe = createWatcher(query, (change) =>
+      dispatch('handleUpdate', change)
+    );
+
+    commit('ADD_UNSUBSCRIBE', unsubscribe);
+    commit('ADD_PAGE_QUERIED');
+  },
+  bindNext({ state, commit, dispatch }) {
+    const query = this.$fire.firestore
+      .collection('lists')
+      .where('published', '==', true)
+      .orderBy('created')
+      .startAfter(state.numDocsQueried)
+      .limit(RESULTS_PER_PAGE);
+    const unsubscribe = createWatcher(query, (change) =>
+      dispatch('handleUpdate', change)
+    );
+
+    commit('ADD_UNSUBSCRIBE', unsubscribe);
+    commit('ADD_PAGE_QUERIED');
   },
   create({ dispatch }, list) {
     return new Promise((resolve, reject) => {
@@ -104,6 +160,6 @@ export const actions = {
     this.$fire.firestore.collection('lists').doc(listId).delete();
   },
   unbindOwned({ commit }) {
-    commit('UNSUBSCRIBE');
+    commit('UNSUBSCRIBE_OWNED');
   },
 };

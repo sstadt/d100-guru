@@ -14,6 +14,7 @@
       tabs
         tab(heading="Browse Lists" selected)
           list-grid(:lists="publishedLists" @roll-list="rollList")
+          primary-button(label="Load More" @click="loadMore")
         tab(heading="My Lists" v-if="loggedIn")
           list-grid(:lists="ownedLists" @roll-list="rollList")
 </template>
@@ -65,7 +66,10 @@
         return this.userListCount >= MAX_LISTS_PER_USER;
       },
       showCreateList() {
-        return this.currentUser.admin || (this.loggedIn && !this.atListCap);
+        return (
+          (this.currentUser && this.currentUser.admin) ||
+          (this.loggedIn && !this.atListCap)
+        );
       },
     },
     methods: {
@@ -91,6 +95,9 @@
         if (this.rollAfterTransition) {
           this.rollActiveList();
         }
+      },
+      loadMore() {
+        this.$store.dispatch('lists/bindNext');
       },
     },
   };

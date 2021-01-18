@@ -1,7 +1,7 @@
 /**
  * Sets up actions for simple Firebase collections
- * @param {*} ref TODO: exactly what kind of Firebase object is this?
- * @param {function} commit Vuex commit function
+ * @param {*} query TODO: exactly what kind of Firebase object is this?
+ * @param {function} callback Callback function to execute on snapshot change
  *
  * Usage
  *
@@ -31,12 +31,10 @@
  *   onRemove: (id) => {},
  * })
  */
-export const createWatcher = (ref, commit) => {
-  return ref.onSnapshot((snapshot) => {
-    return snapshot
-      .docChanges()
-      .forEach((change) => changeHandler(change, commit));
-  });
+export const createWatcher = (query, callback) => {
+  return query.onSnapshot((snapshot) =>
+    snapshot.docChanges().forEach((change) => callback(change))
+  );
 };
 
 /**
@@ -45,20 +43,20 @@ export const createWatcher = (ref, commit) => {
  * @param {object} change TODO: exactly what object is this in firebase?
  * @param {commit} commit Vuex commit function
  */
-const changeHandler = (change, commit) => {
-  switch (change.type) {
-    case 'added':
-      commit('ADD', { ...change.doc.data(), id: change.doc.id });
-      break;
-    case 'modified':
-      commit('UPDATE', { ...change.doc.data(), id: change.doc.id });
-      break;
-    case 'removed':
-      commit('REMOVE', change.doc.id);
-      break;
-    // default:
-    // TODO
-    // console.warn('--- unhandled change type');
-    // console.warn(change.type);
-  }
-};
+// const changeHandler = (change, commit) => {
+//   switch (change.type) {
+//     case 'added':
+//       commit('ADD', { ...change.doc.data(), id: change.doc.id });
+//       break;
+//     case 'modified':
+//       commit('UPDATE', { ...change.doc.data(), id: change.doc.id });
+//       break;
+//     case 'removed':
+//       commit('REMOVE', change.doc.id);
+//       break;
+//     // default:
+//     // TODO
+//     // console.warn('--- unhandled change type');
+//     // console.warn(change.type);
+//   }
+// };

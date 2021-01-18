@@ -5,7 +5,7 @@ let isSigningUp = false;
 let unsubscribeUser = null;
 
 export const state = () => ({
-  currentUser: null,
+  currentUser: { uid: null },
   userData: null,
   loggedIn: false,
   authOpen: false,
@@ -42,7 +42,7 @@ export const mutations = {
   },
   UNSET_USER(state) {
     state.loggedIn = false;
-    state.currentUser = null;
+    state.currentUser = { uid: null };
     state.userRef = null;
     state.userData = {};
   },
