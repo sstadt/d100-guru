@@ -8,7 +8,6 @@ export const state = () => ({
   query: null,
   unsubscribeOwned: () => {},
   unsubscribePublished: [],
-  numDocsQueried: 0,
 });
 
 export const getters = {
@@ -50,14 +49,11 @@ export const mutations = {
   SET_QUERY(state, query) {
     state.query = query;
   },
-  ADD_PAGE_QUERIED(state) {
-    state.numDocsQueried += RESULTS_PER_PAGE;
+  SET_UNSUBSCRIBE_OWNED(state, unsubscribe) {
+    state.unsubscribeOwned = () => unsubscribe();
   },
   ADD_UNSUBSCRIBE(state, unsubscribe) {
     state.unsubscribePublished.push(unsubscribe);
-  },
-  SET_UNSUBSCRIBE_OWNED(state, unsubscribe) {
-    state.unsubscribeOwned = () => unsubscribe();
   },
   UNSUBSCRIBE_OWNED(state) {
     state.unsubscribeOwned();
@@ -65,7 +61,7 @@ export const mutations = {
     state.all = state.all.filter((list) => list.published);
   },
   UNSUBSCRIBE_PUBLISHED(state, rootState) {
-    state.numDocsQueried = 0;
+    state.query = null;
     state.unsubscribePublished.forEach((unsubscribe) => () => unsubscribe());
     state.unsubscribePublished = [];
     state.all = state.all.filter(
@@ -110,21 +106,23 @@ export const actions = {
     );
 
     commit('ADD_UNSUBSCRIBE', unsubscribe);
-    commit('ADD_PAGE_QUERIED');
   },
-  bindNext({ state, commit, dispatch }) {
+  bindSearch() {
+    // TODO: duplicate bindPublished, but include search
+  },
+  bindNext({ commit, dispatch }) {
     const query = this.$fire.firestore
       .collection('lists')
       .where('published', '==', true)
       .orderBy('created')
       .startAfter(lastDoc)
       .limit(RESULTS_PER_PAGE);
+    // TODO: implement get() and subscribe *after*, so you can see we are at the end
     const unsubscribe = createWatcher(query, (change) => {
       dispatch('handleUpdate', change);
     });
 
     commit('ADD_UNSUBSCRIBE', unsubscribe);
-    commit('ADD_PAGE_QUERIED');
   },
   create({ dispatch }, list) {
     return new Promise((resolve, reject) => {
@@ -163,5 +161,8 @@ export const actions = {
   },
   unbindOwned({ commit }) {
     commit('UNSUBSCRIBE_OWNED');
+  },
+  unbindPublished({ commit }) {
+    commit('UNSUBSCRIBE_PUBLISHED');
   },
 };
