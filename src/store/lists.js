@@ -1,6 +1,7 @@
 import { createWatcher } from '~/scripts/helpers/firebase.js';
 
 const RESULTS_PER_PAGE = 2;
+let lastDoc = null;
 
 export const state = () => ({
   all: [],
@@ -78,6 +79,7 @@ export const actions = {
     switch (change.type) {
       case 'added':
         commit('ADD', { ...change.doc.data(), id: change.doc.id });
+        lastDoc = change.doc;
         break;
       case 'modified':
         commit('UPDATE', { ...change.doc.data(), id: change.doc.id });
@@ -115,11 +117,11 @@ export const actions = {
       .collection('lists')
       .where('published', '==', true)
       .orderBy('created')
-      .startAfter(state.numDocsQueried)
+      .startAfter(lastDoc)
       .limit(RESULTS_PER_PAGE);
-    const unsubscribe = createWatcher(query, (change) =>
-      dispatch('handleUpdate', change)
-    );
+    const unsubscribe = createWatcher(query, (change) => {
+      dispatch('handleUpdate', change);
+    });
 
     commit('ADD_UNSUBSCRIBE', unsubscribe);
     commit('ADD_PAGE_QUERIED');
