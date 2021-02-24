@@ -1,6 +1,6 @@
 import { createWatcher } from '~/scripts/helpers/firebase.js';
 
-const RESULTS_PER_PAGE = 2;
+const RESULTS_PER_PAGE = 100;
 let lastDoc = null;
 
 export const state = () => ({
