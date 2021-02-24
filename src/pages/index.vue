@@ -14,7 +14,11 @@
       tabs
         tab(heading="Browse Lists" selected)
           list-grid(:lists="publishedLists" @roll-list="rollList")
-          primary-button(label="Load More" @click="loadMore")
+          primary-button.page--index__load-more(
+            v-if="!endOfPublished"
+            label="Load More"
+            @click="loadMore"
+          )
         tab(heading="My Lists" v-if="loggedIn")
           list-grid(:lists="ownedLists" @roll-list="rollList")
 </template>
@@ -53,6 +57,7 @@
       ...mapState({
         loggedIn: (state) => state.user.loggedIn,
         currentUser: (state) => state.user.currentUser,
+        endOfPublished: (state) => state.lists.endOfPublished,
       }),
       ...mapGetters('lists', {
         publishedLists: 'published',
@@ -111,5 +116,9 @@
   .page-controls {
     display: flex;
     justify-content: flex-end;
+  }
+
+  .page--index__load-more {
+    margin-top: $content-gutter;
   }
 </style>

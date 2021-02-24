@@ -8,6 +8,7 @@ export const state = () => ({
   query: null,
   unsubscribeOwned: () => {},
   unsubscribePublished: [],
+  endOfPublished: false,
 });
 
 export const getters = {
@@ -67,6 +68,10 @@ export const mutations = {
     state.all = state.all.filter(
       (list) => list.author === rootState.user.currentUser.uid
     );
+    state.endOfPublished = false;
+  },
+  END_OF_PUBLISHED(state) {
+    state.endOfPublished = true;
   },
 };
 
@@ -101,11 +106,18 @@ export const actions = {
       .where('published', '==', true)
       .orderBy('created')
       .limit(RESULTS_PER_PAGE);
-    const unsubscribe = createWatcher(query, (change) =>
-      dispatch('handleUpdate', change)
-    );
 
-    commit('ADD_UNSUBSCRIBE', unsubscribe);
+    query.get().then((response) => {
+      const unsubscribe = createWatcher(query, (change) => {
+        dispatch('handleUpdate', change);
+      });
+
+      commit('ADD_UNSUBSCRIBE', unsubscribe);
+
+      if (response.docs.length < RESULTS_PER_PAGE) {
+        commit('END_OF_PUBLISHED');
+      }
+    });
   },
   bindSearch() {
     // TODO: duplicate bindPublished, but include search
@@ -117,12 +129,18 @@ export const actions = {
       .orderBy('created')
       .startAfter(lastDoc)
       .limit(RESULTS_PER_PAGE);
-    // TODO: implement get() and subscribe *after*, so you can see we are at the end
-    const unsubscribe = createWatcher(query, (change) => {
-      dispatch('handleUpdate', change);
-    });
 
-    commit('ADD_UNSUBSCRIBE', unsubscribe);
+    query.get().then((response) => {
+      const unsubscribe = createWatcher(query, (change) => {
+        dispatch('handleUpdate', change);
+      });
+
+      commit('ADD_UNSUBSCRIBE', unsubscribe);
+
+      if (response.docs.length < RESULTS_PER_PAGE) {
+        commit('END_OF_PUBLISHED');
+      }
+    });
   },
   create({ dispatch }, list) {
     return new Promise((resolve, reject) => {
