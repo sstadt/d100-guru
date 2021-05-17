@@ -6,27 +6,27 @@
       a.auth__link(href="#" @click.prevent="switchView('ForgotPassword')") Forgot Password
     transition(name="slide-left")
       p.alert.alert--error(v-if="error.length > 0") {{ error }}
-    validation-observer(v-slot="{ invalid, handleSubmit }")
+    ValidationObserver(v-slot="{ invalid, handleSubmit }")
       form.auth__form(@submit.prevent="handleSubmit(login)" novalidate)
-        validation-provider(name="Email" rules="required|email" v-slot="{ errors }")
+        ValidationProvider(name="Email" rules="required|email" v-slot="{ errors }")
           .form-input
-            email-input(
+            EmailInput(
               label="Email Address"
               placeholder="example@gmail.com"
               v-model="email"
               :errors="errors"
             )
-        validation-provider(name="Password" rules="required" v-slot="{ errors }")
+        ValidationProvider(name="Password" rules="required" v-slot="{ errors }")
           .form-input
-            password-input(
+            PasswordInput(
               label="Password"
               name="password"
               placeholder="Password"
               v-model="password"
               :errors="errors"
             )
-        submit-button(label="Sign In" :wide="true" :disabled="invalid" full)
-    primary-button(label="Sign in with Google" icon="google" full @click="googleLogin")
+        SubmitButton(label="Sign In" :wide="true" :disabled="invalid" full)
+    PrimaryButton(label="Sign in with Google" icon="google" full @click="googleLogin")
 </template>
 
 <script>

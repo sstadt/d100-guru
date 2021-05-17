@@ -3,20 +3,20 @@
     transition(name="slide-fade-left" mode="out-in")
       .create-list-form__toggle(v-if="!formVisible" key="toggle")
         .form-input
-          primary-button(label="New List" @click="showForm" small)
+          PrimaryButton(label="New List" @click="showForm" small)
       .create-list-form__form(v-else key="form")
-        validation-observer(v-slot="{ invalid, handleSubmit }")
+        ValidationObserver(v-slot="{ invalid, handleSubmit }")
           form(@submit.prevent="handleSubmit(createList)" novalidate)
-            validation-provider(name="Email" rules="required" v-slot="{ errors }")
+            ValidationProvider(name="Email" rules="required" v-slot="{ errors }")
               .form-input.form-input__inline
-                text-input(
+                TextInput(
                   ref="listNameInput"
                   label="New List"
                   :placeholder="newListPlaceholder"
                   v-model="newListTitle"
                 )
-                submit-button(label="Create" :disabled="invalid" inline)
-                icon-button.create-list-form__cancel(icon="times" label="Cancel" @click="hideForm")
+                SubmitButton(label="Create" :disabled="invalid" inline)
+                IconButton.create-list-form__cancel(icon="times" label="Cancel" @click="hideForm")
 </template>
 
 <script>

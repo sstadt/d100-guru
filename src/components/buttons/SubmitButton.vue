@@ -5,9 +5,9 @@
     :disabled="isDisabled"
     @click="$emit('click')"
   )
-    icon(v-if="icon && !reverseIcon" :name="icon" :size="iconSize")
+    Icon(v-if="icon && !reverseIcon" :name="icon" :size="iconSize")
     span {{ label }}
-    icon(v-if="icon && reverseIcon" :name="icon" :size="iconSize")
+    Icon(v-if="icon && reverseIcon" :name="icon" :size="iconSize")
 </template>
 
 <script>

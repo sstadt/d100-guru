@@ -2,14 +2,14 @@
   transition(name="fade")
     .modal(v-if="isVisible")
       .modal__overlay(@click="close")
-      icon-button.modal__close-video(v-if="video" label="Close Modal" icon="close", size="12px" @click="close")
+      IconButton.modal__close-video(v-if="video" label="Close Modal" icon="close", size="12px" @click="close")
       .modal__content--video(v-if="video")
         .modal__content--video__container
           iframe(width="853" height="480" :src="videoUrl" frameborder="0" allowfullscreen)
       .modal__content-wrapper(v-else)
-        icon-button.modal__close(label="Close Modal" icon="close" size="12px" @click="close")
+        IconButton.modal__close(label="Close Modal" icon="close" size="12px" @click="close")
         .modal__header(v-if="title")
-          icon.modal__title-icon(v-if="icon" :name="icon" :size="19")
+          Icon.modal__title-icon(v-if="icon" :name="icon" :size="19")
           p.modal__title {{ title }}
         .modal__content
           slot(name="content")
@@ -101,7 +101,6 @@
     left: 0;
     width: 850px;
     max-width: 100%;
-    min-height: 100%;
     background-color: $bg--main;
 
     @include mobile-only {

@@ -1,6 +1,6 @@
 <template lang="pug">
   .input.input--checkbox(:class="inputClass")
-    input(type="checkbox", :id="inputId" v-model="currentValue" :disabled="disabled" :value="value")
+    input(type="checkbox" :id="inputId" v-model="currentValue" :disabled="disabled" :value="value")
     .input--checkbox__indicator
     label(:for="inputId") {{ label }}
 </template>

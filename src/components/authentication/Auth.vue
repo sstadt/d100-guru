@@ -2,7 +2,7 @@
   .auth
     transition(name="fade")
       .auth__loading(v-if="loading")
-        loading-icon
+        LoadingIcon
     transition(name="fade", mode="out-in")
       component(
         :is="currentAuthView"

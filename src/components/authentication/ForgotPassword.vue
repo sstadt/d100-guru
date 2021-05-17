@@ -5,17 +5,17 @@
       a.auth__link(href="#" @click.prevent="switchView('Login')") Login
     transition(name="fade")
       .alert.alert--success(v-if="requestSubmitted") Check your email!
-    validation-observer(v-slot="{ invalid, handleSubmit }")
+    ValidationObserver(v-slot="{ invalid, handleSubmit }")
       form.auth__form(@submit.prevent="handleSubmit(requestReset)" novalidate)
-        validation-provider(name="Email" rules="required|email" v-slot="{ errors }")
+        ValidationProvider(name="Email" rules="required|email" v-slot="{ errors }")
           .form-input
-            email-input(
+            EmailInput(
               label="Email Address"
               placeholder="example@gmail.com"
               v-model="email"
               :errors="errors"
             )
-        submit-button(label="Send Reset Instructons" :disabled="invalid" full)
+        SubmitButton(label="Send Reset Instructons" :disabled="invalid" full)
 </template>
 
 <script>

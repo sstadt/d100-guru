@@ -1,12 +1,12 @@
 <template lang="pug">
   a.button.button--icon(
-    :class="buttonClass", 
+    :class="buttonClass",
     :disabled="isDisabled",
     :href="href",
     :title="label",
     :target="target"
   )
-    icon(v-if="icon", :name="icon", :size="size")
+    Icon(v-if="icon", :name="icon", :size="size")
     span.u-sr-only {{ label }}
 </template>
 

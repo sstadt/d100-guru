@@ -5,7 +5,7 @@
     :disabled="isDisabled",
     @click="$emit('click')"
   )
-    icon(v-if="icon", :name="icon", :size="iconSize")
+    Icon(v-if="icon", :name="icon", :size="iconSize")
     span.u-sr-only {{ label }}
 </template>
 

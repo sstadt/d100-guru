@@ -1,16 +1,16 @@
 <template lang="pug">
   ul.u-list-bordered
     li.u-list-bordered__item(v-for="list in lists" :key="list.id")
-      nuxt-link(:to="`/list/${list.id}`") {{ list.title | clean }}
+      NuxtLink(:to="`/list/${list.id}`") {{ list.title | clean }}
       .u-list-bordered__controls
-        icon-button(
+        IconButton(
           label="Roll"
           icon="d20"
           :icon-size="22"
           @click="rollList(list.id)"
           tooltip
         )
-        icon-button(
+        IconButton(
           v-if="list.author === currentUser.uid"
           label="Delete"
           icon="trash"
@@ -51,7 +51,7 @@
       },
       deleteList(listId) {
         const list = this.lists.find((list) => list.id === listId);
-        const message = `Are you sure you want to delete ${list.title}\n!!! This cannot be undone !!!`;
+        const message = `Are you sure you want to delete ${list.title}\n? This cannot be undone !!!`;
 
         if (confirm(message)) {
           this.$store.dispatch('lists/delete', list.id);

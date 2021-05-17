@@ -4,15 +4,15 @@
       h1.list-roller__title {{ list.title }}
       transition(name="slide-fade-left")
         .list-roller__last-result(v-if="history.length > 0")
-          roll-result-icon(:roll="lastResult.roll" :size="50")
+          RollResultIcon(:roll="lastResult.roll" :size="50")
           p.list-roller__subtitle.h2 {{ lastResult.value }}
-      primary-button(label="Roll" :small="$mq === 'mobile'" @click="roll")
+      PrimaryButton(label="Roll" :small="$mq === 'mobile'" @click="roll")
     transition(name="slide-fade-left" appear)
       .list-roller-history(v-if="showHistory" :style="historyStyle")
         p.list-roller-history__title History
         transition-group.list-roller-history__list.u-list-simple(tag="ul" name="slide-fade-left" appear)
           li.list-roller-history__item(v-for="result in historyResults" :key="result.id")
-            roll-result-icon.list-roller-history__icon(:roll="result.roll")
+            RollResultIcon.list-roller-history__icon(:roll="result.roll")
             span.list-roller-history__label {{ result.value }}
 </template>
 
@@ -22,11 +22,13 @@
   import { clone, debounce } from '~/scripts/helpers/utils.js';
   import { getRandomNumber } from '~/scripts/helpers/dice.js';
   import RollResultIcon from '~/components/rolls/RollResultIcon.vue';
+  import PrimaryButton from '~/components/buttons/PrimaryButton.vue';
 
   export default {
     name: 'ListRoller',
     components: {
       RollResultIcon,
+      PrimaryButton,
     },
     mixins: [smoothReflow],
     props: {

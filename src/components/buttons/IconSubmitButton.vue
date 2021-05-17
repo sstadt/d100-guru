@@ -1,11 +1,11 @@
 <template lang="pug">
   button.button.button--icon(
-    type="submit", 
-    :class="buttonClass", 
-    :disabled="isDisabled", 
+    type="submit",
+    :class="buttonClass",
+    :disabled="isDisabled",
     @click="$emit('click')"
   )
-    icon(v-if="icon", :name="icon", :size="size")
+    Icon(v-if="icon", :name="icon", :size="size")
     span.u-sr-only {{ label }}
 </template>
 

@@ -6,9 +6,9 @@
     @click="$emit('click')"
     v-tooltip="tooltipText"
   )
-    icon(v-if="icon && !reverseIcon" :name="icon" :size="iconSize")
+    Icon(v-if="icon && !reverseIcon" :name="icon" :size="iconSize")
     span {{ label }}
-    icon(v-if="icon && reverseIcon" :name="icon" :size="iconSize")
+    Icon(v-if="icon && reverseIcon" :name="icon" :size="iconSize")
 </template>
 
 <script>

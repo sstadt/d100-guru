@@ -1,6 +1,6 @@
 <template lang="pug">
   span.roll-result-icon(:style="wrapperStyle")
-    icon.roll-result-icon__icon(name="d20" :size="size")
+    Icon.roll-result-icon__icon(name="d20" :size="size")
     span.roll-result-icon__roll(:style="textStyle") {{ roll }}
 </template>
 

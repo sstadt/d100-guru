@@ -8,7 +8,7 @@
       v-model="listItems"
       @end="saveItems"
     )
-      list-display-item.u-list-bordered__item(
+      ListDisplayItem.u-list-bordered__item(
         ref="listItems"
         v-for="(item, index) in listItems"
         :key="item.id"

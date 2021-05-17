@@ -1,13 +1,13 @@
 <template lang="pug">
   .page.page--list
-    sticky-hero
+    StickyHero
       .container
         transition(name="fade" mode="out-in")
-          list-roller(ref="roller" v-if="list" :list="list")
+          ListRoller(ref="roller" v-if="list" :list="list")
           p.h1(v-else) Loading list...
     .container.container--page(v-if="list")
-      list-controls(v-if="list && isAuthor" :list="list")
-      list-display(:list="list")
+      ListControls(v-if="list && isAuthor" :list="list")
+      ListDisplay(:list="list")
 </template>
 
 <script>
