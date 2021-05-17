@@ -96,6 +96,9 @@ export default {
 
   gtm: {
     id: 'G-YLHYF6Z9GM',
+    enabled: true,
+    pageTracking: true,
+    scriptURL: 'https://www.googletagmanager.com/gtag/js'
   },
 
   mq: {
