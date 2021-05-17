@@ -50,6 +50,7 @@ export default {
     '@nuxtjs/firebase',
     '@nuxtjs/svg-sprite',
     '@nuxtjs/style-resources',
+    '@nuxtjs/gtm',
     'nuxt-mq',
   ],
 
@@ -91,6 +92,10 @@ export default {
       Philosopher: true,
       Mulish: true,
     },
+  },
+
+  gtm: {
+    id: 'G-YLHYF6Z9GM',
   },
 
   mq: {
