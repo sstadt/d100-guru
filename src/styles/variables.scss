@@ -4,6 +4,7 @@
 
 $color-white: #fff;
 $color-off-white: #f7fafa;
+$color-smoke: #d7dedd;
 $color-light-gray: #e8f0ef;
 $color-gray: #abbabb;
 $color-medium-gray: #72808a;
@@ -62,6 +63,7 @@ $bg--control: $color-gray;
 // borders
 $border--main: $color-transparent-black--light;
 $border--light: $color-off-white;
+$border--subtle: $color-smoke;
 $border--mid: $color-light-gray;
 $border--dark: $color-gray;
 $border--dark--selected: $color-dark-gray;
@@ -75,6 +77,7 @@ $border-radius--tooltip: 16px;
 // shadows
 $drop-shadow: 0 3px 8px rgba($color-black, 0.1);
 $drop-shadow--light: 0 3px 15px $color-transparent-black--light;
+$drop-shadow--tight: 0 0.5px 4px $color-transparent-black--light;
 
 // typography
 $text--main: $color-black;

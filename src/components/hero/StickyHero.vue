@@ -15,7 +15,8 @@
     position: sticky;
     top: 0;
     padding: 20px 0;
-    box-shadow: $drop-shadow--light;
+    box-shadow: $drop-shadow--tight;
+    border-bottom: 1px solid $border--subtle;
     background-color: $bg--main;
   }
 </style>
