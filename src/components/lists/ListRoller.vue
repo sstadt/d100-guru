@@ -19,6 +19,7 @@
 <script>
   import smoothReflow from 'vue-smooth-reflow';
   import newResult from '~/scripts/schema/newResult.js';
+  import { LIST_RESULT_ROLLED } from '~/scripts/config/gtm.js';
   import { clone, debounce } from '~/scripts/helpers/utils.js';
   import { getRandomNumber } from '~/scripts/helpers/dice.js';
   import RollResultIcon from '~/components/rolls/RollResultIcon.vue';
@@ -84,6 +85,11 @@
         });
 
         this.history.unshift(result);
+        this.$gtm.push({
+          event: LIST_RESULT_ROLLED,
+          list: this.list.title,
+          result: `${randomIndex}/${this.list.items.length}`,
+        });
       },
       updateContentHeight: debounce(function () {
         this.contentHeight = this.$refs.mainContent.offsetHeight;
