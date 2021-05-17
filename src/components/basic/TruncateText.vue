@@ -4,7 +4,7 @@
       slot
     a.truncate-text__toggle(href="#" @click.prevent="toggleVisibility")
       | {{ toggleLabel }}
-      icon(:name="open ? 'chevron-up' : 'chevron-down'" :size="11")
+      Icon(:name="open ? 'chevron-up' : 'chevron-down'" :size="11")
 </template>
 
 <script>

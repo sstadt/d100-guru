@@ -1,6 +1,6 @@
 <template lang="pug">
   .user-menu
-    primary-button.user-menu__dropdown-toggle(
+    PrimaryButton.user-menu__dropdown-toggle(
       :label="statusLabel"
       :icon="statusIcon"
       :icon-size="10"
@@ -9,7 +9,7 @@
       @click="handleTopClick"
     )
     .user-menu__dropdown(v-if="currentUser && dropdownOpen")
-      primary-button.user-menu__dropdown-action(
+      PrimaryButton.user-menu__dropdown-action(
         label="Log Out"
         text
         @click="logout"

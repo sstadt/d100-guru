@@ -1,7 +1,7 @@
 <template lang="pug">
   .input.input--quantity
     label.u-sr-only(v-if="label") {{ label }}
-    icon-button.input--quantity__decrement.u-icon-primary(
+    IconButton.input--quantity__decrement.u-icon-primary(
       label="Decrease Quantity"
       icon="minus"
       :size="10"
@@ -16,7 +16,7 @@
       :placeholder="placeholder"
       readonly
     )
-    icon-button.input--quantity__increment.u-icon-primary(
+    IconButton.input--quantity__increment.u-icon-primary(
       label="Increase Quantity"
       icon="plus"
       :size="10"

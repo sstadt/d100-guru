@@ -3,34 +3,34 @@
     h2.auth__title Signup
     .auth__subtitle
       a.auth__link(href="#", @click.prevent="switchToLogin") Login
-    validation-observer(v-slot="{ invalid, handleSubmit }")
+    ValidationObserver(v-slot="{ invalid, handleSubmit }")
       form.auth__form(@submit.prevent="handleSubmit(signUp)", novalidate)
-        validation-provider(name="Display Name" rules="required" v-slot="{ errors }")
+        ValidationProvider(name="Display Name" rules="required" v-slot="{ errors }")
           .form-input
-            text-input(
+            TextInput(
               label="Display Name"
               placeholder="Display Name"
               v-model="name"
               :errors="errors"
             )
-        validation-provider(name="Password" rules="required|email" v-slot="{ errors }")
+        ValidationProvider(name="Password" rules="required|email" v-slot="{ errors }")
           .form-input
-            email-input(
+            EmailInput(
               label="Email Address"
               placeholder="Email"
               v-model="email"
               :errors="errors"
             )
-        validation-provider(name="Password" rules="required" v-slot="{ errors }")
+        ValidationProvider(name="Password" rules="required" v-slot="{ errors }")
           .form-input
-            password-input(
+            PasswordInput(
               label="Password"
               placeholder="Password"
               v-model="password"
               :errors="errors"
             )
-            password-strength(:password="password")
-        submit-button(label="Sign Up" :disabled="invalid" full)
+            PasswordStrength(:password="password")
+        SubmitButton(label="Sign Up" :disabled="invalid" full)
 </template>
 
 <script>

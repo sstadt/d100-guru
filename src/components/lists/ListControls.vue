@@ -1,9 +1,9 @@
 <template lang="pug">
   .list-controls
-    nuxt-link(to="/")
+    NuxtLink(to="/")
       icon(name="chevron-left" :size="8")
       span Back
-    toggle-input(
+    ToggleInput(
       ref="publishToggle"
       v-model="isPublished"
       label="Shared"

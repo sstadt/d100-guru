@@ -17,7 +17,7 @@
             :class="{ 'carousel__dots__thumbnail__image--video': thumbnailImages[n - 1].alt.includes('video') }"
           )
             img(:src="thumbnailImages[n - 1].src")
-            icon.carousel__dots__thumbnail__icon(v-if="thumbnailImages[n - 1].alt.includes('video')" name="play" :size="26")
+            Icon.carousel__dots__thumbnail__icon(v-if="thumbnailImages[n - 1].alt.includes('video')" name="play" :size="26")
           .u-sr-only Show Slide {{ n }}
 </template>
 

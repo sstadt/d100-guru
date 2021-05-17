@@ -7,7 +7,7 @@
         :class="{ 'error': message.type === 'error' }"
       )
         p.toast__message__copy(v-html="message.text")
-        primary-button.toast__message__cta(
+        PrimaryButton.toast__message__cta(
           v-if="message.callback",
           :small="true",
           :secondary="true",

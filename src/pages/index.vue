@@ -1,26 +1,26 @@
 <template lang="pug">
   .page.page--index
-    sticky-hero
+    StickyHero
       .container
         transition(name="fade" mode="out-in" @after-enter="heroTransitioning")
-          list-roller(ref="roller" v-if="activeList" :list="activeList")
+          ListRoller(ref="roller" v-if="activeList" :list="activeList")
           div(v-else)
             h2 D100 Guru
-            p Click the #[icon(name="d20")] icon on a list below to roll something!
+            p Click the #[Icon(name="d20")] icon on a list below to roll something!
     .container.container--page
       transition(name="slide-fade-left")
         .page-controls(v-if="showCreateList")
-          create-list-form
-      tabs
-        tab(heading="Browse Lists" selected)
-          list-grid(:lists="publishedLists" @roll-list="rollList")
-          primary-button.page--index__load-more(
+          CreateListForm
+      Tabs
+        Tab(heading="Browse Lists" selected)
+          ListGrid(:lists="publishedLists" @roll-list="rollList")
+          PrimaryButton.page--index__load-more(
             v-if="!endOfPublished"
             label="Load More"
             @click="loadMore"
           )
-        tab(heading="My Lists" v-if="loggedIn")
-          list-grid(:lists="ownedLists" @roll-list="rollList")
+        Tab(heading="My Lists" v-if="loggedIn")
+          ListGrid(:lists="ownedLists" @roll-list="rollList")
 </template>
 
 <script>

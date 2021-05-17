@@ -1,6 +1,6 @@
 <template lang="pug">
   .radio-group
-    radio-input(
+    RadioInput(
       ref="radioInputs"
       v-for="option in options"
       :key="option.value"

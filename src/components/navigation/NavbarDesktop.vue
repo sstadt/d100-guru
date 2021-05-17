@@ -1,9 +1,9 @@
 <template lang="pug">
   .navbar.navbar--desktop
     .container
-      nuxt-link.navbar__escape-hatch(to="/")
-        logo
-      user-menu
+      NuxtLink.navbar__escape-hatch(to="/")
+        Logo
+      UserMenu
 </template>
 
 <script>

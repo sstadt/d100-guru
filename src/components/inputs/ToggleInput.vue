@@ -4,9 +4,9 @@
     label.input--toggle__hitbox(:for="inputId")
       .input--toggle__track
       .input--toggle__icon-wrapper
-        icon.input--toggle__die-icon(name="d20")
+        Icon.input--toggle__die-icon(name="d20")
         transition(name="zoom-in")
-          icon.input--toggle__check-icon(v-if="currentValue" name="check" :size="12")
+          Icon.input--toggle__check-icon(v-if="currentValue" name="check" :size="12")
     label.input--toggle__label(:for="inputId") {{ label }}
 </template>
 
