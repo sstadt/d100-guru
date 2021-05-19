@@ -1,1 +1,1 @@
-export const LIST_RESULT_ROLLED = 'listRolled';
+export const LIST_RESULT_ROLLED = 'list_rolled';

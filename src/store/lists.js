@@ -120,7 +120,7 @@ export const actions = {
     });
   },
   bindSearch() {
-    // TODO: duplicate bindPublished, but include search
+    // TODO: need to use a service like algolia or elastic search for this
   },
   bindNext({ commit, dispatch }) {
     const query = this.$fire.firestore

@@ -85,11 +85,15 @@
         });
 
         this.history.unshift(result);
-        this.$gtm.push({
-          event: LIST_RESULT_ROLLED,
-          list: this.list.title,
-          result: `${randomIndex}/${this.list.items.length}`,
+        this.$ga.event('list', LIST_RESULT_ROLLED, this.list.title, {
+          items: this.list.items.length,
+          result: randomIndex,
         });
+        // this.$gtm.push({
+        //   event: LIST_RESULT_ROLLED,
+        //   list: this.list.title,
+        //   result: `${randomIndex}/${this.list.items.length}`,
+        // });
       },
       updateContentHeight: debounce(function () {
         this.contentHeight = this.$refs.mainContent.offsetHeight;
