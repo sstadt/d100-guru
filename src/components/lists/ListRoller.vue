@@ -85,10 +85,12 @@
         });
 
         this.history.unshift(result);
-        this.$gtm.push({
-          event: LIST_RESULT_ROLLED,
-          list: this.list.title,
-          result: `${randomIndex}/${this.list.items.length}`,
+        this.$gtm.trackEvent({
+          event: LIST_RESULT_ROLLED, // Event type [default = 'interaction'] (Optional)
+          category: 'List',
+          action: 'click',
+          label: this.list.title,
+          value: `${randomIndex}/${this.list.items.length}`,
         });
       },
       updateContentHeight: debounce(function () {

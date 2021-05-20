@@ -28,6 +28,7 @@ export default {
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     '~/plugins/filter.clean.js',
+    '~/plugins/gtm.js',
     '~/plugins/setupLists.js',
     '~/plugins/tooltip.js',
     '~/plugins/veeValidate.js',
@@ -51,7 +52,7 @@ export default {
     '@nuxtjs/firebase',
     '@nuxtjs/svg-sprite',
     '@nuxtjs/style-resources',
-    '@nuxtjs/gtm',
+    // '@nuxtjs/gtm',
     'nuxt-mq',
   ],
 
@@ -101,12 +102,12 @@ export default {
     pageTracking: true,
   },
 
-  gtm: {
-    id: 'GTM-PZS9TGM',
-    enabled: true,
-    pageTracking: true,
-    scriptURL: 'https://www.googletagmanager.com/gtag/js'
-  },
+  // gtm: {
+  //   id: 'GTM-PZS9TGM',
+  //   enabled: true,
+  //   pageTracking: true,
+  //   scriptURL: 'https://www.googletagmanager.com/gtag/js'
+  // },
 
   mq: {
     // Default breakpoint for SSR
