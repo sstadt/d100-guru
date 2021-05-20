@@ -51,7 +51,7 @@ export default {
     '@nuxtjs/firebase',
     '@nuxtjs/svg-sprite',
     '@nuxtjs/style-resources',
-    // '@nuxtjs/gtm',
+    '@nuxtjs/gtm',
     'nuxt-mq',
   ],
 
@@ -100,12 +100,13 @@ export default {
     enabled: true,
     pageTracking: true,
   },
-  // gtm: {
-  //   id: 'G-YLHYF6Z9GM',
-  //   enabled: true,
-  //   pageTracking: true,
-  //   scriptURL: 'https://www.googletagmanager.com/gtag/js'
-  // },
+
+  gtm: {
+    id: 'GTM-PZS9TGM',
+    enabled: true,
+    pageTracking: true,
+    scriptURL: 'https://www.googletagmanager.com/gtag/js'
+  },
 
   mq: {
     // Default breakpoint for SSR
