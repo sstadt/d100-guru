@@ -39,6 +39,9 @@
       list() {
         return this.lists.find((list) => list.id === this.listId);
       },
+      title() {
+        return this.list ? this.list.title : 'List';
+      },
       isAuthor() {
         return (
           this.currentUser.uid && this.currentUser.uid === this.list.author
@@ -60,6 +63,19 @@
           this.$nuxt.$loading.start();
         });
       }
+    },
+    head() {
+      return {
+        title: this.title,
+        // meta: [
+        //   // hid is used as unique identifier. Do not use `vmid` for it as it will not work
+        //   {
+        //     hid: 'description',
+        //     name: 'description',
+        //     content: 'My custom description'
+        //   }
+        // ]
+      };
     },
   };
 </script>

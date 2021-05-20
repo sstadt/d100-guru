@@ -86,7 +86,7 @@
 
         this.history.unshift(result);
         this.$gtm.trackEvent({
-          event: LIST_RESULT_ROLLED, // Event type [default = 'interaction'] (Optional)
+          event: LIST_RESULT_ROLLED,
           category: 'List',
           action: 'click',
           label: this.list.title,

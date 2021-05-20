@@ -17,6 +17,15 @@
       NavbarDesktop,
       Toast,
     },
+    watch: {
+      $route() {
+        this.$ga.page({
+          page: this.$route.name,
+          title: this.$route.meta.title,
+          location: this.$route.path,
+        });
+      },
+    },
   };
 </script>
 

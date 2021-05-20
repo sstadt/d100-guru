@@ -105,6 +105,19 @@
         this.$store.dispatch('lists/bindNext');
       },
     },
+    head() {
+      return {
+        title: 'd100.guru | Roll all the things for all the things',
+        meta: [
+          {
+            hid: 'description',
+            name: 'description',
+            content:
+              'Save, organize, and roll across all sorts of random tables to populate your RPG campaign world with unforgettable details that make your it feel more alive than ever!',
+          },
+        ],
+      };
+    },
   };
 </script>
 
